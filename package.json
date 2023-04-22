@@ -9,5 +9,15 @@
     "nodemon": "^2.0.22",
     "passport-local-mongoose": "^8.0.0",
     "sqlite3": "^5.1.6"
-  }
+  },
+  "name": "rms_nodjs",
+  "version": "1.0.0",
+  "main": "ser1.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
