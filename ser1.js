@@ -7,9 +7,9 @@ const Path = require('path');
 const fs = require('fs');
 const sqlite3 = require('sqlite3');
 var ejs = require('ejs');
-const myapp = require('.\rmsmaster\userlogin');
-const mainpage = require('.\rmsmaster\mainsp');
-const sbsearch = require('.\rmsmaster\dbsearch');
+const myapp = require('./rmsmaster/userlogin');
+const mainpage = require('./rmsmaster/mainsp');
+const sbsearch = require('./rmsmaster/dbsearch');
 // const customer_model = require('./rmsconfig/model/customer');
 const port = process.env.PORT ||  8080;
 const { MongoClient , ObjectId} = require('mongodb');
@@ -17,7 +17,7 @@ const app = myapp.app ;
 
 app.set('port', process.env.port || port); // set express to use this port
 
-app.set('views',__dirname + '\vws');
+app.set('views',__dirname + '/vws');
 app.use(express.static(__dirname));
 app.use(express.static(Path.join(__dirname, 'rmsmaster')))
 app.use(express.static(Path.join(__dirname, 'public'))) // configure express to use public folder
