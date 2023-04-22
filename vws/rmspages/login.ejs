@@ -1,0 +1,50 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/assets/css/mystyles.css"> 
+    <link rel="stylesheet" href="/public/assets/css/bootstrap.css" media="screen" />
+    <script type = "text/javascript"  src="/public/assets/js/minajax.js"></script>
+
+    <!-- <script type = "text/javascript"  src= 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script> -->
+    <title><%= rscr.title %></title>
+</head>
+
+    <body>
+        <div class="container" >
+
+            <label style="color: white;" >Join Our Social Network </label>
+    		<div class="login-form">
+                
+                <form action="/rmslogin" method="post">
+    				<div class="info" style="color: blue;" id="info" ><%= rscr.info %></div>
+    					<input type="text" name="username" placeholder="Username" class="rmsinput" 
+                        style="text-transform:lowercase;" required="required" />
+    				
+    					<input type="password" name="password" placeholder="Password" class="rmsinput" required="required"/>
+    				
+                   
+    					<div class="info" style="color: white;" id="alert" ><%= rscr.alert %></div>
+    				
+    					
+    				<button  id="login" class="btn btn-primary btn-block " name="login" >Login</button>
+
+    			</form>	
+    			<form method="POST" action="/rmsregister">
+                    <label></label>
+                    <button  id="register" class="btn btn-primary btn-block " name="register" >
+                        Press to Sign-UP</button>
+                    
+                </form>
+    		</div>
+    	    <div>
+                
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+    </script>
+    </html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+--> 
+    <script  type="text/javascript" src="public/assets/js/rmsheader.js"></script>
+    <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
+    <link rel="stylesheet" href="public/assets/css/bootstrap.css">
+    
+</head>
+<style>
+    /* .button {
+        background-color: #4CAF50;
+        /* Green 
+    
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.buttonhv {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+}
+.buttonhv:hover {
+    background-color: #555555;
+    color: white;
+}
+*/
+</style>
+
+<body>
+<div class="page-wrapper">
+        
+  
+        <form method="POST" action="/rmsnav">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">
+                        <button type="submit" id="rmshomenav" name="name" value="rmshome" class="btn btn-info" >RMS-Home-Main</button> 
+                </span>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Active</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/rmsnav?id=userinfo" id="rmshomenav" class="nav-link">User-Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/rmsnav?id=bankinfo" id="rmshomenav" class="nav-link">Bank-Info</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a href="/rmsnav?id=seriesinfo" id="rmshomenav" class="nav-link">Bill-Series-Info</a>
+                        </li>
+                    </ul>
+                    <span class="navbar-brand mb-0 h1">
+                        <button type="submit" id="rmslogout" class="btn btn-outline-danger" name="name" value="logout">Log-Out</button>
+                </span>
+                </div>
+            </nav>
+    
+        </form>
+</div>
+</body>
+</html>
