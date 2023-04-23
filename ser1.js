@@ -23,7 +23,7 @@ app.use(express.static(Path.join(__dirname, 'rmsmaster')))
 app.use(express.static(Path.join(__dirname, 'public'))) // configure express to use public folder
 
 //const uri = "mongodb+srv://techmed:benzene@cluster0.bdrk79r.mongodb.net/techmed?retryWrites=true&w=majority";
-const uri = 'mongodb://0.0.0.0:27017/mytech-med';
+const uri = 'mongodb://127.0.0.1:27017/mytech-med';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 try {
