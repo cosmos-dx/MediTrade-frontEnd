@@ -15,7 +15,7 @@ const memdb = rmsfun.memdb;
 
 
 const { MongoClient , ObjectId} = require('mongodb');
-const uri = 'mongodb://localhost:27017/mytech-med';
+const uri = 'mongodb://127.0.0.1:27017/mytech-med';
 //const uri = "mongodb+srv://techmed:benzene@cluster0.bdrk79r.mongodb.net/techmed?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 //const mgdb = client.db("techmed");
