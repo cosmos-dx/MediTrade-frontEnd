@@ -241,117 +241,70 @@ app.post('/addtodb',function(req,res){
   });
 
 app.post('/adduserinfo', function(req, res){
-
-  var owner = req.session.rscr['owner'];
-  var uqpath = req.session.rscr['uqpath'];
-  
-    ownerstat =[];
-    ownerstat.push(req.body.name.toUpperCase());
-    ownerstat.push(req.body.add1.toUpperCase());
-    ownerstat.push(req.body.add2.toUpperCase());
-    ownerstat.push(req.body.add3.toUpperCase());
-    var printstat = {}
-   
-  
-    if(req.body['Bill Page Type'] == '1'){printstat['A4'] = true; printstat['A6'] = false; printstat['A5'] = false; }
-    else if(req.body['Bill Page Type'] == '3'){printstat['A4'] = false; printstat['A6'] = false; printstat['A5'] = true; }
-    else if(req.body['Bill Page Type'] == '2') {printstat['A4'] = false; printstat['A6'] = true; printstat['A5'] = false; }
-    else{printstat['A4'] = true; printstat['A6'] = false; printstat['A5'] = false;}
-
-      var filter = { };
-      var updatedata = { $set:{
-        'ownerstatic':ownerstat,
-        'ownervar.phone' : req.body.phone1.toString(),
-        'ownervar.phone1' : req.body.phone2.toString(),
-        'ownervar.email' : req.body.email.toString().toUpperCase(),
-        'ownervar.regn' : req.body.regn.toString(),
-        'ownervar.gstn' : req.body.gstn.toString(),
-        'printsettings' : printstat
-      }}
-      var updateuserinfo = rmslogin.tclc["owner"].updateOne(filter, updatedata);
+  var rscr =  req.session.rscr;
+    ownerstat = {
+      "userinfo" :{"ownerstatic": [req.body.name, req.body.add1, req.body.add2, req.body.add3],
+      "printsettings": req.body['pagetype'], 
+      "displaysettings": {"batchlist":false,},
+      "info": req.body.info, "phone": req.body.phone1, "phone1": req.body.phone2, "tpname": "", 
+      "email": req.body.email, "regn":req.body.regn,"gstn":req.body.gstn,
+      },
+    }
+    
+    var filter ={};
+    var updatedta = {$set : ownerstat}
+      var updateuserinfo = rmslogin.tclc["owner"].updateOne(filter, updatedta);
       updateuserinfo.then(function(upres){
-        var updtosess = rmslogin.tclc["owner"].find({}).sort({'itemid' : -1}).toArray();
-        updtosess.then(function(gotinfo){
-          owner['o'] = gotinfo[0]['ownerstatic'][0];
-          owner['oth'] = gotinfo[0]['ownervar'];
-          owner['ownername']=  gotinfo[0]['ownerstatic'][0];
-          owner['ownerstatic'] = gotinfo[0]['ownerstatic'];
-          owner['ownervar'] = gotinfo[0]['ownervar'];
-          uqpath['usersettingdata']['ownerstatic'] =  gotinfo[0]['ownerstatic'];
-          uqpath['usersettingdata']['printsettings'] = gotinfo[0]['printsettings'];
-          uqpath['usersettingdata']['ownervar'] = gotinfo[0]['ownervar'];
-          uqpath['usersettingdata']['_id'] = gotinfo[0]['_id'].toString();
-          req.session.rscr['htmlheaderdp'] = ownerstat[0]+" , "+ownerstat[1]+ " , "+ownerstat[2];
-          res.render('rmspages/user-info', {spinfo: {"update": "Updated"}});
+      rscr['userinfo'] = ownerstat['userinfo'];
+      var hederdpinfo = ownerstat['userinfo']['ownerstatic'];
+      req.session.rscr['htmlheaderdp'] = hederdpinfo[0]+" , "+hederdpinfo[1]+ " , "+hederdpinfo[2];
+      res.render('rmspages/user-info', {spinfo: rscr['userinfo'] ,update:"Updated"});
             
-        }) 
       })
 });
 
 app.post('/addbankinfo', function(req, res){
 
-  var owner = req.session.rscr['owner'];
-  var uqpath = req.session.rscr['uqpath'];
+  var rscr =  req.session.rscr;
+  var bankstat = {
+    "bankinfo" :{
+      "bank2": {"add": req.body.add2.toUpperCase() , "ifsc": req.body.ifsc2.toUpperCase(), "upid": req.body.upid2, 
+      "name": req.body.name2.toUpperCase(), "ac": req.body.acno2},
+      "bank1": {"add": req.body.add1.toUpperCase(), "ifsc": req.body.ifsc1.toUpperCase(), "upid": req.body.upid1, 
+      "name": req.body.name1.toUpperCase(), "ac": req.body.acno1},
+   },
+  }
 
       var filter = {};
-      var updatedata = { $set:{
-        'ownervar.bank2.add' : req.body.add2.toString().toUpperCase(),
-        'ownervar.bank2.ifsc' : req.body.ifsc2.toString().toUpperCase(),
-        'ownervar.bank2.upid' : req.body.upi2.toString(),
-        'ownervar.bank2.name' : req.body.name2.toString().toUpperCase(),
-        'ownervar.bank2.ac' : req.body.acno2,
-
-        'ownervar.bank1.add' : req.body.add1.toString().toUpperCase(),
-        'ownervar.bank1.ifsc' : req.body.ifsc1.toString().toUpperCase(),
-        'ownervar.bank1.upid' : req.body.upi1.toString(),
-        'ownervar.bank1.name' : req.body.name1.toString().toUpperCase(),
-        'ownervar.bank1.ac' : req.body.acno1,
-
-      }}
+      var updatedata = { $set:bankstat}
       
       var updateuserinfo = rmslogin.tclc["owner"].updateOne(filter, updatedata);
       updateuserinfo.then(function(upres){
-        var updtosess = rmslogin.tclc["owner"].find({}).sort({'itemid' : -1}).toArray();
-        updtosess.then(function(gotinfo){
-          owner['oth'] = gotinfo[0]['ownervar'];
-          owner['ownervar'] = gotinfo[0]['ownervar'];
-          uqpath['usersettingdata']['ownervar'] = gotinfo[0]['ownervar'];
-          uqpath['usersettingdata']['_id'] = gotinfo[0]['_id'].toString();
-          res.render('rmspages/bank-info', {spinfo: {"update": "Updated"}});
-            
-        }) 
+
+          rscr['bankinfo'] = bankstat['bankinfo'];
+          res.render('rmspages/bank-info', {spinfo:rscr['bankinfo'], update:"Updated"});
       })
 });
 
 app.post('/addbillseriesinfo', function(req, res){
+  var rscr =  req.session.rscr;
+  var billstat = {
+    "billseriesinfo" : {
+      "bill" :{"main":req.body.main.toUpperCase(), "esti":req.body.esti.toUpperCase(), "challan":req.body.challan.toUpperCase(),
+       "saleorder":req.body.saleorder.toUpperCase(),"purchaseorder":req.body.purchaseorder.toUpperCase(),"receipt":req.body.receipt.toUpperCase()},
+     }
+  }
 
       var filter = {};
-      var updatedata = { $set:{
-        'bill.main' : req.body.add2.toString().toUpperCase(),
-        'bill.esti' : req.body.ifsc2.toString().toUpperCase(),
-        'ownervar.bank2.upid' : req.body.upi2.toString(),
-        'ownervar.bank2.name' : req.body.name2.toString().toUpperCase(),
-        'ownervar.bank2.ac' : req.body.acno2,
-
-        'ownervar.bank1.add' : req.body.add1.toString().toUpperCase(),
-        'ownervar.bank1.ifsc' : req.body.ifsc1.toString().toUpperCase(),
-        'ownervar.bank1.upid' : req.body.upi1.toString(),
-        'ownervar.bank1.name' : req.body.name1.toString().toUpperCase(),
-        'ownervar.bank1.ac' : req.body.acno1,
-
-      }}
+      var updatedata = { $set: billstat}
       
       var updateuserinfo = rmslogin.tclc["owner"].updateOne(filter, updatedata);
       updateuserinfo.then(function(upres){
-        var updtosess = rmslogin.tclc["owner"].find({}).sort({'itemid' : -1}).toArray();
-        updtosess.then(function(gotinfo){
-          owner['oth'] = gotinfo[0]['ownervar'];
-          owner['ownervar'] = gotinfo[0]['ownervar'];
-          uqpath['usersettingdata']['ownervar'] = gotinfo[0]['ownervar'];
-          uqpath['usersettingdata']['_id'] = gotinfo[0]['_id'].toString();
-          res.render('rmspages/bank-info', {spinfo: {"update": "Updated"}});
-            
-        }) 
+        
+        rscr['billseries'] = billstat['billseriesinfo']["bill"];
+        rscr['billseriesinfo'] = billstat['billseriesinfo'];
+        res.render('rmspages/billseries-info', {spinfo: rscr['billseriesinfo']['bill'], update:"Updated" });
+
       })
 });
 

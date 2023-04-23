@@ -204,13 +204,15 @@ var itemdatalimit = 5;
 const posdict = POSDICT();
 var info = ['axy','first info','b','second, info'];
 var raw_billseries =  '<%= JSON.stringify(spinfo.billseries) %>'; 
-var fyear =  '<%= spinfo.fyear %>';
+
+var fyear =  parseInt('<%= spinfo.fyear %>');
 
 var billseries = {};
 var owner = JSON.parse(jsonformater('<%= JSON.stringify(spinfo.owner) %>')); 
 var rscr = {"owner":owner};
 //var info = {'1':'axy','2':'first info','b':'second','ginfo':'info'};
 //window.onbeforeunload = function(){return false;};
+
 
  
 $(document).ready(function(){
@@ -222,7 +224,7 @@ $(document).ready(function(){
         //console.log('bill set', billseries['main']);
         //console.log('bill set', billseries['main'],  billseries['fyear']);
        
-        billnoSET('#billno', billseries['main'],  billseries['fyear'])
+        billnoSET('#billno', billseries['main'],  fyear)
     }
     tableColumnHeader();
     appendRow();
@@ -343,9 +345,9 @@ function xdateFormat(inputDate) {  // inputDate = yyyy-mm-dd
 
 function onEsti(evt){
     if(evt.target.value.trim()==""){
-        billnoSET('#billno', billseries['main'],  billseries['fyear'])
+        billnoSET('#billno', billseries['main'],  fyear)
     }else{
-        billnoSET('#billno', billseries['esti'],  billseries['fyear'])
+        billnoSET('#billno', billseries['esti'],  fyear)
     }
     //console.log(billseries);
     RecdicPanFill()

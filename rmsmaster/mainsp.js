@@ -15,65 +15,23 @@ var updict ={};
 app.get('/rmsnav', function(req, res){
 
     if (req.query.id === 'undefined'){
-        // Session interrupted, logout
-            res.redirect('/rmslogin');
-          }
+        res.redirect('/rmslogin');
+    }
 
     if(req.query.id == 'userinfo'){
-        var userinfo = rmslogin.tclc["owner"].find({}).sort({'itemid' : -1}).toArray();
-        userinfo.then(function(result){
-            updict['update'] = " ";
-            updict['name'] = result[0]['ownerstatic'][0];
-            updict['add1'] = result[0]['ownerstatic'][1];
-            updict['add2'] = result[0]['ownerstatic'][2];
-            updict['add3'] = result[0]['ownerstatic'][3];
-            updict['phone'] = result[0]['ownervar']['phone'];
-            updict['phone1'] = result[0]['ownervar']['phone1'];
-            updict['email'] = result[0]['ownervar']['email'];
-            updict['regn'] = result[0]['ownervar']['regn'];
-            updict['gstn'] = result[0]['ownervar']['gstn'];
-            updict['userinfocode'] = 
-            res.render('rmspages/user-info',{spinfo : updict});
-        })
+        var rscr = req.session.rscr;
+        res.render('rmspages/user-info',{spinfo : rscr['userinfo'], update :" "});
 
        
     }
     if(req.query.id == 'bankinfo'){
-        var userinfo = rmslogin.tclc["owner"].find({}).sort({'itemid' : -1}).toArray();
-        userinfo.then(function(result){
-            updict['update'] = " ";
-            updict['add1'] = result[0]['ownervar']['bank1']['add'];
-            updict['ifsc1'] = result[0]['ownervar']['bank1']['ifsc'];
-            updict['upid1'] = result[0]['ownervar']['bank1']['upid'];
-            updict['name1'] = result[0]['ownervar']['bank1']['name'];
-            updict['acno1'] = result[0]['ownervar']['bank1']['ac'];
-
-            updict['add2'] = result[0]['ownervar']['bank2']['add'];
-            updict['ifsc2'] = result[0]['ownervar']['bank2']['ifsc'];
-            updict['upid2'] = result[0]['ownervar']['bank2']['upid'];
-            updict['name2'] = result[0]['ownervar']['bank2']['name'];
-            updict['acno2'] = result[0]['ownervar']['bank2']['ac'];
-
-            res.render('rmspages/bank-info',{spinfo : updict}); 
-        })
-       
+        var rscr = req.session.rscr; 
+        res.render('rmspages/bank-info',{spinfo : rscr['bankinfo'], update :" "}); 
         
     }
     if(req.query.id == 'seriesinfo'){
-
-        var userinfo = rmslogin.tclc["owner"].find({}).sort({'itemid' : -1}).toArray();
-        userinfo.then(function(result){
-            updict['update'] = " ";
-            updict['main'] = result[0]['bill']['main'];
-            updict['esti'] = result[0]['bill']['esti'];
-            updict['challan'] = result[0]['bill']['challan'];
-            updict['saleorder'] = result[0]['bill']['saleorder'];
-            updict['purchaseorder'] = result[0]['bill']['purchaseorder'];
-            updict['receipt'] = result[0]['bill']['receipt'];
-
-            res.render('rmspages/billseries-info',{spinfo : updict});
-        })
-         
+        var rscr = req.session.rscr; 
+        res.render('rmspages/billseries-info',{spinfo : rscr['billseriesinfo']['bill'], update: " "});
     }
 })
 
@@ -87,7 +45,7 @@ app.post('/rmsnav', function(req, res) {
     else{
        
         if (req.body.name == 'rmshome'){
-            rscr['title']="RMS-Home";
+            rscr['title']="MediTrade-Home";
             rscr['cssearch']="";
             rscr['cs']="";
             //console.log(rscr['daterow']);
@@ -95,7 +53,7 @@ app.post('/rmsnav', function(req, res) {
             //res.render('rmspages/pmain', {spinfo: rscr});
         }
         if (req.body.name == 'logout'){
-            rscr['title']="RMS-Login";
+            rscr['title']="MediTrade-Login";
             rscr['cssearch']="";
             rscr['cs']="";
             res.redirect('/rmslogin');

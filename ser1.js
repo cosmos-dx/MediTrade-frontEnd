@@ -11,7 +11,7 @@ const myapp = require('./rmsmaster/userlogin');
 const mainpage = require('./rmsmaster/mainsp');
 const sbsearch = require('./rmsmaster/dbsearch');
 // const customer_model = require('./rmsconfig/model/customer');
-const port = process.env.PORT ||  8080;
+const port = process.env.PORT ||  80;
 const { MongoClient , ObjectId} = require('mongodb');
 const app = myapp.app ;
 

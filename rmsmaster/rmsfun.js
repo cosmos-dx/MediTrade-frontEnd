@@ -8,7 +8,7 @@ var db = null; //require(Path.join(Path.dirname(__dirname),"rmsconfig\\rmsdb"));
 //const db = require('./rmsconfig/rmsdb');
 
 function emptyRSCR(){
-    var rscr = {"info":"RMS-Solutions", "alert":"","title":"","htmlheaderdp":"","pathinfo":"",
+    var rscr = {"info":"MediTrade-Soft", "alert":"","title":"","htmlheaderdp":"","pathinfo":"",
         "updatermsregister":false, "rmsregister":"","getsdc":"", "csinfo":"","cinfo":"","sinfo":"",
         "dbfname":"", "loginpage":"/","homepage":"","tables":null,"recdic":null,"daterow":null,"daterange":[],
         "owner":"","uqpath":"","estidict":"","dbcscr":"","cscr":"","fyear":0, "sfyear":null,}//'sfyear'==>> Selected Fyear 
@@ -79,7 +79,7 @@ function readRSCR(){
               "cssearch":"suppliers","recdic":recdic,"tables":tables};
 
       //rscr==>Resources
-      var rscr = {"info":"RMS-Solutions", "alert":"","title":"","htmlheaderdp":"","pathinfo":"",
+      var rscr = {"info":"MediTrade-Soft", "alert":"","title":"","htmlheaderdp":"","pathinfo":"",
         "updatermsregister":false, "rmsregister":"","getsdc":"", "csinfo":csinfo,"cinfo":cinfo,"sinfo":sinfo,
         "dbfname":"", "loginpage":"/","homepage":"","tables":tables,"recdic":recdic,"daterow":null,"daterange":[],
         "owner":owner,"uqpath":uqpath,"estidict":estidict,"dbcscr":dbcscr,"cscr":cscr,"fyear":0, "sfyear":null,}//"sfyear"==>> Selected Fyear  

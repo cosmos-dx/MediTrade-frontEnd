@@ -222,6 +222,7 @@ function propostAjax(name, searchtxt, seturl, gptype, idf, keyc, info){
         });
      }
 
+
 function billnoSET(dpidtag, bstartstring, fyear, billas='M'){
   $.ajax({
      url: cshost,
@@ -236,11 +237,13 @@ function billnoSET(dpidtag, bstartstring, fyear, billas='M'){
      dataType: 'json',
      success: function(result) {
         var billno = bstartstring+"00001";
-        var dbbillno = result[0]["billno"];
-        if (dbbillno){
-            var bn = parseInt(dbbillno.split(bstartstring)[1])+1;  
-            var bnstr = ('00000'+bn).slice(-5);
-            billno = bstartstring+bnstr;
+        if(result.length > 0){
+            var dbbillno = result[0]["billno"];
+            if (dbbillno){
+                var bn = parseInt(dbbillno.split(bstartstring)[1])+1;  
+                var bnstr = ('00000'+bn).slice(-5);
+                billno = bstartstring+bnstr;
+            }
         }
         $(dpidtag).val(billno);
      

@@ -50,7 +50,7 @@ app.use(sessions(sess));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var defaultUser ={
+var ccccdefaultUser ={
   "ownerstatic": ["RMS DEMO", "RMS DEMO ADDRESS 1", "RMS DEMO ADDRESS 2", "Empty Yet ADDRESS3"],
   "printsettings": {"A4":true, "A6":false, "A5":false},
   "diaplaysettings": {"batchlist":false,},
@@ -61,6 +61,23 @@ var defaultUser ={
   "bill" :{"main":"S", "esti":"E", "challan":"CHL", "saleorder":"SO","purchaseorder":"PO","receipt":"R"},
   "keys": ["H1","H2", "H3", "H4"]
           };
+
+
+var defaultUser ={
+  "userinfo" :{"ownerstatic": ["RMS DEMO", "RMS DEMO ADDRESS 1", "RMS DEMO ADDRESS 2", "Empty Yet ADDRESS3"],
+             "printsettings": "A4", 
+             "displaysettings": {"batchlist":false,},
+            "info": "xxxx", "phone": "1234567890", "phone1": "1234567890", "tpname": "", 
+            "email": "abcd@efg.com", "regn":"Owner Reg. Number","gstn":"Owner GSTN",
+    },
+   "bankinfo" :{
+      "bank2": {"add": "BANK ADDRESS", "ifsc": "ABCDD123123", "upid": "", "name": "MY BANK", "ac": "123457543212312"},
+      "bank1": {"add": "", "ifsc": "HDICIC53177", "upid": "", "name": "", "ac": ""},
+   },
+   "billseriesinfo" : {
+    "bill" :{"main":"S", "esti":"E", "challan":"CHL", "saleorder":"SO","purchaseorder":"PO","receipt":"R"},
+   }
+};
 
 function getFinencialYearRange(lastfyeardict){
 if(lastfyeardict){
@@ -199,7 +216,7 @@ app.get('/rmslogin', function(req, res) {
   rscr = rmsfun.emptyRSCR(); 
   
   req.session.destroy();
-  rscr['title']='RMS-Login'
+  rscr['title']='MediTrade-Login'
   res.render('rmspages/login' , {root:__dirname, rscr: rscr});
   //res.redirect('/');
   
@@ -244,50 +261,7 @@ app.post('/rmslogin', function(request, response) {
            rscr['uqpath']['dbfname']=dbfname;
            rscr['uqpath']['dbpath']=UserDirInfo['dbpath'];
            rscr['uqpath']['usersettingpath']=usersettingpath;
-           //let owner={'o':"own", 'cal':null,'oth':"",'ownername':'','ownerstatic':'','ownervar':'',} // 'cal' =>> finencial year calander 
-           
-          //  fs.readFile(usersettingpath, function(err, data) {
-          //       if (err) throw err;
-          //       const usersettingdata = JSON.parse(data);
-          //       let ownerstatic = usersettingdata['ownerstatic']; 
-          //       let ownervar = usersettingdata['ownervar']; 
-          //       let billseries = usersettingdata['bill'];
-                
-          //       rscr['uqpath']['usersettingdata']=usersettingdata;
-          //       rscr['owner']['ownerstatic']=ownerstatic;
-          //       rscr['owner']['ownervar']=ownervar;
-          //       rscr['billseries']=billseries;
-          //       rscr['owner']['oth']=ownervar;
-          //       rscr['owner']['o']=ownerstatic[0];
-          //       rscr['owner']['ownername']=ownerstatic[0];
-                
-          //   });
-          //  db.all("SELECT partid, partname, frm, tod, partnum FROM mycalendar ORDER BY partid DESC ", 
-          //   function(err, rows, fields) {
-          //     if (err) throw err;
-              
-               
-          //      rscr['owner']['cal']=rows;
-          //      //console.log('Sending Data');
-          //      //console.log(rscr['owner']['cal']);
-          //      request.session.loggedin = true;
-          //      request.session.username = username;
-          //      request.session.mid = results.mid;
-          //      request.session.name = results.name;
-          //      request.session.lastname = results.lastname;
-          //      request.session.phone = results.phone;
-          //      request.session.serverid = results.serverid;
-          //      let ownerstatic = rscr['owner']['ownerstatic'];
-
-          //      rscr['htmlheaderdp']=ownerstatic[0]+', '+ownerstatic[1]+', '+ownerstatic[2];
-          //      rscr['title']='Rms-Panel';
-          //      rscr['gblink']='/rmshome';
-          //      rscr['linktitle']='Rms-MainPanel';
-
-          //      response.render('rmspages/rmshome', {spinfo: rscr})
-          //      //return true;
-                
-          //     });
+         
           
           tclc["owner"].find().limit(1).toArray().then(function(ownerdet){
             if (ownerdet.length < 1){
@@ -309,15 +283,15 @@ app.post('/rmslogin', function(request, response) {
                     ownerdet = ownerdet[0];
                     } 
 
-                let ownerstatic = ownerdet['ownerstatic']; 
-                let ownervar = ownerdet['ownervar']; 
-                let billseries = ownerdet['bill'];
-                
+                let ownerstatic = ownerdet['userinfo']['ownerstatic']; 
+                let ownervar = ownerdet['userinfo']; 
+                rscr['userinfo'] = ownervar;
+                rscr['bankinfo'] = ownerdet['bankinfo'];
+                rscr['billseriesinfo']=ownerdet['billseriesinfo'];
+                rscr['billseries'] = ownerdet['billseriesinfo']['bill'];
                 rscr['uqpath']['usersettingdata']=ownerdet;
                 rscr['owner']['ownerstatic']=ownerstatic;
                 rscr['owner']['ownervar']=ownervar;
-                rscr['billseries']=billseries;
-                rscr['owner']['oth']=ownervar;
                 rscr['owner']['o']=ownerstatic[0];
                 rscr['owner']['ownername']=ownerstatic[0];
                 rscr['owner']['cal']=frange;
