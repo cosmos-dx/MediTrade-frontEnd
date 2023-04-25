@@ -33,6 +33,23 @@ app.get('/rmsnav', function(req, res){
         var rscr = req.session.rscr; 
         res.render('rmspages/billseries-info',{spinfo : rscr['billseriesinfo']['bill'], update: " "});
     }
+    if(req.query.id == 'deleteallcoll'){
+        rmslogin.tclc["trns"].drop();
+        rmslogin.tclc["cash"].drop();
+        rmslogin.tclc["pr"].drop();
+        rmslogin.tclc["cust"].drop();
+        rmslogin.tclc["sup"].drop();
+        rmslogin.tclc["itm"].drop();
+        rmslogin.tclc["stk"].drop(); 
+        rmslogin.tclc["sale"].drop();
+        rmslogin.tclc["sitm"].drop();
+        rmslogin.tclc["pur"].drop();
+        rmslogin.tclc["pitm"].drop();
+        res.redirect('/rmslogin');
+
+
+        
+    }
 })
 
 app.post('/rmsnav', function(req, res) {
