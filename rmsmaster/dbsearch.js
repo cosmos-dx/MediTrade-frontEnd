@@ -98,10 +98,11 @@ app.post('/itemsearchenter', (req, res) => {
   var column = raw_idf[2];
   var selection = raw_idf[1];
   var search_for = raw_idf[0];
+  var stockfetchlimit = 5;
   
   try{
-    qry.csfind_by_name(rmslogin.tclc, "POST", idf, req.body.searchtxt.toUpperCase(), column, 3, function(data){ 
-    
+    qry.csfind_by_name(rmslogin.tclc, "POST", idf, req.body.searchtxt.toUpperCase(), column, stockfetchlimit, function(data){ 
+         
           res.send(JSON.stringify(data));
       });
   }
@@ -196,11 +197,7 @@ app.post('/sendbilltodb', (req, res) => {
     main = true;
   }
   
-  
-  //var returndata = {"mode":mode, "recdic":redicdata};
-  //redicdata['grid']["stockarray"]);
-  //expiry date not given of grid ------------- stk insert ---- important -- have to be given
-  //till then its default given empty in stkinsert
+
 
   try{
   qry.csfinalbill(rmslogin.tclc, idf, redicdata, mode, main, function(){

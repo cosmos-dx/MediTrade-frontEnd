@@ -4,7 +4,7 @@ function tableColumnHeader(){
     
     document.getElementById("itembox").insertRow().innerHTML ='<thead><tr>'+
     '<th></th><th>S.No</th><th>Items Name</th><th>Pack</th><th>Qty</th><th>Batch</th><th>Bonus</th>'+
-    '<th>Rate</th><th>Dis-%</th><th>Amount</th><th> GST-% </th><th>NetRate</th>'+
+    '<th>Rate</th><th>Dis-%</th><th>Amount</th><th>Expiary</th><th> GST-% </th><th>NetRate</th>'+
     '</tr></thead>';
 }
 
@@ -23,8 +23,11 @@ function appendRow(){
     '<td><input type="text" id='+idcount+'_qty'+' name="qty" class="rmsqtyvalidate" placeholder="Qty" '+
     ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" ></td >'+
 
-    '<td><input type="text" id='+idcount+'_batchno'+ ' name="batchno" class="typeahead" placeholder="Batch" '+
-    ' onfocus="getFocusedID(event)" style="width:80px" onkeyup="onBatchUpdate(event)" onfocus="getFocusedID(event)"></td >'+
+    // '<td><input type="text" id='+idcount+'_batchno'+ ' name="batchno" class="typeahead" placeholder="Batch" '+
+    // ' onfocus="getFocusedID(event)" style="width:80px" onkeyup="onBatchUpdate(event)" onfocus="getFocusedID(event)"></td >'+
+
+    '<input type="text" id='+idcount+'_batchno name="batchno" class="addinput batinputstyle" list='+idcount+'_batlist value=""  '+
+    'placeholder="Batch" onfocus="getFocusedID(event)" onkeyup="onBatchUpdate(event)" /><div list='+idcount+"_batlist id="+idcount+'_batlist ></div>'+
 
     '<td><input type="text" id='+idcount+'_bonus'+' name="bonus" class="bonusvalidate" placeholder="Bonus" '+
     ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" ></td >'+
@@ -34,6 +37,10 @@ function appendRow(){
     ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" ></td >'+
     '<td><input type="text" id='+idcount+'_amt'+' name="amt" class="gridamtlabel1" placeholder="0.00" '+
     ' onfocus="getFocusedID(event)" readonly ></td >'+
+   
+    '<td><input type="text" id='+idcount+'_exp name="exp" class="expvalidate" placeholder="mm/yy" value="" onfocus="getFocusedID(event)" '+
+    'onkeyup="onExp(event)" maxlength="5" /></td>'+
+   
     '<td><label id='+idcount+'_tax'+' name="tax" class="tdgridlabel" >0.00</label></td >'+
     '<td><label id='+idcount+'_netrate'+' name="netrate" class="tdgridlabel" >0.00</label></td ></tr>';
 
@@ -44,6 +51,7 @@ function appendRow(){
         propostAjax('products', searchtxt, itemhost ,'POST', 'itemsearch||selection||all||items', 1, {'limit':itemdatalimit,});    
             });
     
+    onBatchSelect(idcount,"#"+idcount+"_batchno","#"+idcount+"_batlist","#"+idcount+"_exp");         
     
     searchTypeAhead('#'+idcount+'_itemsearch','products','POST', 
         itemhost+"?name=%QUERY"+"&idf=items&getcolumn=name&limit="+itemdatalimit,
@@ -183,12 +191,12 @@ function propostAjax(name, searchtxt, seturl, gptype, idf, keyc, info){
         success: function(result) {
             if(result.length > 0){
                 totstk = 0;
-                dbstkarray = result[0]['stockarray'];
+                dbstkarray = result[0]['stockarray']; //--------------------------------------------------
                 if(dbstkarray.length > 0){
                     for(var i=0; i<dbstkarray.length; i++) {
                         totstk += dbstkarray[i]["qty"];
                     }
-
+                    console.log(dbstkarray);
                     batchno = dbstkarray[0]["batchno"]; //geting recent/latest batch so, force to zero index 
                     batchstk = dbstkarray[0]["qty"]; //geting recent/latest batch so, force to zero index 
                 }else{

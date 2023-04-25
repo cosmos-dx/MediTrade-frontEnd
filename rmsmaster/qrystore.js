@@ -383,8 +383,9 @@ function csfind_by_name(db, method, idf, text, column, limit, callback){
 					// converted item id to string
 					itemid = itemid.toString();
 
-					const findResult = db["stk"].find({"itemid":itemid}).sort({'itemid' : -1}).limit(1).toArray(); // remove limit for multiple batch
+					const findResult = db["stk"].find({"itemid":itemid}).limit(limit).sort({'itemid' : -1}).toArray(); // remove limit for multiple batch
 					findResult.then(function(stkresult){
+						
 						result[0]["stockarray"] = stkresult;
 						
 						callback(result); 
@@ -983,7 +984,7 @@ function SALE_UPDATE(fyear, saletbl, recdic, db, transid, saleid){
 			  if (main){
 				stkinfo = {'info':'Stock Insert in Sales'};
 				stk_ins_data = {'id':v['proid'],'proid':v['proid'],'bat':v['bat'],
-			   'qty':v['tqty'],'expdbf':v['expdbf'],};
+			   'qty':v['tqty'],'expdate':v['expdate'],};
 				stkinfo = StkInsert("", stk_ins_data, db, v['name'], main);
 				console.log(" find1008 StockId Not Found in StkInsert PANEL_SALE_PROD Stock Inserted");  
 				};
@@ -1123,7 +1124,7 @@ function StkInsert(tbl, d, db, itemname, main){
 		"itemid" :d['itemid'],
 		"batchno" : d['batchno'],
 		"qty" : d['qty'],
-		"expdate": "" ,    //d['expdbf']
+		"expdate": d['expdate'] ,    //d['expdate']
 	};
 	db['stk'].insertOne(insert_Stk).then(function(stk_ins_details){
 		console.log("inserted new stock");
@@ -1222,11 +1223,11 @@ function PANEL_PURCHASE_PROD(fyear, tblname, tbl, recdic, db, purcid, transid, m
 				
               stkinfo = {'info':'Stock Insert in Sales'};
               stk_ins_data = {'itemid':v['itemid'],'id':v['proid'],'proid':v['proid'],'batchno':v['batchno'],
-             'qty':v['tqty'],'expdbf':v['expdbf'],};
+             'qty':v['tqty'],'expdate':v['expdate'],};
 			
               stkinfo = StkInsert(tbl, stk_ins_data, db, v['name'], main);
               inforow.push(stkinfo);
-              console.log(" find821 entered in StkInsert Stock Inserted");  
+              
               };
             
           }

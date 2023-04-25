@@ -197,14 +197,69 @@ function getQty(qty, bonus){
     var b = getBonus(bonus);
     var b1 = b[0];
     var tqty = qty+b1;
-    return tqty; }
-
-function onBatchUpdate(evt){
-    var batchno = $('#'+idcount+'_batchno').val().toUpperCase();
-    recdic['grid'][idcount]['batchno']=batchno;
-    
+    return tqty; 
 }
 
+function onExp(evt){
+    var expdate = evt.target.value;
+    console.log("validate expiry herre in properformat rmsheader line 205 ");
+    recdic['grid'][idcount]['expdate']=expdate;
+}
+
+
+function onBatchUpdate(evt){
+    var batchno = evt.target.value.toUpperCase();
+    if (typeof(recdic['grid'][idcount])=="undefined"){return}
+    if (batchno.trim()==""){$("div[list]").hide();return;}
+    recdic['grid'][idcount]['batchno']=batchno;
+    var stockarray = recdic["grid"][idcount]["stockarray"];
+    $("#"+idcount+"_batlist").empty();
+    var showflag = true;
+    var val=evt.target.value;
+    var n=idcount+"_batlist"
+    var a=$("div[list="+n+"]");
+    for (i = 0; i < stockarray.length; i++){
+        var batno = stockarray[i]["batchno"];
+        var expdt = stockarray[i]["expdate"];
+        var qtyn = stockarray[i]["qty"];
+        var valdata = batno+","+expdt+","+qtyn
+        var dpdata = "Bat: "+batno+" Exp: "+expdt+" Qty: "+qtyn;
+        if(batchno.length < 2){
+            $(a[0]).append("<span id='"+i+"' id='"+i+"' data-reference="+valdata+" >"+dpdata+"</span>")
+        }
+        else{
+            if(batno.startsWith(batchno)){
+                $(a[0]).append("<span data-id='"+i+"' id='"+i+"' data-reference"+valdata+" >"+dpdata+"</span>")
+            }
+        }
+     }
+     $("div[list="+n+"]").show(100);    
+}
+
+function onBatchSelect(idc, batid, batlist, expid){
+    var batcharray = ["ABCD","EFGHHH"];
+    var batid=idcount+"_batlist";
+    var batlist=$("div[list="+batid+"]");
+    var ebat="#"+idcount+"_bat";
+    var nbatlist="#"+idcount+"_batlist";
+    
+    $(nbatlist).on("click","span",function(nbatlist){
+        nbatlist.preventDefault();
+        //var s=this.id;
+        var getid =this.id;
+        var batarray=$(this).html().split(':');
+        var selectedarray =document.getElementById(getid).getAttribute('data-reference').split(',');
+        var selectedqty = selectedarray[2];
+        var selectedexp = selectedarray[1];
+        var selectedbatch = selectedarray[0];
+
+        $("#"+idcount+"_batchno").val(selectedbatch);
+        $(expid).val(selectedexp);
+        recdic['grid'][idcount]['batchno']=selectedbatch;
+        recdic['grid'][idcount]['expdate']=selectedexp;
+        $("div[list]").hide();
+    })
+}
 function onQtyCalculation(evt){
     if (typeof(recdic['grid'][idcount]) == "undefined"){
         CreateAlertDiv("Item Name Not Selected OR Page Re-Loaded !! Select Item First !! ");
