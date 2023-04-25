@@ -176,11 +176,13 @@ function getUniqueId(){
 	
 		if(mode==="save"){
 			if (idf==="items"){
-				var insertdict = {"name": text['name'],"pack": text['pack'],"unit": text['unit'],"netrate": pnet,
+				itemid = new ObjectID().toString();
+				var pnet = parseFloat(parseFloat(text['prate'])*((100+(12))/100)).toFixed(2);
+				var insertdict = {"itemid":itemid, "name": text['name'],"pack": text['pack'],"unit": text['unit'],"netrate": pnet,
 					"prate": text['prate'],"srate": text['srate'],"cgst": text['cgst'],"sgst": text['sgst'],"gst": text['igst'],
 					"dis": "0.00","mrp": text['mrp'],"hsn": text['hsn'],"igroup": text['igroup'],
 					"irack": text['irack'],"compid": text['compid'],"supid": text['supid'],};
-				var pnet = parseFloat(parseFloat(text['prate'])*((100+(12))/100)).toFixed(2);
+				
 				//var pnet = 0; // purchase netrate  
 				if(text['addcomp']){
 					var compmode = 6;
@@ -266,6 +268,8 @@ function getUniqueId(){
 				var oid = new ObjectId(text["_id"]);
 				var myquery = {"_id": oid };
 				delete text["_id"];  // CANNOT Update Unique ID _id, so deleting from text object;
+				var pnet = parseFloat(parseFloat(text['prate'])*((100+(12))/100)).toFixed(2);
+				text['netrate'] = pnet;
 				var updateval = { $set: text};
 				  db["itm"].updateOne(myquery, updateval).then(function(result){
 					  callback({"name":text["name"]});
@@ -358,7 +362,9 @@ function csfind_by_name(db, method, idf, text, column, limit, callback){
 	var qrystr = "";
 	
 	if (idf==="items"){
-		const findResult = db["itm"].find({"name":new RegExp("^" +text, "i")}).limit(5).toArray();
+		
+		
+		const findResult = db["itm"].find({"name":new RegExp("^" +text, "i")}).limit(5).toArray();  
 		findResult.then(function(result){
 			if(method==="GET"){ 
 				for(var i=0; i<result.length; i++){data.push(result[i].name);}
@@ -373,10 +379,14 @@ function csfind_by_name(db, method, idf, text, column, limit, callback){
 					}
 					
 					// Force on Item Selection [POST Method, will fetch stock too]
+					
+					// converted item id to string
+					itemid = itemid.toString();
 
-					const findResult = db["stk"].find({"itemid":itemid}).sort({'itemid' : -1}).limit(limit).toArray(); // remove limit for multiple batch
+					const findResult = db["stk"].find({"itemid":itemid}).sort({'itemid' : -1}).limit(1).toArray(); // remove limit for multiple batch
 					findResult.then(function(stkresult){
 						result[0]["stockarray"] = stkresult;
+						
 						callback(result); 
 						});
 				}
@@ -397,7 +407,7 @@ function csfind_by_name(db, method, idf, text, column, limit, callback){
 	};
 
 	if (idf==="customer"){
-		console.log("text", text);
+	
 		const findResult = db["cust"].find({"name":new RegExp("^" +text)}).limit(5).toArray();
 		findResult.then(function(result){
 			if(method==="GET"){ 
@@ -557,7 +567,7 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 					"fyear": fyear, 
 					
 				}
-				//console.log(insert_mytrans);
+			
 
 				db["trns"].insertOne(insert_mytrans).then(function(result){
 					//var lastidval = result.insertedId.toString();
@@ -570,8 +580,8 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 						"transid" : transid,
 						"type" : typ,
 						"billno": rp['billno'],
-						crdrtype : rp['gtot'],
-						crdrtypealt: 0,
+						[crdrtype] : rp['gtot'],
+						[crdrtypealt]: 0,
 						'date' : rp['dbbilldate'],
 						'comment' : rp['cmnt']
 					}
@@ -620,7 +630,8 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 
 						}
 						db["pur"].insertOne(insert_purchase).then(function(purchaseid){
-							console.log(" find187 got purchaseid, ", spid);  
+							
+							
 							itemflag = PANEL_PURCHASE_PROD(fyear, "", "", rd, db, spid, transid, main);
 							//return [true, tbl["PR_ITM"], "Done"];
 						});					
@@ -661,6 +672,7 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 		    		transflag = TRANS_UPDATE(fyear, tbl, rd, db, typ, cr, dr, transid) ;
 		    		if (rp['mode'] == 2){P_R_DELETE(fyear, tbl, rd, db, typ, cr, transid);}
 		    		purflag = PURCHASE_UPDATE(fyear, tbl["PURC"], rd, db, transid, spid);
+				
 			      itemflag = PANEL_PURCHASE_PROD($fyear, tbl["PR_ITM"], tbl, rd, db, spid, transid, main);	
 			      return [false, "Purchase CASH Update", "Done"];
           	}
@@ -1105,7 +1117,6 @@ function StkInsert(tbl, d, db, itemname, main){
   if(main === false){return {'name':itemname, 'flag':false, 'info':"CHALLAN_SAVED",'msg':"---",};}
   else{
 
-	console.log("insde stk insert ====== ",d);
 	stockid = getUniqueId();
 	var insert_Stk = {
 		"stockid":stockid,
@@ -1158,8 +1169,10 @@ function PURCHASE_UPDATE(fyear, purtbl, recdic, db, transid, purchaseid){
   };
 
 function PANEL_PURCHASE_PROD(fyear, tblname, tbl, recdic, db, purcid, transid, main){
-	
+
+  
   var grid = recdic['grid'] ;
+
   var ins_data = [];
   var upd_data = [];
   var stk_ins_data = [];
@@ -1171,14 +1184,15 @@ function PANEL_PURCHASE_PROD(fyear, tblname, tbl, recdic, db, purcid, transid, m
 
   inforow = [] ;
   
-   
+
   for (const [k, v] of Object.entries(grid)){
-	//console.log("this is v going to start",v);
+	
+
   	 if (v['itemid'] !="" && v['qty'] !="")
 	 {
   	 	
   	 	if(typeof v['spitemid'] !== "undefined"){ 
-			console.log("if inside if") // if (v['spitemid'] !=""){
+			
         upd_data = {'spid':purcid, 'amt':v['amt'],'tdisamt':v['tdisamt'],'supid':v['supid'], 
             'proid':v['itemid'],'bat':v['batchno'],'qty':v['qty'],'bonus':v['bonus'],'rate':v['rate'],'srate':v['srate'],
             'srate_a':v['srate_a'],'dis':v['dis'],'mrp':v['mrp'],'tax1amt':v['cgst'],'pnet':v['pnet'],'netrate':v['netrate'],
@@ -1195,19 +1209,21 @@ function PANEL_PURCHASE_PROD(fyear, tblname, tbl, recdic, db, purcid, transid, m
         //inforow.push(siteminfo);;
       }
       else{
-       	
+     
         ins_data = {'spid':purcid, 'amt':v['amt'],'tdisamt':v['tdisamt'],'supid':v['supid'], 
             'proid':v['itemid'],'bat':v['batchno'],'qty':v['qty'],'bonus':v['bonus'],'rate':v['rate'], 'srate':v['srate'],
             'srate_a':v['srate_a'],'dis':v['dis'],'mrp':v['mrp'],'tax1amt':v['cgst'],'pnet':v['pnet'],'netrate':v['netrate'],};
 
         // if 'stockid' available then stock will update in qty using stockid otherwise insert new row in stock table;
-        if (v['stockid'] ==""){
+        
+		if (v['stockarray'] == undefined ){
 			
             if (main){
-			
+				
               stkinfo = {'info':'Stock Insert in Sales'};
-              stk_ins_data = {'id':v['proid'],'proid':v['proid'],'bat':v['bat'],
+              stk_ins_data = {'itemid':v['itemid'],'id':v['proid'],'proid':v['proid'],'batchno':v['batchno'],
              'qty':v['tqty'],'expdbf':v['expdbf'],};
+			
               stkinfo = StkInsert(tbl, stk_ins_data, db, v['name'], main);
               inforow.push(stkinfo);
               console.log(" find821 entered in StkInsert Stock Inserted");  

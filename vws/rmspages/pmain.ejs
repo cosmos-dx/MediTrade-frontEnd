@@ -264,12 +264,13 @@ function onSave(evt){
     savebool = validateDBEntry(savebool);
     //console.log(cs, recdic);
     if (savebool){
+        
         if(typeof recdic['grid'][0]["qty"] == 'undefined'){
             document.getElementById("statusinfo").innerHTML=" No Items Selected !";
             document.getElementById("statusinfo2").innerHTML=" Cannot Save !";
             return false;
         }
-        //console.log(recdic['grid']);
+      
         //console.log(recdic['ac']);
         //console.log(recdic['grid']);
         

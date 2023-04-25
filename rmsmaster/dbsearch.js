@@ -99,9 +99,15 @@ app.post('/itemsearchenter', (req, res) => {
   var selection = raw_idf[1];
   var search_for = raw_idf[0];
   
-  qry.csfind_by_name(rmslogin.tclc, "POST", idf, req.body.searchtxt.toUpperCase(), column, 3, function(data){ 
-        res.send(JSON.stringify(data));
-    });
+  try{
+    qry.csfind_by_name(rmslogin.tclc, "POST", idf, req.body.searchtxt.toUpperCase(), column, 3, function(data){ 
+    
+          res.send(JSON.stringify(data));
+      });
+  }
+  catch(e){
+    res.redirect('/rmslogin');
+  }
   
 });
 
@@ -122,10 +128,8 @@ app.post('/sppartysearch',function(req,res){
 var seditdata = {};
 
 app.get('/speditcalculate',function(req,res){
-  console.log("");
-  //console.log(req.query);
+
   var rscr = req.session.rscr;
-  //console.log(rscr);
   let db = rmslogin.db;
   let transid = req.query.transid ;
   let ledgid = req.query.ledgid ;
@@ -152,7 +156,7 @@ app.get('/speditcalculate',function(req,res){
               rscr['cssearch']==='purchase'
               rscr['cs']="customer";
               seditdata = {'prows':rows, 'itemrows':itemrows, 'acrows':acrows};
-              console.log("from db search ----- ",seditdata);
+            
               res.send(JSON.stringify(seditdata)); 
               //res.end(JSON.stringify(seditdata));
             }
@@ -162,7 +166,7 @@ app.get('/speditcalculate',function(req,res){
   if (req.query.name == "customer"){
     qry.SPINFO(rmslogin.tclc, ledgid, transid, "cust", "sale", "sitm", fyear, 
           function(err, rows, itemrows, acrows){
-            //console.log(rows);
+         
             rows[0]['gamt'] = gamt;
             rows[0]['amt'] = 0;
             rscr['cssearch']="sale";
@@ -182,25 +186,31 @@ app.get('/spedit',function(req,res){
   });
 
 app.post('/sendbilltodb', (req, res) => {
-  //console.log(req.body.getdata)
-  console.log("yaha agaye kya");
+
   var idf = req.body.idf;
   var mode = req.body.mode;
   var redicdata = req.body.getdata;
   var main = req.body.main; 
-  console.log("idf=",idf);
+
   if(main == "undefined"){
     main = true;
   }
+  
   
   //var returndata = {"mode":mode, "recdic":redicdata};
   //redicdata['grid']["stockarray"]);
   //expiry date not given of grid ------------- stk insert ---- important -- have to be given
   //till then its default given empty in stkinsert
+
+  try{
   qry.csfinalbill(rmslogin.tclc, idf, redicdata, mode, main, function(){
-        console.log("xxxx data ");
+
         res.send(JSON.stringify(redicdata));
     });
+  }
+  catch(e){
+    res.redirect('/rmslogin');
+  }
   
 });
 
@@ -212,8 +222,7 @@ app.get('/addtodb',function(req,res){
   var column = req.query.getcolumn;
   var limit = req.query.limit;
   var mode = req.query.mode;
- console.log('mode get - ',mode);
- console.log('idf get - ',idf);
+
   qry.add_to_db(rmslogin.tclc, idf, text, column, mode, limit, function(data){
         res.send(JSON.stringify(data));
     });
@@ -228,9 +237,7 @@ app.post('/addtodb',function(req,res){
   var column = req.body.getcolumn;
   var limit = 1;
   var mode = req.body.mode;
-  console.log('mode post - ',mode);
-  console.log('idf post - ',idf);
-  
+
 
   
   

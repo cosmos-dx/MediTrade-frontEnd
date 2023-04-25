@@ -10,7 +10,9 @@ function tableColumnHeader(){
 
 function appendRow(){
     
+    
     ++idcount ;
+    
    
     document.getElementById("itembox").insertRow(-1).innerHTML = '<tr><td><button id='+idcount+'_incbtn'+' name="addbtn" '+
     'style="width:30px" onclick="appendRow()">+</button></td>'+
@@ -21,8 +23,8 @@ function appendRow(){
     '<td><input type="text" id='+idcount+'_qty'+' name="qty" class="rmsqtyvalidate" placeholder="Qty" '+
     ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" ></td >'+
 
-    '<td><input type="text" id='+idcount+'_batchno'+' name="batchno" class="typeahead" placeholder="Batch" '+
-    ' onfocus="getFocusedID(event)" style="width:80px" ></td >'+
+    '<td><input type="text" id='+idcount+'_batchno'+ ' name="batchno" class="typeahead" placeholder="Batch" '+
+    ' onfocus="getFocusedID(event)" style="width:80px" onkeyup="onBatchUpdate(event)" onfocus="getFocusedID(event)"></td >'+
 
     '<td><input type="text" id='+idcount+'_bonus'+' name="bonus" class="bonusvalidate" placeholder="Bonus" '+
     ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" ></td >'+
@@ -56,6 +58,8 @@ function appendRow(){
         return /^-?\d*[.,]?\d*$/.test(value); });
     setInputFilter(document.getElementById(idcount+'_dis'), function(value) {
         return /^-?\d*[.,]?\d*$/.test(value); });
+
+    
 }
 
 function SPEDIT_appendRow(rawprows, rawitemrows){

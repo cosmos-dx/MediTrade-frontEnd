@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+--> 
+    <script  type="text/javascript" src="public/assets/js/rmsheader.js"></script>
+    <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
+    <link rel="stylesheet" href="public/assets/css/bootstrap.css">
+    
+</head>
+<style>
+  
+    #rmsnavcss {
+        font-family: "Roboto", Helvetica, Arial, sans-serif;
+        font-weight: 100;
+        font-size: 12px;
+        line-height: 30px;
+        color: #777;
+       
+        font-family:sans-serif;
+        background-image: -moz-linear-gradient(30deg, rgba(66,181,213,0.5) 0%, rgba(0, 245, 16, 0.781) 100%);
+
+        background: -webkit-linear-gradient(30deg, rgba(66,181,213,0.5) 0%,rgba(207, 38, 38, 0.781) 100%);
+        background: -o-linear-gradient(30deg, rgba(66,181,213,0.5) 0%,rgba(0, 245, 16, 0.781) 100%);
+        background: -ms-linear-gradient(30deg, rgba(66,181,213,0.5) 0%,rgba(0, 245, 16, 0.781) 100%);
+        background: linear-gradient(30deg, rgba(66,181,213,0.5) 0%,rgba(2, 250, 109, 0.826) 100%);
+
+    }
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+
+    .buttonhv {
+      background-color: white;
+      color: black;
+      border: 2px solid #555555;
+    }
+    .buttonhv:hover {
+      background-color: #555555;
+      color: white;
+    }
+    
+</style>
+<body>
+<div class="page-wrapper">
+        <form method="POST" action="/rmsnav">
+          <nav class="navbar navbar-light bg-light"  id="rmsnavcss">
+            <span class="navbar-brand mb-0 h1" >
+            <button type="submit" id="rmshomenav" class="button buttonhv" name="name" value="rmshome">RMS-Home-Main</button> 
+            </span>
+
+            <span class="navbar-brand mb-0 h1" >
+              <button type="submit" id="rmsuserinfo" class="button buttonhv" name="name" value="userinfo">User-Info</button> 
+            </span>
+
+            <span class="navbar-brand mb-0 h1" >
+              <button type="submit" id="rmsbankinfo" class="button buttonhv" name="name" value="bankinfo">Bank-Info</button> 
+            </span>
+
+            <span class="navbar-brand mb-0 h1" >
+              <button type="submit" id="rmsbillseriesinfo" class="button buttonhv" name="name" value="seriesinfo">Bill-Series-Info</button> 
+            </span>
+
+            <span class="navbar-brand mb-0 h1" >
+            <button type="submit" id="rmslogout" class="button buttonhv" name="name" value="logout">Log-Out</button> 
+            </span>
+          </nav>
+        </form>
+  

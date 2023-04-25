@@ -23,8 +23,8 @@
 <body>
 <title><%= spinfo.title  %></title>
 <label hidden="hidden" id='cs'><%= spinfo.cs %> </label>  
-<div class="container">
-<div class="addpanel">
+<div class="container" id="container">
+<div class="addpanel" id="addpanel">
 
 <table id="cis" class="addtable" width="400">
     <tr><td><h4>
@@ -361,6 +361,21 @@ function cisseletorActive(getid, fg, bg){
     $(getid).css('color', fg);
   }
 
+  function RemoveReCreateHeaderButtons(){
+    // create id "container" to container div >>>> <div class="container" id="container">
+    // create id "addpanel" to container div >>>> <div class="addpanel" id="addpanel">
+    $("#addpanel").remove();
+    $('#container').append('<div class="addpanel" id="addpanel">'+
+    '<table id="cis" class="addtable" width="400">'+
+    '<tr><td><h4>'+
+    '<button class="btm"  id="c" value="customer" >Customer</button>'+
+    '<button class="btm"  id="i" value="items" >Items</button>'+
+    '<button class="btm"  id="s" value="supplier" >Supplier</button>'+
+    '</h4></td></tr>'+
+    '</table><br>'+
+    '</div>')
+}
+
 function cisseletor(wdg, getid, keyc,labelid){
   //var $box = $(this);
   
@@ -376,6 +391,7 @@ function cisseletor(wdg, getid, keyc,labelid){
     clearFields(r=16,infoclear=true);
     }
   if (confirm('EXIT FROM '+cs.toUpperCase()+' ?')){
+    RemoveReCreateHeaderButtons();
     cs = "customer";  
       if (getid=='c'){
         cs = "customer";

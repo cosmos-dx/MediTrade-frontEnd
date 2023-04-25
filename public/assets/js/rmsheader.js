@@ -199,6 +199,11 @@ function getQty(qty, bonus){
     var tqty = qty+b1;
     return tqty; }
 
+function onBatchUpdate(evt){
+    var batchno = $('#'+idcount+'_batchno').val().toUpperCase();
+    recdic['grid'][idcount]['batchno']=batchno;
+    
+}
 
 function onQtyCalculation(evt){
     if (typeof(recdic['grid'][idcount]) == "undefined"){
@@ -214,7 +219,7 @@ function onQtyCalculation(evt){
     var dis = parseFloat($('#'+idcount+'_dis').val());
     var rawbonus = $('#'+idcount+'_bonus').val();
     var bonuscheck = getBonus(rawbonus) 
-  
+    
     // bbool ===>>> example bonus given on 10 qty(2 two is bonus and 10+2 is net)
     // difference ===>>> (1) when given free coustomer has to buy 10 qty
     // (2) when given net(10+2) customer can buy any qty *** rate will reduce accordingly
@@ -245,8 +250,9 @@ function onQtyCalculation(evt){
     $('#'+idcount+'_netrate').html(netrate.toFixed(2));   
     
     if (isNaN(dis)){dis = 0;}
-
+    var batchno = $('#'+idcount+'_batchno').val().toUpperCase();
     recdic['grid'][idcount]['qty']=qty;
+    recdic['grid'][idcount]['batchno']=batchno
     recdic['grid'][idcount]['bbool']=bbool;
     recdic['grid'][idcount]['bonus']=bonus;
     recdic['grid'][idcount]['tqty']=tqty;
@@ -326,18 +332,8 @@ function onQtyCalculation(evt){
    
     StatusInfoDp(recdic['grid'][idcount], stkvar, tax_[0], disc_[0]);
 
-    /*
-    var keyc = evt.keyCode || evt.which;
-    if (keyc==13){
-        ++enterhitcount ;
-        if (enterhitcount===2){
-            document.getElementById("statusinfo2").innerHTML=evtidf;
-            if (evtnxtidf==='_incbtn'){appendRow(); document.getElementById(idcount+'_itemsearch').focus();}
-            else{document.getElementById(idcount+evtnxtidf).focus();}
-            enterhitcount = 0;
-            }
-        }
-    */
+        
+
     }
 
 function RecdicPanFill(){

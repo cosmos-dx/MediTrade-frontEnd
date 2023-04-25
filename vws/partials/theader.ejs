@@ -10,8 +10,19 @@
 --> 
     <script  type="text/javascript" src="public/assets/js/rmsheader.js"></script>
     <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="public/assets/css/bootstrap.css">
     
+<style>
+    #iconlogout{
+        font-size:18px;
+        color:rgb(215, 6, 6);
+    }
+    #rmslogout:hover #iconlogout {
+     color: white;
+    }
+</style>
+
 </head>
 
 
@@ -38,7 +49,9 @@
                         </li>
                     </ul>
                     <span class="navbar-brand mb-0 h1">
-                        <button type="submit" id="rmslogout" class="btn btn-outline-danger" name="name" value="logout">Log-Out</button>
+                        <button type="submit" id="rmslogout" class="btn btn-outline-danger" name="name" value="logout">
+                            <i class='fas fa-power-off' id="iconlogout" ></i>
+                        </button>
                 </span>
                 </div>
             </nav>

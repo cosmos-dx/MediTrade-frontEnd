@@ -1,0 +1,45 @@
+{
+    "ownerstatic": [
+        "RMS DEMO",
+        "RMS DEMO ADDRESS 1",
+        "RMS DEMO ADDRESS 2",
+        "Empty Yet ADDRESS3"
+    ],
+    "ownervar": {
+        "info": "xxxx",
+        "phone": "1234567890",
+        "phone1": "1234567890",
+        "tpname": "",
+        "bank2": {
+            "add": "BANK ADDRESS",
+            "ifsc": "ABCDD123123",
+            "upid": "",
+            "name": "MY BANK",
+            "ac": "123457543212312"
+        },
+        "bank1": {
+            "add": "",
+            "ifsc": "HDICIC53177",
+            "upid": "",
+            "name": "",
+            "ac": ""
+        },
+        "email": "abcd@efg.com",
+        "regn": "Owner Reg. Number",
+        "gstn": "Owner GSTN"
+    },
+    "bill": {
+        "main": "S",
+        "esti": "E",
+        "challan": "CHL",
+        "saleorder": "SO",
+        "purchaseorder": "PO",
+        "receipt": "R"
+    },
+    "keys": [
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+    ]
+}

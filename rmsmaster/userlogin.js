@@ -15,7 +15,7 @@ const memdb = rmsfun.memdb;
 
 
 const { MongoClient , ObjectId} = require('mongodb');
-const uri = 'mongodb://127.0.0.1:27017/mytech-med';
+const uri = 'mongodb://localhost:27017/mytech-med';
 //const uri = "mongodb+srv://techmed:benzene@cluster0.bdrk79r.mongodb.net/techmed?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 //const mgdb = client.db("techmed");
@@ -113,7 +113,7 @@ if(lastfyeardict){
 }
 
 function AdminMongoConnect(){
-  var url = 'mongodb://127.0.0.1:27017//';
+  var url = 'mongodb://0.0.0.0:27017//';
   //var url = 'mongodb://localhost:27017//'+getuseraddress;
   var client = new MongoClient(url);
   client.connect();
@@ -153,7 +153,7 @@ function CreateEmptyCollections(emptydb){
   collectionList.forEach(function(collectionName) {emptydb.createCollection(collectionName)})
 }
 function MongoConnect(getuseraddress){
-  var url = 'mongodb://127.0.0.1:27017//'+getuseraddress;
+  var url = 'mongodb://0.0.0.0:27017//'+getuseraddress;
   //var url = 'mongodb://localhost:27017//'+getuseraddress;
   var client = new MongoClient(url);
   client.connect();
@@ -194,13 +194,13 @@ app.get('/',(req,res) => {
    if(req.session.userid){
         //res.send("Welcome User <a href=\'/logout'>click to logout</a>");
         rscr = rmsfun.emptyRSCR();
-        rscr['title']='RMS-Login'
+        rscr['title']='MediTrade-Login'
         res.render('rmspages/login',{root:__dirname, rscr:rscr})
         
     }
     else{
         rscr = rmsfun.emptyRSCR();
-        rscr['title']='RMS-Login'
+        rscr['title']='MediTrade-Login'
         res.render('rmspages/login',{root:__dirname, rscr:rscr})
         
      }

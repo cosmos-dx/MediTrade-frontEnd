@@ -2,7 +2,7 @@ const fs = require('fs');
 const Path = require("path");
 const sqlite3 = require('sqlite3');
 
-const memdb = require(Path.join(Path.dirname(__dirname),"rmsconfig/member"));
+const memdb = require(Path.join(Path.dirname(__dirname),"rmsconfig\\member"));
 var db = null; //require(Path.join(Path.dirname(__dirname),"rmsconfig\\rmsdb"));
 //const memdb = require('nod/rmsconfig/member');
 //const db = require('./rmsconfig/rmsdb');
