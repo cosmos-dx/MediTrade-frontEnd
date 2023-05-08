@@ -1,12 +1,3 @@
-
-
-
-const memdb = require(Path.join(Path.dirname(__dirname),"rmsconfig//member"));
-var db = null; //require(Path.join(Path.dirname(__dirname),"rmsconfig\\rmsdb"));
-//const memdb = require('nod/rmsconfig/member');
-//const db = require('./rmsconfig/rmsdb');
-
-
 function emptyRSCR(){
     var rscr = {"info":"MediTrade-Soft", "alert":"","title":"","htmlheaderdp":"","pathinfo":"",
         "updatemediregister":false, "mediregister":"","getsdc":"", "csinfo":"","cinfo":"","sinfo":"",
@@ -88,7 +79,4 @@ function readRSCR(){
 
 module.exports.emptyRSCR = emptyRSCR
 module.exports.readRSCR = readRSCR
-
-module.exports.GetUserDirName = GetUserDirName
-module.exports.dbfileCreate = dbfileCreate
 

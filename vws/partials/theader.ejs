@@ -10,25 +10,109 @@
     <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" type="text/css" href="public/assets/css/navburger.css"/>
+    <link rel="stylesheet" type="text/css" href="public/assets/css/sample.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="public/assets/css/bootstrap.css">
 
 <style>
-    #iconlogout{
-        font-size:18px;
-        color:rgb(215, 6, 6);
-    }
-    #medilogout:hover #iconlogout {
-     color: white;
-    }
+
 </style>
 
 </head>
 
 
 <body>
-<div class="page-wrapper">
+<!-- <div class="page-wrapper"> -->
+    <div>
+
+
+
+    <form method="POST" action="/medinav">
+
+        <div class="sticky">
+        <!--mid nav-->
+        <div class="mid-nav">
+            <!--logo-->
+            <div class="mid-l">
+                <img src="" alt="" srcset="">
+                <h1 style="color: #f6f6f6;;">MEDI-TRADE &nbsp; SOFTWARE</h1>
+            </div>
+            <div class="mid-r">
+                
+                        <button type="submit" id="medilogout" class="btn btn-outline-danger" name="name" value="logout">
+                            <i class='fas fa-power-off' id="iconlogout" ></i>
+                        </button>
+                    
+            </div>
+        </div>
+        <!--last nav-->
+        <div class="last-nav">
+            <ul>
+                <li> <button type="submit" id="medihomebtn" class="btn-home" name="name" value="medihome">          
+                    Medi Home &nbsp;<i class="fa-solid fa-house fa-lg"></i>
+                </button></li>
+                <li><a href="https://rmssoft.co.in" target="_blank">YourWebLink &nbsp;<i class="fa-solid fa-link fa-lg"></i></a></li>
+                <li class="medidropdown">
+                    <a href="#">Informations &nbsp; <i class="fa-solid fa-circle-info fa-lg"></i></a>
+                    <ul class="medidropdown-menu">
+                        <li><a href="/medinav?id=userinfo">User-Info</a></li>
+                        <li><a href="/medinav?id=bankinfo">Bank-Info</a></li>
+                        <li><a href="/medinav?id=seriesinfo">Bill-Series-Info</a></li>
+                    </ul>
+                </li>
+                <li class="medidropdown">
+                    <a href="#">Business &nbsp;<i class="fa-solid fa-briefcase fa-lg"></i></a>
+                    <ul class="medidropdown-menu">
+                        <li><a href="/medinav?id=purchase">PURCHASE</a></li>
+                        <li><a href="/medinav?id=sales">SALE</a></li>
+                        <li><a href="/medinav?id=spurchase">SEARCH PURCHASE</a></li>
+                        <li><a href="/medinav?id=ssales">SEARCH SALE</a></li>
+                    </ul>
+                </li>
+
+                <li class="medidropdown">
+                    <a href="#">Ledger Manage &nbsp; <i class="fa-solid fa-calculator fa-lg"></i> </a>
+                    <ul class="medidropdown-menu">
+                        <li><a href="/medinav?id=cashledger">CASH LEDGER</a></li>
+                        <li><a href="/medinav?id=saleledger">SALE LEDGER</a></li>
+                        <li><a href="/medinav?id=purchaseledger">PURCHASE LEDGER</a></li>
+                    </ul>
+                </li>
+
+                <li class="medidropdown">
+                    <a href="#">Fetch &nbsp; <i class="fa-solid fa-plus fa-lg"></i> </a>
+                    <ul class="medidropdown-menu">
+                        <li><a href="/medinav?id=addcustomer">ADD CUSTOMER</a></li>
+                        <li><a href="/medinav?id=addsupplier">ADD SUPPLIER</a></li>
+                        <li><a href="/medinav?id=additem">ADD ITEMS</a></li>
+                    </ul>
+                </li>
+                
+                <li class="medidropdown">
+                    <a href="#">GST & STOCK &nbsp; <i class="fa-solid fa-file-invoice fa-lg"></i> </a>
+                    <ul class="medidropdown-menu">
+                        <li><a href="/medinav?id=gstsummary">GST-SUMMARY</a></li>
+                        <li><a href="/medinav?id=companystock">COMPANY-STOCK</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">CONTACT US &nbsp; <i class="fa-regular fa-address-card fa-lg"></i></a></li>
+                <li> <button type="submit" id="medihomebtn" class="btn-techmed" name="name" value="medihome">TECH-MED
+                    &nbsp; <i class="fa-regular fa-handshake fa-xl"></i>
+                </button></li>
+                &nbsp;
+                <button class="buy-now">Buy Now 
+                    <i class="fa-solid fa-cart-shopping fa-bounce"></i>
+                </button>
+
+            </ul>
+        </div>
+        
+          
+        </div>
+        
+    </form>
     
-<form method="POST" action="/medinav">
+<!-- <form method="POST" action="/medinav">
 
     <nav class="navbar navbar-expand navbar-light bg-dark">
         <div class="burgernavheader">
@@ -86,7 +170,7 @@
         </div>
     </nav>
 
-</form>
+</form> -->
 
 </div>
 </body>
