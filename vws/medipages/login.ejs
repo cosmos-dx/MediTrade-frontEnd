@@ -1,0 +1,51 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="description" content="Sale and Purchase Inventory For All Kind of Trade, Develop Utility Software "/>
+    <meta name="keywords" content="MEDI-TRADE SOLUTIONS, MEDI-TRADE SOFT, MEDICAL Billing Software, Abishek Gupta,  ERP, Pharmaceutical WholeSale Inventory">
+    <meta name="Author" content="Abhishek Gupta, me.abhi.deo.18@gmail.com">
+    <link rel="stylesheet" href="/public/assets/css/mystyles.css"> 
+    <link rel="stylesheet" href="/public/assets/css/bootstrap.css" />
+    <script type = "text/javascript"  src="/public/assets/js/minajax.js"></script>
+
+    <!-- <script type = "text/javascript"  src= 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script> -->
+    <title><%= rscr.title %></title>
+</head>
+
+    <body >
+        <div class="overlay">
+        <div class="container" >
+
+            <label class="form-label" >MediTrade-Solutions </label>
+    		<div class="login-form">
+                
+                <form action="/medilogin" method="post">
+    				<div class="info" style="color: blue;" id="info" ><%= rscr.info %></div>
+    					<input type="text" name="username" placeholder="Username" class="form-control" required="required" />
+    				
+    					<input type="password" name="password" placeholder="Password" class="form-control" required="required"/>
+    				    
+    					<div class="info" style="color: white;" id="alert" ><%= rscr.alert %></div>
+    				
+    				<button  id="login" class="btn btn-primary btn-block " name="login" >Login</button>
+
+    			</form>	
+    			<form method="POST" action="/mediregister">
+                    <br>
+                    <button  id="register" class="btn btn-primary btn-block " name="register" >
+                        Press to Sign-UP</button>
+                    
+                </form>
+    		</div>
+    	    <div>
+        
+            </div>
+        </div>
+    </div>
+    </body>
+    <script type="text/javascript">
+    
+    </script>
+    </html>

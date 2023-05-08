@@ -5,20 +5,19 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<!--
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
---> 
-    <script  type="text/javascript" src="public/assets/js/rmsheader.js"></script>
+
+    <script  type="text/javascript" src="public/assets/js/header.js"></script>
     <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" type="text/css" href="public/assets/css/navburger.css"/>
     <link rel="stylesheet" href="public/assets/css/bootstrap.css">
-    
+
 <style>
     #iconlogout{
         font-size:18px;
         color:rgb(215, 6, 6);
     }
-    #rmslogout:hover #iconlogout {
+    #medilogout:hover #iconlogout {
      color: white;
     }
 </style>
@@ -28,38 +27,67 @@
 
 <body>
 <div class="page-wrapper">
-        
-  
-        <form method="POST" action="/rmsnav">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-                <div class="container-fluid">
-                    <span class="navbar-brand mb-0 h1">
-                        <button type="submit" id="rmshomenav" name="name" value="rmshome" class="btn btn-info" >RMS-Home-Main</button> 
-                </span>
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a href="/rmsnav?id=userinfo" id="rmshomenav" class="nav-link">User-Info</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/rmsnav?id=bankinfo" id="rmshomenav" class="nav-link">Bank-Info</a> 
-                        </li>
-                        <li class="nav-item">
-                            <a href="/rmsnav?id=seriesinfo" id="rmshomenav" class="nav-link">Bill-Series-Info</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/rmsnav?id=deleteallcoll" id="rmshomenav" class="nav-link">Delete</a>
-                        </li>
-                    </ul>
-                    <span class="navbar-brand mb-0 h1">
-                        <button type="submit" id="rmslogout" class="btn btn-outline-danger" name="name" value="logout">
-                            <i class='fas fa-power-off' id="iconlogout" ></i>
-                        </button>
-                </span>
-                </div>
-            </nav>
     
-        </form>
+<form method="POST" action="/medinav">
+
+    <nav class="navbar navbar-expand navbar-light bg-dark">
+        <div class="burgernavheader">
+            <input type="checkbox" id="openSidebarMenu">
+            <label for="openSidebarMenu" class="sidebarIconToggle">
+                <div class="spinner diagonal part-1"></div>
+                <div class="spinner horizontal"></div>
+                <div class="spinner diagonal part-2"></div>
+            </label>
+            
+            <div id="sidebarMenu">
+              <ul class="sidebarMenuInner">
+                <br>
+                <li><a href="https://rmssoft.co.in" target="_blank">YourWebLink</a></li>
+                <li><a href="/medinav?id=medihome">Home</a></li>
+                <li><a href="/medinav?id=purchase">PURCHASE</a></li>
+                <li><a href="/medinav?id=sales">SALE</a></li>
+                <li><a href="/medinav?id=spurchase">SEARCH PURCHASE</a></li>
+                <li><a href="/medinav?id=ssales">SEARCH SALE</a></li>
+                <li><a href="/medinav?id=addcustomer">ADD CUSTOMER</a></li>
+                <li><a href="/medinav?id=addsupplier">ADD SUPPLIER</a></li>
+                <li><a href="/medinav?id=additem">ADD ITEMS</a></li>
+                <li><a href="/medinav?id=cashledger">CASH LEDGER</a></li>
+                <li><a href="/medinav?id=saleledger">SALE LEDGER</a></li>
+                <li><a href="/medinav?id=purchaseledger">PURCHASE LEDGER</a></li>
+                <li><a href="/medinav?id=gstsummary">GST-SUMMARY</a></li>
+                <li><a href="/medinav?id=companystock">COMPANY-STOCK</a></li>
+                <li><a href="/medinav?id=userinfo">User-Info</a></li>
+                <li><a href="/medinav?id=bankinfo">Bank-Info</a></li>
+                <li><a href="/medinav?id=seriesinfo">Bill-Series-Info</a></li>
+                <br><br><br>
+              </ul>
+            </div>
+        </div>
+
+
+        <div class="container-fluid">
+                 
+          <h6 style="color:blue;margin-left:50px;margin-right:50px;margin-top:5px;width:100%;" >
+                <%= spinfo.htmlheaderdp %></h6>
+          <div style="display: inline-flex; padding-right:100px;">
+            <span class="navbar-brand mb-0 h1">
+            <button type="submit" id="medihomebtn" class="btn btn-outline-info" name="name" value="medihome">
+                <i class='fa fa-home' id="medihome" ></i>
+            </button>
+            </span>
+
+            <span class="navbar-brand mb-0 h1">
+            <button type="submit" id="medilogout" class="btn btn-outline-danger" name="name" value="logout">
+                <i class='fas fa-power-off' id="iconlogout" ></i>
+            </button>
+            </span>
+          </div>
+
+        </div>
+    </nav>
+
+</form>
+
 </div>
 </body>
 </html>

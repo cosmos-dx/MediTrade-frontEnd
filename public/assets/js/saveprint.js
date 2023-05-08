@@ -47,7 +47,7 @@ function DbSaveBill(recdicdata, cs, mode, method, givenurl){
      dataType: 'json',
      success: function(result) {
         // result data must be here *** this is not working here check in dbsearch.js sendbilltodb POST method 
-        console.log(mode, "Saved", result);
+        //console.log(mode, "Saved", result);
         //showPrintConfirm(); // this print function using in onSave function which is risky or incorrect; remember
      }
   });
@@ -61,6 +61,7 @@ function showPrintConfirm(){
   $('#close').css('display', 'none');
   $('#exportpdf').css('display', 'none');
   $('#exportxls').css('display', 'none');
+  $('#deleteconfirm').css('display', 'none');
   $('#printconfirm').css('display', 'inline-flex');
   $('#printcancel').css('display', 'inline-flex');
   $('#printconfirm').css('text-align', 'center');
@@ -73,6 +74,7 @@ function hidePrintConfirm(){
   $('#delete').css('display', 'inline-flex');
   $('#reset').css('display', 'inline-flex');
   $('#close').css('display', 'inline-flex');
+  $('#deleteconfirm').css('display', 'none');
   $('#printconfirm').css('display', 'none');
   $('#printcancel').css('display', 'none');
   //$('#reset').focus();
@@ -99,9 +101,14 @@ function getLogo(url){
     return img;
 };
 
+function SFStr(v){
+    try{return parseFloat(v).toFixed(2).toString();}
+    catch(err){return "[err]"}
+}
 function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     
     var doc = new jsPDF({orientation:ornt});
+  
     var pgwh = {"landscape":[300, 210, 10], "potrait":[210, 300, 10],}
     var page = pgwh[ornt];
     var [pageWidth, pageHight, pgpadd] = pgwh[ornt];
@@ -117,6 +124,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     var btmTaxColHeight = btmTaxPos+32; // only for GST tax rate collection at Bottom of this page;
     var [gtcl1,gtcl2,gtcl3,gtcl4,gtcl5,gtcl6,gtcl7,gtcl8] = [pgpadd+13,pgpadd+32,pgpadd+52,pgpadd+72,pgpadd+92,pgpadd+110,pgpadd+142,pgpadd+170]
     var btm_vcol = 145 // for bottom tax rows; verical posotion of taexs;
+  
     var bottpayl = pgpadd+221;
     var bottpayv = pgpadd+247;
     var tmctxt1 = vfp+20;  // top middle column text "Inv.No" static label
@@ -139,13 +147,16 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     var partyfontsize = ifsz+4;
     var rp = recdic['pan'] ;
     var rg = recdic['grid'] ;
-    var owd = rscr['owner']['o'];
+    
     //var [owner,oadd1,oadd2] = rscr['owner']['ownername'].split(',');
-    var ownervar = rscr['owner']['ownervar'];
+   // var ownervar = rscr['owner']['ownervar'];
     //var ownerstatic = rscr['owner']['ownerstatic'];
-    var [owner,oadd1,oadd2,oadd3] = rscr['owner']['ownerstatic'];
-    var bank1 = ownervar.bank1;
-    var bank2 = ownervar.bank2;
+
+    var [owner,oadd1,oadd2,oadd3] = rscr['userinfo']['ownerstatic'];
+    
+    
+    var bank1 = rscr['bankinfo']['bank1'];
+    var bank2 = rscr['bankinfo']['bank2'];
     
     var totitems = 0;
     var totqty = 0;
@@ -157,15 +168,15 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     //var mylogo = new Image()
     //mylogo.src = '../../static/img/mylogo.png';
     doc.setProperties({
-            title: 'RMS_SALES_BILL',
+            title: 'MEDI_SALES_BILL',
             subject: 'to Party Name',     
-            author: 'www.rmssoft.co.in',
+            author: 'http://meditradesoft.in/',
             keywords: 'sale, item, total',
-            creator: 'RMS'
+            creator: 'Abhishek Gupta'
         });
 
     //oc.setFont("Arial"); //doc.setFont("courier");
-
+   
     doc.setFontType("bold");
     doc.setFontSize(partyfontsize-2);
     hln += hlnspace
@@ -194,7 +205,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     doc.line(tmcVL1, hln, tmcHLwidth, hln); //Horizontal Line (start_pos, start_horizontal_pos, width_number,  end_pos)
 
     //toprightvt = vfp+83;
-
+   
     doc.setFontSize(ifsz);
     doc.setFontType("normal");
     doc.text(tmctxt1, hln-1, 'Invoice.No:'); // (horizontal_col_pos, vertical_row_pos, text)
@@ -227,7 +238,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
 
     hln += vfmid
     doc.line(tmcVL1, hln, tmcHLwidth, hln); //Horizontal Line (start_pos, start_horizontal_pos, width_number,  end_pos)
-
+  
     doc.setFontSize(ifsz);
     doc.setFontType("normal");
     doc.text(tmctxt1, hln-1, 'Order.No:'); // (horizontal_col_pos, vertical_row_pos, text)
@@ -285,18 +296,18 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     doc.text(pgpadd+2, toplefthz, oadd2);
     toplefthz += shlnspace
     doc.text(pgpadd+2, toplefthz, 'Phone No');
-    doc.text(pgpadd+18, toplefthz, ownervar['phone1'].toString());
+    doc.text(pgpadd+18, toplefthz, rscr['userinfo']['phone']);
     toplefthz += shlnspace
     doc.text(pgpadd+2, toplefthz, 'R.N/D.L.N:');
-    doc.text(pgpadd+19, toplefthz, ownervar['regn'].toString());
+    doc.text(pgpadd+19, toplefthz, rscr['userinfo']['regn']);
     toplefthz += shlnspace
     doc.text(pgpadd+2, toplefthz, 'GSTN:');
-    doc.text(pgpadd+15, toplefthz, ownervar['gstn'].toString());
+    doc.text(pgpadd+15, toplefthz, rscr['userinfo']['gstn']);
     toplefthz += shlnspace
     doc.text(pgpadd+2, toplefthz, 'Email:');
-    doc.text(pgpadd+15, toplefthz, ownervar.email);
+    doc.text(pgpadd+15, toplefthz, rscr['userinfo']['email']);
     doc.setTextColor(0, 0, 0);
-    
+   
     doc.setFontSize(ifsz-1);
     doc.setFontType("italic");
     toprighttxt = tmctxt4+25; //toprightvt+35;
@@ -345,7 +356,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     doc.line(pgpadd, itemheader_firstline_v_col_start, pageWidth-pgpadd, itemheader_firstline_v_col_start); //Horizontal Line (start_pos, start_horizontal_pos, width_number,  end_pos)
     
     var itemsheader = {'sno':['S.N', 1, ifsz-1],'hsn':['HSN',8, ifsz-2],'name':['Item Name',19, ifsz],'pack':['Pack',99, ifsz-2],
-    'qty':['Qty',110, ifsz],'bonus':['Free',125, ifsz],'bat':['Batch',137, ifsz-3],'exp':['Exp',160, ifsz],'mrp':['MRP',170, ifsz],
+    'qty':['Qty',110, ifsz],'bonus':['Free',125, ifsz],'batchno':['Batch',137, ifsz-3],'expdate':['Exp',160, ifsz],'mrp':['MRP',170, ifsz],
     'rate':['Rate',188, ifsz],'dis':['Dis',205, ifsz],'tax':['TAX',215, ifsz],'amt':['Amount',225, ifsz],
     'ttaxamt':['TaxAmt',245, ifsz-2],'netamt':['Netamount',261, ifsz], };
     for (const [i, vl] of Object.entries(itemsheader)) {
@@ -360,6 +371,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
 
     for (const [key, value] of Object.entries(recdic['grid'])) {
         itemheader_firstline_v_col_start += 4;
+       
         if (typeof value !== "undefined") {
             totitems += 1;
             totqty += value['tqty'];
@@ -377,7 +389,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
            else{gstxdict[value['tax']]=[value];}     
         }    
     }
-
+   
     doc.setFontSize(ifsz);
     hln = btmTaxPos; // force position
     //horizontal bottom first section end
@@ -453,6 +465,8 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
             ttaxamt += parseFloat(value[i]['ttaxamt']);
             netamt += parseFloat(value[i]['netamt']);
             bonus = value[i]['bonus'];
+
+            
         }
         gamt += amt;
         gtdisamt += tdisamt;
@@ -475,13 +489,16 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
         // creating blank space left when reseved space for required tax rate not exists;
         hln += shlnspace;
     }
-     
+    
     doc.text(pgpadd+180, btm_vcol, 'Item  &  Qty');
-    doc.text(bottpayl, btm_vcol, 'TOTAL:');
+    ;
+    doc.text(bottpayl, btm_vcol, 'TOTAL Amount:');
+   
     doc.setFontSize(ifsz+2);
     doc.setFontType("bold");
-    doc.text(bottpayv, btm_vcol, rp['tamt']);
-
+    
+    doc.text(bottpayv, btm_vcol, SFStr(rp['tamt']));
+    
     doc.setFontSize(ifsz-1);
     doc.setFontType("normal");
     btm_vcol += shlnspace
@@ -489,25 +506,25 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
    
     doc.text(pgpadd+175, btm_vcol, 'Total Items:');
     doc.text(pgpadd+195, btm_vcol, totitems.toString());
-    doc.text(bottpayl, btm_vcol, 'DIS.AMT:');
-    doc.text(bottpayv, btm_vcol, recdic['pan']['tdisamt']);
-
+    doc.text(bottpayl, btm_vcol, 'DIS.AMT:'); 
+    doc.text(bottpayv, btm_vcol, SFStr(rp['tdisamt']));
+    
     btm_vcol += shlnspace;
     doc.text(pgpadd+175, btm_vcol, 'Total Qty:');
     doc.text(pgpadd+195, btm_vcol, totqty.toString());
     doc.text(bottpayl, btm_vcol, 'GST Payable:');
-    doc.text(bottpayv, btm_vcol, recdic['pan']['ttaxamt'].toString());
+    doc.text(bottpayv, btm_vcol,SFStr(rp['ttaxamt']));
 
     btm_vcol += shlnspace;
-   
-    doc.text(bottpayl, btm_vcol, 'Payable:');
-    doc.text(bottpayv, btm_vcol, recdic['pan']['tsubtot'].toString());
+    
+    doc.text(bottpayl, btm_vcol, 'Taxable Amount:'); 
+    doc.text(bottpayv, btm_vcol, SFStr(rp['tsubtot']));
     btm_vcol += shlnspace
 
     
     doc.text(bottpayl, btm_vcol, 'Round Off:');
     doc.text(bottpayv, btm_vcol, recdic['pan']['roundoff'].toString());
-
+    
     //horizontal line taxclass bottom section 
     doc.line(pgpadd, btmTaxColHeight-(shlnspace+1), pageWidth-70, btmTaxColHeight-(shlnspace+1)); //Horizontal Line (start_pos, start_horizontal_pos, width_number,  end_pos)
     
@@ -541,7 +558,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     doc.text(pgpadd+2, hln, 'MSG: ');
     doc.text(bottpayl, hln-1, 'Other: ');
     doc.text(bottpayv, hln-1, ' 0.00 ');
-
+    
     doc.setTextColor(33, 24, 99);
     doc.text(pageWidth-65, hln+7, ' Grand Total ');
     doc.setFontSize(partyfontsize);
@@ -570,7 +587,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     doc.text(pageWidth-149, hln, 'For ');
     doc.text(pageWidth-141, hln, owner);
     doc.text(pageWidth-145, hln+12, 'Authorised Signatory');
-
+   
     hln += shlnspace
     doc.setFontType("normal");
     doc.text(pgpadd+2, hln, 'A/C No:');
@@ -597,10 +614,10 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     doc.text(pgpadd+65, hln, 'Term Condition Number 2');
     //doc.text(pgpadd+2, hln, 'Term Condition Number 3');
     //doc.text(pgpadd+65, hln, 'Term Condition Number 4');
-
+    
     hln += 3
     doc.setFontSize(ifsz-4);
-    doc.text(pgpadd+125, hln, 'Powered By RMSSOFT - www.rmssoft.co.in');
-
-    doc.save('RMS_SALESBILL.pdf');
+    doc.text(pgpadd+125, hln, 'Powered By MEDI-TRADE SOFT - http://meditradesoft.in/');
+    
+    doc.save('MEDI_SALESBILL.pdf');
 }

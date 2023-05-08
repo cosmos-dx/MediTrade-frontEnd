@@ -1,0 +1,154 @@
+
+
+a {
+  color: #f4fad9; 
+}
+a:hover {
+  background-color: yellow;
+}
+
+.burgernavheader {
+  margin-left: auto;
+  
+  width: 75%;
+  margin-top: -30px;
+  position: fixed;
+  font-family: cursive, bold;
+  
+  padding-left: 15px;
+  text-align: center;
+  color: #99ffcc;
+  font-size: 1.0rem;
+  z-index: 10;
+}
+
+#sidebarMenu {
+  position: fixed;
+  left: -40px;
+  width: 340px;
+  height: 100%;
+  transform: translateX(-340px);
+  transition: transform 250ms ease-in-out;
+  background-color: #99ffcc;
+  overflow-y: auto;
+}
+
+.sidebarMenuInner {
+/*  margin-top: 150px;*/
+/*  padding: 0;*/
+  border-top: 1px solid;
+  overflow: auto;
+}
+
+.sidebarMenuInner li {
+  list-style: none;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid ;
+}
+
+.sidebarMenuInner li span {
+  display: block;
+  font-size: 14px;
+  color: #000;
+}
+
+.sidebarMenuInner li a {
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+input[type="checkbox"]:checked ~ #sidebarMenu { transform: translateX(0); }
+
+input[type=checkbox] {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  display: none;
+}
+
+.sidebarIconToggle {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: absolute;
+  z-index: 99;
+  margin-top: -7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom:10px;
+  left: -15px;
+  width: 5%;
+  background-color: #343a40 !important;
+}
+
+.spinner {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.horizontal {
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  height: 4px;
+  float: left;
+  margin-top: 5px;
+}
+
+.diagonal.part-1 {
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  height: 3px;
+  float: left;
+  margin-top: 4px;
+}
+
+.diagonal.part-2 {
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  height: 4px;
+  float: left;
+  margin-top: 5px;
+}
+
+input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  opacity: 0;
+}
+
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  transform: rotate(135deg);
+  margin-top: 8px;
+}
+
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  transform: rotate(-135deg);
+  margin-top: -9px;
+}
+
+footer , mydocfooter {
+  font-family: monospace;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  text-align: center;
+  background-color: #fff;
+  font-size:1rem;
+}

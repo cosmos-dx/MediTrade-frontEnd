@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<style type="text/css">
+   
+</style>
+
+
+<%- include('../partials/theader'); %>
+<head>
+<meta charset="UTF-8" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta name="description" content="Sale and Purchase Inventory For All Kind of Trade, Develop Utility Software "/>
+<meta name="keywords" content="MEDI-TRADE SOLUTIONS, MEDI-TRADE SOFT, MEDICAL Billing Software, Abishek Gupta,  ERP, Pharmaceutical WholeSale Inventory">
+<meta name="Author" content="Abhishek Gupta, me.abhi.deo.18@gmail.com">
+<title><%= spinfo.title  %></title>
+
+<link rel="stylesheet" href="public/assets/css/mystyles.css"> 
+<!--<style type="text/css" src="public/assets/css/mystyles.css"></style>-->
+</head>
+<body>
+  
+    <div class="container">
+      <div class="card-body">
+        <div >
+          <p id="rpurchase" class="blink_me info"></p>
+          <div>
+           <select style="padding: 10px; background:#edf2ff; border-color:darkblue; font-size:18px; " 
+           name="fyear" id="fy" onchange="getfyear(this)">
+           <option value="null">Select Finencial Year</option>;
+            <% for(var i=0; i< spinfo.owner.cal.length; i++) {%>
+               <option value="<%= i %>">From [<%= spinfo.owner.cal[i].frm %>] To
+                [<%= spinfo.owner.cal[i].tod %>]</option>
+            <% } %> 
+           </select>
+          </div>
+        </div>
+        <div id="table" class="table-editable">
+          
+          <label id="statusinfo" class="blink_me info"></label>
+          <form method="POST" action="/medinav">
+          <table >
+            <thead>
+              <tr>
+                <hr style="width:100%;text-align:left;margin-left:0">
+                <th class="text-center">
+                <button  id="purchase" class="accordion" name="name" value="purchase">Purchase</button> 
+                </th>
+                <th class="text-center">
+                <button  id="sales" class="accordion" name="name" value="sales">Sales</button> 
+                </th>
+                <th class="text-center">
+                <button  id="spurchase" class="accordion" name="name" value="spurchase">Search Purchase</button> 
+                </th>
+                <th class="text-center">
+                <button  id="ssales" class="accordion" name="name" value="ssales">Search Sales</button> 
+                </th>
+              </tr>
+              </thead>
+            </table>
+            <table>
+              <thead>
+              <tr>
+                <hr style="width:100%;text-align:left;margin-left:0">
+                <th class="text-center">
+                <button  id="additem" class="btn btn-outline-info" name="name" value="additem">Add Item</button> 
+                </th>
+                <th class="text-center">
+                <button  id="addsupplier" class="btn btn-outline-info" name="name" value="addsupplier">Add Supplier</button> 
+                </th>
+                <th class="text-center">
+                <button  id="addcustomer" class="btn btn-outline-info" name="name" value="addcustomer">Add Customer</button> 
+                </th>
+              </tr>  
+            </thead>
+          </table>
+
+          <table>
+              <thead>
+              <tr>
+                <hr style="width:100%;text-align:left;margin-left:0">
+                <th class="text-center">
+                <button  id="cashledger" class="btn btn-outline-success" name="name" value="cashledger">CASH Ledger</button> 
+                </th>
+                <th class="text-center">
+                <button  id="saleledger" class="btn btn-outline-success" name="name" value="saleledger">Customer Ledger</button> 
+                </th>
+                <th class="text-center">
+                <button  id="purchaseledger" class="btn btn-outline-success" name="name" value="purchaseledger">Supplier Ledger</button> 
+                </th>
+                
+              </tr>  
+            </thead>
+          </table>
+
+          <table>
+              <thead>
+              <tr>
+                <hr style="width:100%;text-align:left;margin-left:0">
+                <th class="text-center">
+                <button  id="gstsummary" class="btn btn-outline-primary" name="name" value="gstsummary">GST SUMMARY</button> 
+                </th>
+                <th class="text-center">
+                <button  id="companystock" class="btn btn-outline-primary" name="name" value="companystock">COMPANY STOCK AJUSTMENT</button> 
+                </th>
+              </tr>  
+            </thead>
+          </table>
+
+          </form>
+        </div>
+      </div>
+    </div>
+ 
+</body>
+
+<script type="text/javascript">
+
+var fyeararray = '<%= JSON.stringify(spinfo.owner.cal) %>'; 
+var caldata = null;
+var cshost =  '<%= spinfo.uqpath %>';  
+var rscr = {}; //'<%= spinfo %>'; 
+//** dbfname variable is useing static/uploadcssjs/rmsupload.js script **//
+var dbfname = '<%= spinfo.uqpath.dbfname %>'; 
+var raw_dtrow = '<%= JSON.stringify(spinfo.daterow) %>';  
+var dtrow = null ;
+
+$(document).ready(function(){
+  caldata = JSON.parse(jsonformater(fyeararray));
+  
+    dtrow = JSON.parse(jsonformater(raw_dtrow)) ;
+    
+    //if (rscr['daterow']==null){
+    if (dtrow==null){
+      
+        buttonState(true);   
+    }else{
+        rscr['daterow'] = dtrow;
+        document.getElementById('fy')[0].outerText='';
+        //var partid = dtrow.partid-1;
+        //$('#fy').append("<option selected='selected' value='"+partid+"'>From [" + dtrow.frm + "] To [" + /dtrow.tod + "]</option");
+        buttonState(false);
+        
+        }
+});
+
+function onButton(evt, idf){
+  let htp = document.URL;
+  let chkpath = htp.split('/')[3];
+  htp = htp.split(chkpath)[0]
+  //var pageinfo = response.data;
+  document.getElementById("statusinfo").innerHTML = idf; 
+  if (idf==='purchase'){
+      
+    console.log(htp + 'pmain');
+    location.replace(htp + 'vws/medipages/login');
+  };
+  if (idf==='sales'){location.replace(htp + 'smain');}
+  if (idf==='spurchase'){location.replace(htp + 'spsearch:spurchase');}
+  if (idf==='ssales'){location.replace(htp + 'spsearch:ssales');}
+}
+
+function buttonState(state){
+    if (state===true){
+        statusInfo ('Please select Financial Year !', 'red','bold',wdgid='#statusinfo')}
+    else{statusInfo ('', 'red','bold',wdgid='#statusinfo')}
+    var pur = document.getElementById('purchase');
+    pur.disabled = state;
+    var sale = document.getElementById('sales');
+    sale.disabled = state;
+    var addc = document.getElementById('spurchase');
+    addc.disabled = state;
+    var adds = document.getElementById('ssales');
+    adds.disabled = state;
+    var additem = document.getElementById('additem');
+    additem.disabled = state;
+    var addsup = document.getElementById('addsupplier');
+    addsup.disabled = state;
+    var addcust = document.getElementById('addcustomer');
+    addcust.disabled = state;
+    var cashledger = document.getElementById('cashledger');
+    cashledger.disabled = state;
+    var saleledger = document.getElementById('saleledger');
+    saleledger.disabled = state;
+    var purchaseledger = document.getElementById('purchaseledger');
+    purchaseledger.disabled = state;
+    var stockledger = document.getElementById('stockledger');
+    stockledger.disabled = state;
+    var gstsummary = document.getElementById('gstsummary');
+    gstsummary.disabled = state;
+    var companystock = document.getElementById('companystock');
+    companystock.disabled = state;
+
+  }
+
+  function getfyear(selectObject) {
+      var value = selectObject.value;  
+      if (value =="null"){buttonState(true); return true;}
+      var daterow = caldata[value];
+
+      var daterange = [daterow['frm'], daterow['tod']];
+      var partnum = daterow['partnum'];
+      var partname = daterow['partname'];
+      var fyear = partname.split('y')[1];
+
+        //console.log(rscr);
+        $.ajax({ type:"POST",url:"/selectfyear",
+          data: {action:'action',type:'fyear',
+          daterow:daterow, daterange:daterange, partnum:partnum, partname:partname, fyear:fyear, rscr:rscr,},    
+          success:function(data) { 
+             rscr = JSON.parse(data);
+             buttonState(false);
+             }
+       });
+     
+    }
+</script>
+
+</html>

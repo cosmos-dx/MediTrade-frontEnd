@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/theader'); %>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="description" content="Sale and Purchase Inventory For All Kind of Trade, Develop Utility Software "/>
+    <meta name="keywords" content="MEDI-TRADE SOLUTIONS, MEDI-TRADE SOFT, MEDICAL Billing Software, Abishek Gupta,  ERP, Pharmaceutical WholeSale Inventory">
+    <meta name="Author" content="Abhishek Gupta, me.abhi.deo.18@gmail.com">
+    <link rel="stylesheet" href="public/assets/css/userdtastyle.css"> 
+    <title>User-Info</title>
+</head>
+<body>
+  
+    <div class="container">  
+        <form id="contact" action="/addbillseriesinfo" method="POST">
+          <h3>Bill-Series-Info <%= update  %> </h3>
+          <h4>Use Your Series Prefix : Hint You can choose a letter such as E for Estimate Bill Type</h4>
+          <fieldset>
+            <input placeholder="Main" type="text" name="main" value ="<%= spinfo.main  %>"  tabindex="1" required autofocus>
+          </fieldset>
+          <fieldset>
+            <input placeholder="Estimate " name="esti" value= "<%= spinfo.esti  %>"  type="text" tabindex="2" >
+          </fieldset>
+          <fieldset>
+            <input placeholder="Challan" name="challan" value= "<%= spinfo.challan  %>"  type="text" tabindex="3" >
+          </fieldset>
+          <fieldset>
+            <input placeholder="Sale Order" name="saleorder" value= "<%= spinfo.saleorder  %>"  type="text" tabindex="4" >
+          </fieldset>
+         
+          <fieldset>
+            <input placeholder="Purchase order" type="text" name="purchaseorder" value= "<%= spinfo.purchaseorder  %>"  tabindex="4" >
+          </fieldset>
+          <fieldset>
+            <input placeholder="Receipt" type="text" name="receipt" value= "<%= spinfo.receipt  %>"  tabindex="4" >
+          </fieldset>
+          
+          <fieldset>
+            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Save</button>
+          </fieldset>
+        </form>
+      </div>
+    
+</body>
+</html>
