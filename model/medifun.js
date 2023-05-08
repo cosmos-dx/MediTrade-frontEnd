@@ -80,3 +80,7 @@ function readRSCR(){
 module.exports.emptyRSCR = emptyRSCR
 module.exports.readRSCR = readRSCR
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c0d6200fc8c48f903c6f02b2d02aa6ecba9d9f7d
