@@ -10,7 +10,7 @@ const myapp = require('./model/userlogin');
 const mainpage = require('./model/mainsp');
 const sbsearch = require('./model/dbsearch');
 // const customer_model = require('./rmsconfig/model/customer');
-const port = process.env.PORT ||  8080;
+const port = process.env.PORT ||  80;
 const app = myapp.app ;
 
 app.set('port', process.env.port || port); // set express to use this port
