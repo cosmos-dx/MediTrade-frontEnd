@@ -41,12 +41,27 @@
     justify-content: space-evenly;
 }
 
+.mid-nav .menu-icon {
+    color: #f1f1f1;
+    
+}
+
 .mid-l{
     display: flex;
     color: #f6f6f6;
     font-family: 'Play', sans-serif;
     font-weight: 700;
 }
+
+.mid-l .menu-icon {
+    display: none;
+}
+
+.menu-icon {
+    display: none;
+}
+
+
 .mid-r{
     display: flex;
     align-items: center;
@@ -93,32 +108,89 @@
     display: block;
 }
 
-.last-nav {
+/* .last-nav {
     background-image: linear-gradient(to right, #3434bd, #4db8ff);
     display: flex;
     justify-content: space-evenly;
-  }
+  } */
   
 
-.last-nav > ul {
+  .last-nav {
+    background-image: linear-gradient(to right, #3434bd, #4db8ff);
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+    display: flex;
+  }
+  
+  .last-nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    
-}
-  
-.last-nav > ul >  li {
-    float: left;
-    border-right:1px solid #bbbbbb2e;
   }
-
-li a {
+  
+  .last-nav li {
+    display: inline-block;
+    margin-right: 20px;
+    position: relative;
+  }
+  
+  .last-nav a {
+    color: #e2e2e2;
     display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
+    padding: 10px;
     text-decoration: none;
+  }
+  
+  .last-nav a:hover {
+    background-color: #ddd;
+  }
+  
+  .last-nav .btn-home {
+    background-color: #2196F3;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .last-nav .btn-techmed {
+    background-color: #4CAF50;
+    border: none;
+    color: #fff;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .last-nav .buy-now {
+    background-color: #FF5722;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .last-nav .fa {
+    margin-right: 5px;
   }
 
   #iconlogout{
@@ -134,7 +206,7 @@ display: block;
 
 .medidropdown-menu {
 display: none;
-position: absolute;
+position: fixed;                                                            /* Two Display change it to absolute  */
 z-index: 1;
 
 background-image: linear-gradient(to right, #afbcfd, #80bfea);
@@ -148,10 +220,12 @@ list-style: none;
 .medidropdown-menu li {
 margin: 0;
 padding: 0;
+/* width: 100%; */
 }
 
 .medidropdown-menu a {
 display: block;
+
 font-weight: 600;
 color: rgb(255, 255, 255);
 text-decoration: none;

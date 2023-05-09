@@ -16,6 +16,8 @@
 
 <style>
 
+        
+
 </style>
 
 </head>
@@ -31,10 +33,22 @@
 
         <div class="sticky">
         <!--mid nav-->
+
+        
         <div class="mid-nav">
             <!--logo-->
+
+         
+            <div class="menu-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
             <div class="mid-l">
+            
+          
                 <img src="" alt="" srcset="">
+
+                
+                
                 <h1 style="color: #f6f6f6;;">MEDI-TRADE &nbsp; SOFTWARE</h1>
             </div>
             <div class="mid-r">
@@ -46,7 +60,11 @@
             </div>
         </div>
         <!--last nav-->
-        <div class="last-nav">
+        <!-- <div class=".menu-icon"><i class="fa-solid fa-bars"></i></div> -->
+        
+        <div class="last-nav" >
+            
+
             <ul>
                 <li> <button type="submit" id="medihomebtn" class="btn-home" name="name" value="medihome">          
                     Medi Home &nbsp;<i class="fa-solid fa-house fa-lg"></i>
@@ -96,9 +114,9 @@
                     </ul>
                 </li>
                 <li><a href="#">CONTACT US &nbsp; <i class="fa-regular fa-address-card fa-lg"></i></a></li>
-                <li> <button type="submit" id="medihomebtn" class="btn-techmed" name="name" value="medihome">TECH-MED
+                 <button type="submit" id="medihomebtn" class="btn-techmed" name="name" value="medihome">TECH-MED
                     &nbsp; <i class="fa-regular fa-handshake fa-xl"></i>
-                </button></li>
+                </button>
                 &nbsp;
                 <button class="buy-now">Buy Now 
                     <i class="fa-solid fa-cart-shopping fa-bounce"></i>
@@ -112,66 +130,40 @@
         
     </form>
     
-<!-- <form method="POST" action="/medinav">
 
-    <nav class="navbar navbar-expand navbar-light bg-dark">
-        <div class="burgernavheader">
-            <input type="checkbox" id="openSidebarMenu">
-            <label for="openSidebarMenu" class="sidebarIconToggle">
-                <div class="spinner diagonal part-1"></div>
-                <div class="spinner horizontal"></div>
-                <div class="spinner diagonal part-2"></div>
-            </label>
-            
-            <div id="sidebarMenu">
-              <ul class="sidebarMenuInner">
-                <br>
-                <li><a href="https://rmssoft.co.in" target="_blank">YourWebLink</a></li>
-                <li><a href="/medinav?id=medihome">Home</a></li>
-                <li><a href="/medinav?id=purchase">PURCHASE</a></li>
-                <li><a href="/medinav?id=sales">SALE</a></li>
-                <li><a href="/medinav?id=spurchase">SEARCH PURCHASE</a></li>
-                <li><a href="/medinav?id=ssales">SEARCH SALE</a></li>
-                <li><a href="/medinav?id=addcustomer">ADD CUSTOMER</a></li>
-                <li><a href="/medinav?id=addsupplier">ADD SUPPLIER</a></li>
-                <li><a href="/medinav?id=additem">ADD ITEMS</a></li>
-                <li><a href="/medinav?id=cashledger">CASH LEDGER</a></li>
-                <li><a href="/medinav?id=saleledger">SALE LEDGER</a></li>
-                <li><a href="/medinav?id=purchaseledger">PURCHASE LEDGER</a></li>
-                <li><a href="/medinav?id=gstsummary">GST-SUMMARY</a></li>
-                <li><a href="/medinav?id=companystock">COMPANY-STOCK</a></li>
-                <li><a href="/medinav?id=userinfo">User-Info</a></li>
-                <li><a href="/medinav?id=bankinfo">Bank-Info</a></li>
-                <li><a href="/medinav?id=seriesinfo">Bill-Series-Info</a></li>
-                <br><br><br>
-              </ul>
-            </div>
-        </div>
-
-
-        <div class="container-fluid">
-                 
-          <h6 style="color:blue;margin-left:50px;margin-right:50px;margin-top:5px;width:100%;" >
-                <%= spinfo.htmlheaderdp %></h6>
-          <div style="display: inline-flex; padding-right:100px;">
-            <span class="navbar-brand mb-0 h1">
-            <button type="submit" id="medihomebtn" class="btn btn-outline-info" name="name" value="medihome">
-                <i class='fa fa-home' id="medihome" ></i>
-            </button>
-            </span>
-
-            <span class="navbar-brand mb-0 h1">
-            <button type="submit" id="medilogout" class="btn btn-outline-danger" name="name" value="logout">
-                <i class='fas fa-power-off' id="iconlogout" ></i>
-            </button>
-            </span>
-          </div>
-
-        </div>
-    </nav>
-
-</form> -->
 
 </div>
 </body>
+<script>
+// Get the navbar and menu icon
+const navbar = document.querySelector('.last-nav');
+const menuIcon = document.querySelector('.menu-icon');
+
+// Add a click event listener to the menu icon
+menuIcon.addEventListener('click', () => {
+  // Toggle the open class on the menu icon
+  menuIcon.classList.toggle('open');
+  // Toggle the display property on the navbar
+  navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
+
+  // If the menu icon is now visible, add a click event listener to the document
+  if (getComputedStyle(menuIcon).display !== 'none') {
+    document.addEventListener('click', (event) => {
+      // If the clicked element is not the navbar or the menu icon, close the navbar
+      if (!navbar.contains(event.target) && !menuIcon.contains(event.target)) {
+        menuIcon.classList.remove('open');
+        navbar.style.display = 'none';
+      }
+    });
+  } else {
+    // If the menu icon is not visible, remove the event listener from the document
+    document.removeEventListener('click');
+  }
+});
+
+
+</script>
 </html>
+
+
+

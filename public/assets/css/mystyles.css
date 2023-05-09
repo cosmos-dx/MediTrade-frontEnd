@@ -79,6 +79,195 @@ div.scroll2 {
 	background: -ms-linear-gradient(30deg, rgba(252,229,166,0.4) 0%,rgba(66,181,213,0.5) 100%);
 	background: linear-gradient(30deg, rgba(252,229,166,0.4) 0%,rgba(66,181,213,0.5) 100%);  
 }
+@media screen and (max-width: 2000px) {
+	.container{
+		margin-top: 15%;
+	}
+}
+@media screen and (max-width: 1900px) {
+	.container{
+		margin-top: 15%;
+	}
+}
+
+@media screen and (max-width: 1500px) {
+	.last-nav {
+		position: fixed; /* Fixed position so it remains visible while scrolling */
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 260px;
+		background-color: #f2f2f2;
+		overflow-x: hidden;
+		padding-top: 20px;
+	  
+		display: none;
+		
+	  }
+	  .mid-l .menu-icon {
+		display: block;
+	  }
+	  .menu-icon {
+		display: block;
+	  }
+	  .menu-icon {
+		display: block;
+		left: 0;
+		padding: 5px;
+		cursor: pointer;
+	  }
+	  .menu-icon__bar {
+		display: block;
+		width: 22px;
+		height: 2px;
+		margin-bottom: 4px;
+		background-color: #333;
+		transition: transform 0.2s ease;
+	  }
+	  
+	  .menu-icon.open .menu-icon__bar:first-child {
+		transform: rotate(-45deg) translate(-5px, 6px);
+	  }
+	  
+	  .menu-icon.open .menu-icon__bar:last-child {
+		transform: rotate(45deg) translate(-5px, -6px);
+	  }
+	  
+	  /* Style for the navbar links */
+	  .last-nav a {
+		  
+		display: block;
+		color: #eeeeee;
+		padding: 15px;
+		text-decoration: none;
+		font-size: 14px;
+		border-bottom: 1px solid #ddd;
+	  
+		
+	  }
+	  .last-nav a:hover {
+		background-color: rgb(209, 209, 209);
+		color: #2196F3;
+	  }
+	  
+	  .last-nav a.active {
+		background-color: #e5e538;
+	  }
+	  
+	  /* Style for the dropdown menu */
+	  .last-nav .medidropdown {
+		position: relative;
+	  }
+	  
+	  .last-nav .medidropdown:hover .medidropdown-menu {
+		display: block;
+	  }
+	  
+	  .last-nav .medidropdown-menu {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 100%;
+		background-color: #f2f2f2;
+		min-width: 100px;
+		z-index: 1;
+		padding: 10px 0;
+		border: 1px solid #ddd;
+	  }
+	  
+	  .last-nav .medidropdown-menu li a {
+		color: #333;
+		padding: 10px;
+		font-size: 13px;
+		text-decoration: none;
+
+		
+	  }
+	  
+	  .last-nav .medidropdown-menu li a:hover {
+		/* background-color: #ddd; */
+
+		background-color: rgb(209, 209, 209);
+		color: #2196F3;
+	  }
+	  
+	  /* Style for the active link */
+	  
+	  
+	  /* Style for the "Buy Now" button */
+	  .last-nav .buy-now {
+		background-color: #FF5722;
+		width: 100%;
+		border: none;
+		color: #fff;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 20px;
+		margin-top: 5px;
+		cursor: pointer;
+	  }
+	  
+	  .last-nav .btn-techmed {
+		background-color: #4CAF50;
+		width: 100%;
+		border: none;
+		color: #fff;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 14px;
+		margin-top: 30px;
+		cursor: pointer;
+	  }
+	  
+	  .buy-now:hover {
+		background-color: #3e8e41;
+	  }
+	  
+}
+
+@media screen and (max-width: 1270px) {
+	.container{
+		margin-top: 15%;
+		
+	}
+	.mid-l h1{
+		font-size: xx-large ;
+	}
+}
+@media screen and (max-width: 1250px) {
+	.last-nav{
+		display: none;
+	}
+	
+	  
+}
+
+@media screen and (max-width: 992px) {
+	.container{
+		margin-top: 16%;
+	}
+
+}
+@media screen and (max-width: 768px) {
+	.container{
+		margin-top: 17%;
+	}
+	.mid-l h1{
+		font-size: x-large ;
+	}
+}
+@media screen and (max-width: 650px) {
+	.container{
+		margin-top: 20%;
+	}
+}
+@media screen and (max-width: 450px) {
+	.container{
+		margin-top: 30%;
+	}
+}
 
 .xxxcontainer {
 	background-color: #ffffe6;

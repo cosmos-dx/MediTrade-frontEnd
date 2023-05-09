@@ -9,8 +9,10 @@ var ejs = require('ejs');
 const myapp = require('./model/userlogin');
 const mainpage = require('./model/mainsp');
 const sbsearch = require('./model/dbsearch');
+const { hostname } = require('os');
 // const customer_model = require('./rmsconfig/model/customer');
-const port = process.env.PORT ||  80;
+const wifi = '192.168.149.139'  ;
+const port = process.env.PORT ||  80 ;
 const app = myapp.app ;
 
 app.set('port', process.env.port || port); // set express to use this port
@@ -30,4 +32,4 @@ app.engine('html', require('ejs').renderFile);
 module.exports.app = app;
 
 
-app.listen(port , () => console.log(`Script ser1.js is Running at port ${port}`));
+app.listen(port ,   () => console.log(`Script ser1.js is Running at port ${port}`));
