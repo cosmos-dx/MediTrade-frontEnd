@@ -82,11 +82,13 @@ div.scroll2 {
 @media screen and (max-width: 2000px) {
 	.container{
 		margin-top: 15%;
+		margin-bottom: 12%;
 	}
 }
 @media screen and (max-width: 1900px) {
 	.container{
 		margin-top: 15%;
+		margin-bottom: 12%;
 	}
 }
 
@@ -230,6 +232,7 @@ div.scroll2 {
 @media screen and (max-width: 1270px) {
 	.container{
 		margin-top: 15%;
+		margin-bottom: 16%;
 		
 	}
 	.mid-l h1{
@@ -247,12 +250,14 @@ div.scroll2 {
 @media screen and (max-width: 992px) {
 	.container{
 		margin-top: 16%;
+		margin-bottom: 20%;
 	}
 
 }
 @media screen and (max-width: 768px) {
 	.container{
 		margin-top: 17%;
+		margin-bottom: 30%;
 	}
 	.mid-l h1{
 		font-size: x-large ;
@@ -261,11 +266,13 @@ div.scroll2 {
 @media screen and (max-width: 650px) {
 	.container{
 		margin-top: 20%;
+		margin-bottom: 40%;
 	}
 }
 @media screen and (max-width: 450px) {
 	.container{
 		margin-top: 30%;
+		margin-bottom: 55%;
 	}
 }
 
