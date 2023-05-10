@@ -5,8 +5,8 @@
 <%- include('../partials/theader'); %>
 <meta charset="UTF-8" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 <meta name="description" content="Sale and Purchase Inventory For All Kind of Trade, Develop Utility Software "/>
-<meta name="keywords" content="MEDI-TRADE SOLUTIONS, MEDI-TRADE SOFT, MEDICAL Billing Software, Abishek Gupta,  ERP, Pharmaceutical WholeSale Inventory">
-<meta name="Author" content="Abhishek Gupta, abhishekgupta0118@gmail.com">
+<meta name="keywords" content="MEDI TRADE SOLUTIONS, MEDI SOFT, MEDICAL Billing Software, Abishek Gupta,  ERP, Pharmaceutical WholeSale Inventory">
+<meta name="Author" content="Abhishek Gupta, me.abhi.deo.18@gmail.com">
 <title><%= spinfo.title  %></title>
 <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
 <script  type="text/javascript" src="public/assets/js/typeahead.min.js"></script>
@@ -151,6 +151,35 @@
     </div>
 
 </div>
+<div>
+    <footer class="mydocfooter">
+  
+     
+      <div class="footerblock-1">
+        <h7>About Us</h7>
+        <li> <a href="#"  > Medi-Trade  </a></li>
+        <li> <a href="#" > Tech-Med </a></li>
+        <li><a href="#"> GST & SALES & PURCHASE </a></li>
+      </div>
+
+      <div class="footerblock-2">
+        <h7>Informations</h7>
+        <li> <a href="https://www.linkedin.com/in/abhishek-gupta-a1a44a203/"  target="_blank"> Linkedin <i class="fa-brands fa-linkedin fa-lg"></i> </a></li>
+        <li> <a href="https://github.com/cosmos-dx/"  target="_blank"> GitHub <i class="fa-brands fa-github-alt fa-lg"></i> </a></li>
+        <li><a href="https://auth.geeksforgeeks.org/user/abhishekgupta1802/"  target="_blank">GeeksForGeeks<i class="fa-light fa-code-simple fa-lg"></i></a></li>
+      </div>
+
+      <div class="footerblock-3">
+        <h7>Contact</h7>
+        <li> <a href="#"  > HelpLine </a></li>
+        <li> <a href="#" > YouTube  </a></li>
+        <li><a href="#" > Twitter </a></li>
+      </div>
+
+
+      <p> &copy;MEDI-TRADE - <span> abhishekgupta0118@gmail.com </span></p>
+    </footer> 
+ </div>
 </body>
 </html>
 
@@ -263,21 +292,11 @@ $(document).ready(function(){
     if(typeof(recdic['grid'])==="string"){
         recdic["grid"] = itemrows; 
     }
-    savebool = validateDBEntry(savebool);
+
+    DbSaveBill(recdic, cs.trim(), "delete", "POST", "/sendbilltodb");
+    hidePrintConfirm()
+    PageRedirect(cs.trim());
     
-    if (savebool){
-        if(typeof recdic['grid'][0]["qty"] == 'undefined'){
-            document.getElementById("statusinfo").innerHTML=" No Items Selected !";
-            document.getElementById("statusinfo2").innerHTML=" Cannot Save !";
-            return false;
-        }
-        //console.log(recdic['ac']);
-        //console.log(recdic['grid']);
-        DbSaveBill(recdic, cs.trim(), "delete", "POST", "/sendbilltodb");
-        hidePrintConfirm()
-        PageRedirect(cs.trim());
-        
-        }
     });
 
   });
@@ -336,7 +355,15 @@ function onClose(){
     document.getElementById("status").innerHTML=sp;}
     
 function onPDF(evt){
-    showPrintConfirm()
+    if(typeof(recdic['pan'])==="string"){
+        recdic["pan"] = JSON.parse(recdic["pan"]);
+    }
+    if(typeof(recdic['grid'])==="string"){
+        recdic["grid"] = itemrows; 
+    }
+    if(RecdicPanFill()){
+        showPrintConfirm()
+    }
     //document.getElementById("status").innerHTML="PDF Export Button Pressed";
     }
 function onXLS(evt){

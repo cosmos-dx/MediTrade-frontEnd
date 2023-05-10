@@ -138,7 +138,59 @@ function statusInfo (info, clr, weight, wdgid='#statusinfo'){
   //$(wdgid).css('font-weight', weight);
   //$(wdgid).css('margin-left', '-100px');
   }
-  
+
+function ismmyyDate(mmyy){
+    if(mmyy.length>0){
+        if(mmyy.length=='1'){
+            if(mmyy=='0'){return [true, '0'];}
+            if(mmyy=='1'){return [true, '1'];}
+            else{return [true, ('00000'+mmyy).slice(-2)+"/"];}
+        }
+        else if(mmyy.length=='2'){
+            if(mmyy=='00'){document.getElementById("statusinfo").innerHTML = "Wrong Date ! Check Again !";return [false, ""];}
+            if(mmyy=='01'){return [true, "01/"];}
+            if(mmyy=='02'){return [true, "02/"];}
+            if(mmyy=='03'){return [true, "03/"];}
+            if(mmyy=='04'){return [true, "04/"];}
+            if(mmyy=='05'){return [true, "05/"];}
+            if(mmyy=='06'){return [true, "06/"];}
+            if(mmyy=='07'){return [true, "07/"];}
+            if(mmyy=='08'){return [true, "08/"];}
+            if(mmyy=='09'){return [true, "09/"];}
+            if(mmyy=='10'){return [true, "10/"];}
+            if(mmyy=='11'){return [true, "11/"];}
+            if(mmyy=='12'){return [true, "12/"];}
+        }
+    }
+    document.getElementById("statusinfo").innerHTML = "Exp.Date - "+mmyy;
+    return [true, mmyy];
+}
+
+function onExp(evt){
+    var expval = ismmyyDate(evt.target.value);
+    if(expval[0]){
+        evt.target.value = expval[1];
+        recdic['grid'][idcount]['expdate']=expval[1];
+    }
+    else{
+        evt.target.value = "";
+        recdic['grid'][idcount]['expdate']="";
+    }
+}
+
+function onExpValidate(evt){
+    var expdate = evt.target.value;
+    if(expdate.length>4){
+        evt.target.value = expdate;
+        recdic['grid'][idcount]['expdate']=expdate;
+    }else{
+        document.getElementById("statusinfo").innerHTML = "Wrong Date ! Check Again !";
+        evt.target.value = "";
+        recdic['grid'][idcount]['expdate']="";
+    }
+    
+}
+
 function getAmount(qty, rate, bbv=true, b1=1, b2=0){
     var amt = 0;
 
@@ -199,12 +251,6 @@ function getQty(qty, bonus){
     var tqty = qty+b1;
     return tqty; }
 
-
-function onExp(evt){
-    var expdate = evt.target.value;
-    console.log("validate expiry herre in properformat rmsheader line 205 ");
-    recdic['grid'][idcount]['expdate']=expdate;
-    }
 
 function onBatchUpdate(evt){
     var batchno = evt.target.value.toUpperCase();
@@ -313,9 +359,9 @@ function onQtyCalculation(evt){
 
     var keyc = evt.keyCode || evt.which;
     var getitemname = document.getElementById(idcount+"_itemsearch").value.trim()  ;
-    if (getitemname==""){CreateAlertDiv("Item Name Not Selected !! Select Item First !! ");return false;}
+    if (getitemname==""){document.getElementById("statusinfo").innerHTML ="Item Name Not Selected !! Select Item First !! ";return false;}
     var getqty = $('#'+idcount+'_qty').val().trim();
-    if(getqty==""){CreateAlertDiv("Quantity Not Given !! Write Qty First !! ");return false;}
+    if(getqty==""){document.getElementById("statusinfo").innerHTML = "Quantity Not Given !! Write Qty First !!"; return false;} 
     
     if(keyc==13){
         try{
@@ -493,7 +539,7 @@ function RecdicPanFill(){
     recdic['pan']['tamt']=parseFloat(document.getElementById("tamt").innerHTML) ;
     recdic['pan']['tdisamt']=parseFloat(document.getElementById("tdisamt").innerHTML) ;
     recdic['pan']['ttaxamt']=parseFloat(document.getElementById("ttaxamt").innerHTML) ;
-
+    return true;
     };
 
 function rmstoday(){return new Date().toISOString().substring(0, 10);}

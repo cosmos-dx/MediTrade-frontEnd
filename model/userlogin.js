@@ -252,19 +252,20 @@ function MongoConnect(getuseraddress){
 
 app.get('/',(req,res) => { 
    var info = ''; 
-   if(req.session.userid){
-        //res.send("Welcome User <a href=\'/logout'>click to logout</a>");
-        rscr = medifun.emptyRSCR();
-        rscr['title']='MediTrade-Login'
-        res.render('medipages/login',{root:__dirname, rscr:rscr})
+   res.render('medipages/tech-med')
+  //  if(req.session.userid){
+  //       //res.send("Welcome User <a href=\'/logout'>click to logout</a>");
+  //       rscr = medifun.emptyRSCR();
+  //       rscr['title']='MediTrade-Login'
+  //       res.render('medipages/login',{root:__dirname, rscr:rscr})
         
-    }
-    else{
-        rscr = medifun.emptyRSCR();
-        rscr['title']='MediTrade-Login'
-        res.render('medipages/login',{root:__dirname, rscr:rscr})
+  //   }
+  //   else{
+  //       rscr = medifun.emptyRSCR();
+  //       rscr['title']='MediTrade-Login'
+  //       res.render('medipages/login',{root:__dirname, rscr:rscr})
         
-     }
+  //    }
 });
 
 app.get('/medilogin', function(req, res) {

@@ -68,10 +68,10 @@ div.scroll2 {
 .container {
 
 	margin-top: 10%;
-	
+	margin-bottom: 12%;
 	background-color: #ffffe6;
   padding: 1%;
-	height: 100%;
+	height: 80%;
 	font-family:sans-serif;
 	background-image: -moz-linear-gradient(30deg, rgba(252,229,166,0.4) 0%, rgba(66,181,213,0.5) 100%);
 	background: -webkit-linear-gradient(30deg, rgba(252,229,166,0.4) 0%, rgba(66,181,213,0.5) 100%);

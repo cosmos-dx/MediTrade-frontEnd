@@ -142,11 +142,91 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   margin-top: -9px;
 }
 
-footer , mydocfooter {
+/* footer , mydocfooter {
+  display: inline;
   font-family: monospace;
   padding-top: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 60px;
   text-align: center;
-  background-color: #fff;
+  background: linear-gradient(to right, #191970, #00008B);
   font-size:1rem;
+  color: white;
 }
+.mydocfooter .footerblock-1 {
+  display: block;
+} */
+
+.mydocfooter {
+  background: linear-gradient(to right, #00008B, #2e2e99, #5f43b0, #7755c2, #2e2e99, #00008B);
+  /* background: linear-gradient(to right, #191970, #00008B); */
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mydocfooter p {
+  font-size: 10px;
+  text-align: center;
+  color: rgb(234, 234, 234);
+  margin: 0;
+  width: inherit;
+}
+.mydocfooter p span{
+  font-size: 08px;
+  text-align: center;
+  color: rgb(234, 234, 234);
+  margin: 0;
+}
+
+.footerblock-1,
+.footerblock-2,
+.footerblock-3 {
+  width: calc(100% / 3 - 20px);
+  margin: 10px;
+  text-align: center;
+}
+
+.footerblock-1 h7,
+.footerblock-2 h7,
+.footerblock-3 h7 {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(234, 234, 234);
+  margin-bottom: 10px;
+}
+
+.footerblock-1 li,
+.footerblock-2 li,
+.footerblock-3 li {
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+.footerblock-1 a,
+.footerblock-2 a,
+.footerblock-3 a {
+  /* color: #333; */
+  color: rgb(234, 234, 234);
+  font-size: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footerblock-1 a:hover,
+.footerblock-2 a:hover,
+.footerblock-3 a:hover {
+  color: #007bff;
+}
+
+.fa-brands,
+.fa-light {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+/* h7 {
+  margin-top: 0;
+  margin-bottom: 10px;
+} */
