@@ -11,15 +11,18 @@ function tableColumnHeader(){
 
 function appendRow(){
     
-    
-    ++idcount ;
-    
-   
+    // to sync idcount while update(because wrong idcount is comming, still unkown) is ON and user want to add new items
+    // this adjust number only once and sync both variables
+    if(spedit){idcount = staticidcount;} 
+    ++idcount ;                      
+    staticidcount = idcount; // sync staticidcount to idcount   
     document.getElementById("itembox").insertRow(-1).innerHTML = '<tr><td><button id='+idcount+'_incbtn'+' name="addbtn" '+
     'style="width:30px" onclick="appendRow()">+</button></td>'+
     '<td><label id='+idcount+'_sno'+' name="sno" class="rmslabelwidth0" >'+idcount+'</label></td>'+
-    '<td><input id='+idcount+'_itemsearch'+' name="typeahead" class="typeahead" autocomplete="on" spellcheck="false" '+
-    ' placeholder="Items Name" onkeyup="onItemChange(event)" onfocus="onItemSearchFocus(event)"></td >'+
+    '<input type="text" id='+idcount+'_itemsearch name="addinput" class="addinput" autocomplete="off" spellcheck="false" list='+idcount+'_itemlist value="" '+
+    ' style="text-transform:uppercase; width:330px; height:30px; border: 1px solid #a6b8ba;" '+
+    ' placeholder="Items Name" onfocus="onItemSearchFocus(event)"><div list='+idcount+"_itemlist id="+idcount+'_itemlist ></div>'+
+
     '<td><label id='+idcount+'_pack'+' name="pack" class="tdgridpacklabel0" ></label></td >'+
     '<td><input type="text" id='+idcount+'_qty'+' name="qty" class="rmsqtyvalidate" placeholder="Qty" '+
     ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" ></td >'+
@@ -62,9 +65,7 @@ function appendRow(){
     
     onBatchSelect(idcount,"#"+idcount+"_batchno","#"+idcount+"_batlist","#"+idcount+"_exp");
 
-    searchTypeAhead('#'+idcount+'_itemsearch','products','POST', 
-        itemhost+"?name=%QUERY"+"&idf=items&getcolumn=name&limit="+itemdatalimit,
-        itemdatalimit)
+    onItemSearch("#"+idcount+"_itemsearch","#"+idcount+"_itemlist");
    
     
     setInputFilter(document.getElementById(idcount+'_qty'), function(value) {
@@ -80,9 +81,8 @@ function appendRow(){
 }
 
 function SPEDIT_appendRow(rawprows, rawitemrows){
-    let prows = JSON.parse(jsonformater(rawprows));
-    let itemrows = JSON.parse(jsonformater(rawitemrows));
-    let idcount = 0;
+    let prows = rawprows;
+    let itemrows = rawitemrows;
     // let prows = JSON.parse(rawprows); // party rows;
     // let itemrows = JSON.parse(rawitemrows);
     var amt = 0
@@ -90,11 +90,14 @@ function SPEDIT_appendRow(rawprows, rawitemrows){
     var tdisamt = 0
     var netamt = 0
     for(let idc=0; idc<itemrows.length; idc++) {
-        
+        idcount = idc;
         var astr = '<tr><td><button id='+idc+'_incbtn'+' name="addbtn" style="width:30px" onclick="appendRow()">+</button></td>'+
         '<td><label id='+idc+'_sno'+' name="sno" class="rmslabelwidth0" >'+idc+'</label></td>'+
-        '<td><input id='+idc+'_itemsearch'+' name="typeahead" class="typeahead" autocomplete="on" spellcheck="false" '+
-        ' placeholder="Items Name" onkeyup="onItemChange(event)" onfocus="onItemSearchFocus(event)" value="'+itemrows[idc].name+'"></td >'+
+      
+        '<input type="text" id='+idc+'_itemsearch name="addinput" class="addinput" autocomplete="off" spellcheck="false" list='+idc+'_itemlist '+
+        ' style="text-transform:uppercase; width:330px; height:30px; border: 1px solid #a6b8ba;" '+
+        ' placeholder="Items Name" onfocus="onItemSearchFocus(event)" value="'+itemrows[idc].name+'"><div list='+idc+"_itemlist id="+idc+'_itemlist ></div>'+
+
         '<td><label id='+idc+'_pack'+' name="pack" class="tdgridpacklabel0" >'+itemrows[idc].pack+'</label></td >'+
         '<td><input type="text" id='+idc+'_qty'+' name="qty" class="rmsqtyvalidate" placeholder="Qty" '+
         ' onfocus="getFocusedID(event)" onkeyup="onQtyCalculation(event)" value="'+itemrows[idc].qty+'" ></td >'+
@@ -137,7 +140,10 @@ function SPEDIT_appendRow(rawprows, rawitemrows){
         tdisamt +=parseFloat(itemrows[idc]["tdisamt"])
         netamt +=parseFloat(itemrows[idc]["netamt"])
         document.getElementById("itembox").insertRow(-1).innerHTML += astr;
+
+
         onBatchSelect(idc,"#"+idc+"_batchno","#"+idc+"_batlist","#"+idc+"_exp");
+        onItemSearch("#"+idc+"_itemsearch","#"+idc+"_itemlist");
 
         }
     
@@ -172,111 +178,544 @@ function setInputFilter(textbox, inputFilter) {
   });
 }
 
-function searchTypeAhead(s, n, m, r, l){
-    $(s).typeahead({name:n, method:m, remote:r, limit:l });
-} ;
+function partySearch(cs, csurl){
+    var rowlen = 0;
+    var listattr = 'dlist';
+    var divList =  $('div[list=dlist]');
+    var tag = 'name';
 
-function suppostAjax(searchtxt, seturl, gptype, idf, keyc,){
-    var dbrows = [];  
-    var csname = document.getElementById("cssearch").innerHTML;
-    
-    $.ajax({
-        url: seturl,
-        type: gptype,
-        data: {name:csname,searchtxt:searchtxt, idf:idf, limit:keyc},
-        dataType: 'json',
-        success: function(result) {
-            recdic['pan'] = result[0]; 
-            recdic['pan']["billas"]='M'; // Default to Main Bill
-            recdic['pan']["itype"]='1'; // 1==> for unregisted party; 2==> for registerd party
-            $('.tt-dropdown-menu').css('display', 'none');
-            $('#phone').html(result[0].phone);
-            $('#add1').html(result[0].add1);
-            $('#add2').html(result[0].add2);
-            $('#add3').html(result[0].add3);
-            if (posdict[result[0].add3] != null){
-                 $('#add3').html(posdict[result[0].add3].toUpperCase());
-            }
-            $('#gstn').html(result[0].gstn);
-            $('#regn').html(result[0].regn);
-            //$('#supsearch').val(result[0].name );
-            document.getElementById('0_itemsearch').focus();
-            // document.getElementById('0_itemsearch').focus();
-            // document.getElementById('supsearch').value = result.dbrows[0].name;    
+    $("#supsearch").keyup( function(evt){
+
+      var keyc =  evt.keyCode || evt.which;
+      
+      var text = $(this).val();
+      
+      var eventtype = evt.type;
+      if (keyc===112){alert('Ready to Add New Party') }
+      if (keyc===13){
+            var pbd_mode = true; // if user start seraching getpreviousbilldata should displayed
+            partyFill(kyi, partyrows, cs, pbd_mode, bp=false);
+            kMove('select', tag, divList, listattr, text); 
+        }
+      if (keyc===40){kMove('down', tag, divList, listattr, text)}  
+      if (keyc===38){kMove('up', tag, divList, listattr, text)}  
+            });
+
+    $("#supsearch").on('input', function () {
+        var text = $(this).val();
+        kyi = 0;
+        
+        if(text.length){
+            
+            $.ajax({type:"GET",url:csurl,
+             data: {action:"search",type:'partysearch',name:text.toUpperCase(),cs:cs},    
+             success:function(data) {
+                $(divList[0]).empty();
+
+                partyrows = JSON.parse(data);
+                recdic['pan'] = partyrows[0];
+                
+                recdic['pan']["billas"]='M'; // Default to Main Bill
+                recdic['pan']["itype"]='1'; // 1==> for unregisted party; 2==> for registerd party
+                rowlen = partyrows.length ; //getting size of dict data from server
+                var spannode = divList[0] ;
+                for (var k in partyrows){
+                    var r = partyrows[k];
+                    $(spannode).append("<span data-id='"+k+"' id='"+k+"' >"+r.name+"</span");
+                    //$('#list-name').append('<span>'+i.toString()+'</span>');
+                
+                        }
+                $('div[list='+listattr+']').show(100);
+                kMove('text', tag, divList, listattr, text)
+                if (rowlen === 0){
+                  partyFillDelete(); //for recdic
+                  document.getElementById('statusinfo2').innerHTML = "** Nothing Found **"; return true;}
+                
                 }
             });
-        }
+            
+          }
+        else {kyi = 0;$('div[list]').hide();}
+        
+      });
 
-
-function propostAjax(name, searchtxt, seturl, gptype, idf, keyc, info){
-    cs = document.getElementById("sp").innerHTML.toLowerCase().trim();
-    var totstk = 0 // will add to main result key-value pair
-    var dbstkarray = [];
-    var dbstock = 0;
-    var batchno = "";
-    var dbbatchstock = 0;
-    var dbbatchno = "";
-    var stockid = null;
-    var expdate = "";
+    $('#dlist').on('click',  'span', function(evt){
+      evt.preventDefault();   
+      var listattr = 'dlist';
+      var getid = this.id ;
+      var text = $(this).html();
+      var divList =  $('div[list=dlist]');
+      var tag = listattr ;
+      kyi = getid ;
+      var pbd_mode = true; // if user start seraching and select from divList getpreviousbilldata should displayed
+      partyFill(kyi, partyrows, cs, pbd_mode, bp=false);
+      kMove('select', tag, divList, listattr, text)
+    });
    
-    $.ajax({
-        url: seturl,
-        type: gptype,
-        data: {name:name,searchtxt:searchtxt, idf:idf, limit:keyc, info:info},
-        dataType: 'json',
-        success: function(result) {
-           
-            if(result.length > 0){
-                totstk = 0;
-                dbstkarray = result[0]['stockarray'];
-                if(dbstkarray.length>0){
-                
-                    var dbstk = GetDBStk_stkarray(dbstkarray, ""); // No BATCH Will Available Here, remain EMPTY
-                
-                    batchno = dbstkarray[0]["batchno"];
-                    if (batchno==null){batchno="";}
-                    
-                    stockid = dbstk["stockid"];
-                    dbstock = dbstk["dbstock"];
-                    dbbatchstock = dbstk["dbbatchstock"];
-                    expdate = dbstk["expdate"];
-                    dbbatchno = dbstk["dbbatchno"];
-                   
-                }
-                recdic['grid'][idcount] = result[0]; 
-                recdic['grid'][idcount]['stockid']=stockid;
-                recdic['grid'][idcount]['dbstock']=dbstock;
-                recdic['grid'][idcount]['dbbatchstock']=dbbatchstock;
-                recdic['grid'][idcount]['expdate']=expdate;
-                recdic['grid'][idcount]['dbbatchno']=dbbatchno;
-                recdic['grid'][idcount]["totstk"]=dbstock;
-                recdic['grid'][idcount]["batchno"]=batchno;
-                recdic['grid'][idcount]["rate_a"]=0.00; // Not in use write now but would be useful further
-                // "multibat" default is false; if user give/enter qty more than the relative batch exists
-                // "multibat" true condition automatically match batch wise qty and minus from stock table using stockid ;
-                recdic['grid'][idcount]["multibat"]=false;  
-                $('.tt-dropdown-menu').css('display', 'none');
-                $('#'+idcount+'_pack').html(result[0].pack);
-                if (cs=="customer"){
-                    
-                    $('#'+idcount+'_rate').val(result[0].srate);
-                }else{
+  };
 
-                    $('#'+idcount+'_rate').val(result[0].prate);
-                }
-                
-                $('#'+idcount+'_tax').html(result[0].gst);
-                document.getElementById(idcount+'_qty').focus();
-                $('#'+idcount+'_itemsearch').val(result[0].name);
-                $('#'+idcount+'_batchno').val(batchno);
-                $('#'+idcount+'_expdate').val(expdate);
-                StatusInfoDp(result[0], dbstock, "0.00", "0.00");
-                
-           }
+function partyFill(getid, partyrows, cs, pbd_mode, bp=true){
+      document.getElementById("statusinfo").innerHTML="";
+      document.getElementById("statusinfo2").innerHTML="";  
+      var pdt = partyrows[getid] 
+
+      if (pdt==undefined){pdt = partyrows[0]}
+      recdicTemplateUpdate(recdic['pan'], pdt, 'pan');  // First time recdic['pan'] updates on each purchase or sale
+      recdic['pan']['csid']=pdt['csid'] // CustomerID & SupplierID 
+      recdic['pan']['ledgid']=pdt['ledgid'] // CustomerID & SupplierID 
+      
+      if (bp===false){document.getElementById('supsearch').value = pdt.name;}
+      document.getElementById('add1').innerHTML = pdt.add1;
+      document.getElementById('add2').innerHTML = pdt.add2 + '; &nbsp; ';
+      var statecode = posdict[pdt.add3];
+      var partybal = pdt.bal;
+      if (partybal===undefined){
+        partybal = '0.0'
         }
+      if (statecode == undefined){
+        statecode = 'N.A';
+        document.getElementById("add3").innerHTML = statecode ;}
+      else{document.getElementById("add3").innerHTML = statecode;} 
+      recdic['pan']['state']=pdt.add3;
+      recdic['pan']['statecode']=statecode;
+      document.getElementById('phone').innerHTML = "&#128222; " + pdt.phone;
+      document.getElementById('regn').innerHTML = '&nbsp; &reg; &nbsp; ' +pdt.regn;
+      document.getElementById('gstn').innerHTML = 'GSTN :' + pdt.gstn;
+      //document.getElementById('bal').innerHTML = ' &nbsp; P.Bal. Rs:' +partybal
+      document.getElementById('0_itemsearch').focus();
+      
+      // pbd_mode ==>> previousbilldata
+      //if (pbd_mode){getpreviousbilldata(pdt);}
+     
+      return true;
+    };
 
+function getpreviousbilldata(datarow){
+  //console.log(rscr['fyear']) ;
+  var ids = [datarow.nameid, datarow.id, rscr['fyear'], rscr['dbinfo']['tables']]; // id == ledgerID
+
+      $.ajax({type:"GET",url:cshost.queryp,
+             data: {"action":"search","type":'previousbilldata',jsdata:ids,
+             "cs":cs,"cxt":cshost.cxt,"db":cshost.db},    
+             success:function(data) {
+            //$(divList[0]).empty();
+                var prv_billrows = JSON.parse(data);
+                $('#previtems_table').append("<tr><th>BillDate</th><th>Inv.No</th><th>Amount</th></tr>")
+                for(i=0; i<prv_billrows.length; i++){
+                    $('#previtems_table').append(
+                      "<tr><td>"+prv_billrows[i].billdate+"</td><"+
+                       "<td>"+prv_billrows[i].billno+"</td>"+
+                       "<td>"+prv_billrows[i].amt+"</td>/tr>"
+                        )
+                  } 
+              }
         });
+  }
+
+function recdicTemplateUpdate(staticrecdic, vrecdic, recdickey){
+      for (const [k, v] of Object.entries(staticrecdic)){
+        if (vrecdic[k]){
+          staticrecdic[k]=vrecdic[k];
+          }
+        }
+      if (recdickey==='pan'){recdic[recdickey]=staticrecdic}; // update recdic['pan']
+      return staticrecdic;
+    };
+
+function partyFillDelete(){
+      document.getElementById('add1').innerHTML = '';
+      document.getElementById('add2').innerHTML = '';
+      document.getElementById('add3').innerHTML = '';
+      document.getElementById('phone').innerHTML = '';
+      document.getElementById('regn').innerHTML = '';
+      document.getElementById('gstn').innerHTML = '';
+      //document.getElementById('bal').innerHTML = '';
+      recdic['pan']={};
+      }
+
+//       onItemSearch(_itemsearchid, _itemslistid)
+
+function onItemSearch(t,idl){
+  selecteditemrow = {};
+    var text=0 ;
+    var input_id=idcount+"_itemlist";
+    var div_list=$("div[list="+input_id+"]");
+
+    $(idl).on("click","span",function(t){
+        t.preventDefault();
+        var e=this.id
+        
+        text=$(this).val();
+        kyi=e
+        itemFill(e,itemrows,cs,bp=!1);
+        kMove("select",input_id,div_list,input_id,text)
+    })
+
+    $(t).keydown(function(evt){
+        var keyc =  evt.keyCode || evt.which;
+        if (keyc===112){alert('Ready to Add New Party') }
+        if (keyc===13){
+            var pbd_mode = true; // if user start seraching getpreviousbilldata should displayed
+            itemFill(kyi,itemrows,cs,bp=!1)
+            kMove('select', input_id, div_list, input_id, text); 
+        }
+        if (keyc===40){kMove('down', input_id, div_list, input_id, text)}  
+        if (keyc===38){kMove('up', input_id, div_list, input_id, text)}  
+        
+    })
+
+    $(t).on("input",function(){
+        text=this.value.trim();
+        var itemfield = "#"+idcount+"_itemsearch";
+        var itemDivList = "#"+idcount+"_itemlist";
+        input_id=idcount+"_itemlist";
+        div_list=$("div[list="+input_id+"]");
+        document.getElementById("statusinfo").innerHTML=""
+        if(text==""){$(idl).empty(),kyi=-1, divlistHide(); return;}
+        var itemurl = "/itemsearchenter?idf=items&getcolumn=name&limit=5";
+        $.ajax({
+            type:"GET",url:itemurl, 
+            data: {action:"search",type:'itemsearch',name:text.toUpperCase(),cs:cs, limit:itemdatalimit,},
+            success:function(result){
+                $(div_list[0]).empty()
+                document.getElementById("statusinfo").innerHTML=""
+                itemrows = JSON.parse(result)
+                
+                for(var o in itemrows){
+                    var r=itemrows[o];
+                    $(div_list[0]).append("<span data-id='"+o+"' id='"+o+"' >"+r.name+"</span>")
+                }
+                div_list.show(100);
+                //$("div[list="+input_id+"]").show(100)
+                //kMove("text",input_id,div_list,input_id,text)
+            }
+        })
+    kyi=0;
+    $("div[list]").hide();
+    });
+}
+
+function recdicItemTemplateUpdate(itmrow,idc,n){
+
+    var dbstkarray = [];
+    var stockid = null;
+    var dbstock = 0;
+    var dbbatchstock = 0;
+    var batchno = "";
+    var expdate = "";
+    var totstk = 0 // will add to main result key-value pair
+    if (itmrow.hasOwnProperty('stockarray')){
+        dbstkarray = itmrow['stockarray'];
+        if(dbstkarray.length>0){
+            var dbstk = GetDBStk_stkarray(dbstkarray, ""); // No BATCH Will Available Here, remain EMPTY
+            var batchno = dbstkarray[0]["batchno"];
+            if (batchno==null){batchno="";}
+            var stockid = dbstk["stockid"];
+            var dbstock = dbstk["dbstock"];
+            var dbbatchstock = dbstk["dbbatchstock"];
+            var expdate = dbstk["expdate"];
+            var dbbatchno = dbstk["dbbatchno"];
+        }
+    }else{
+        recdic['grid'][idcount]['stockarray']=dbstkarray;
+    }
+    
+    recdic['grid'][idcount] = itmrow; 
+    recdic['grid'][idcount]['stockid']=stockid;
+    recdic['grid'][idcount]['dbstock']=dbstock;
+    recdic['grid'][idcount]['dbbatchstock']=dbbatchstock;
+    recdic['grid'][idcount]['expdate']=expdate;
+    recdic['grid'][idcount]['dbbatchno']=dbbatchno;
+    recdic['grid'][idcount]["totstk"]=dbstock;
+    recdic['grid'][idcount]["batchno"]=batchno;
+    recdic['grid'][idcount]["rate_a"]=0.00; // Not in use write now but would be useful further
+    // "multibat" default is false; if user give/enter qty more than the relative batch exists
+    // "multibat" true condition automatically match batch wise qty and minus from stock table using stockid ;
+    recdic['grid'][idcount]["multibat"]=false;  
+    //console.log(itmrow)
+    $('#'+idcount+'_pack').html(itmrow.pack);
+    if (cs=="customer"){
+        $('#'+idcount+'_rate').val(itmrow.srate);
+    }else{
+        $('#'+idcount+'_rate').val(itmrow.prate);
+    }          
+    $('#'+idcount+'_tax').html(itmrow.gst);
+    document.getElementById(idcount+'_qty').focus();
+    $('#'+idcount+'_itemsearch').val(itmrow.name);
+    $('#'+idcount+'_batchno').val(batchno);
+    $('#'+idcount+'_expdate').val(expdate);
+    StatusInfoDp(itmrow, dbstock, "0.00", "0.00");
+                
+        ///-------------------------------------------------------------------------------------
+    //for(let[a,l]of Object.entries(itemtemplate)){a in itmrow||(recdic.grid[idc][a]=l)}
+}
+
+function itemFill(kidx,row,n,a=!0){
+    if(Object.entries(row).length>0){
+
+        recdic.grid[idcount]=row[kidx];
+        selecteditemrow=row[kidx];
+        
+        recdicItemTemplateUpdate(selecteditemrow,idcount,spedit)
+        
+        if(a!==1){document.getElementById(idcount+"_itemsearch").value=selecteditemrow.name}
+        var l=idcount+"_qty";
+        var d=idcount+"_bat";
+        var s=idcount+"_exp";
+        var o="01/00";
+        
+        // $.ajax({type:"GET",url:cshost.queryi,
+        //     data:{action:"itemsonly",type:"itemsearch",jsdata:selecteditemrow.nameid,csid:recdic.pan.csid,ledgid:recdic.pan.ledgid,cs:"stock",},
+        //     success:function(t){
+        //         var e=JSON.parse(t),a=e.prv_row;
+        //         // for(delete e.prv_row,stockrows=e,
+        //         //     $("#previtems_table").empty()
+        //         //     $("#previtems_table").append("<tr><th>BillDate</th><th>Inv.No</th><th>Batch</th><th>Qty</th><th>Bonus</th><th>Rate</th><th>Dis%</th><th>MRP</th><th>Amount</th></tr>"),
+        //         //     i=0;i<a.length;i++)
+
+        //         // $("#previtems_table").append("<tr><td>"+a[i].billdate+"</td><<td>"+a[i].billno+"</td><td>"+a[i].bat+"</td><td>"+a[i].qty+
+        //         //         "</td><td>"+a[i].bonus+"</td><td>"+a[i].rate+"</td><td>"+a[i].dis+"</td><td>"+a[i].mrp+"</td><td>"+a[i].amt+"</td>/tr>");
+        //         try{
+        //             if(0===stockrows.length)
+        //                 stockrecdicFill(stockrows,recdic.grid[idcount],idcount,!1),
+        //                 document.getElementById(s).innerHTML="",
+        //                 document.getElementById(d).innerHTML="";
+        //             else if(
+        //                 stockrecdicFill(stockrows,recdic.grid[idcount],idcount,!0),11!=sdc)
+        //                 {o=datedbtoExp(stockrows[0].exp);
+        //                 var l=datetodbExp(o);
+        //                 recdic.grid[idcount].exp=o,
+        //                 recdic.grid[idcount].expdbf=l,
+        //                 recdic.grid[idcount].bat=stockrows[0].bat,
+        //                 "suppliers"===n?(
+        //                 document.getElementById(d).value=stockrows[0].bat,
+        //                 document.getElementById(s).value=o):(
+        //                 document.getElementById(s).innerHTML=o,
+        //                 document.getElementById(d).innerHTML=stockrows[0].bat)}
+        //             else"suppliers"===n?document.getElementById(d).value=stockrows[0].bat:document.getElementById(d).innerHTML=stockrows[0].bat}
+        //         catch(r){
+        //             stockrecdicFill(stockrows,recdic.grid[idcount],idcount,!1)}
+        //         }
+        //     })
+        
+        document.getElementById(l).focus()
+        document.getElementById(l).select()
+        $("div[list]").hide();
+        //$("#previtems_table").empty()
      }
+    }
+
+
+
+function kMove(km, tag, divList, listattr, text, select=false){
+    var visibleelements = [] ;
+    var listelements = divList[0]['children'];
+    var wdglen = listelements.length;
+
+    for (i = 0; i < listelements.length; i++) {
+          if (listelements[i].style.display==''){
+            listelements[i].style.backgroundColor = 'white';
+            visibleelements.push(listelements[i])
+              }
+            }
+    
+    if (km==='down'){
+       
+        if (Object.entries(visibleelements).length > 0) {
+          scrollpos += scrollval;  
+          kyi += 1;    
+          if (visibleelements[kyi] === undefined ){
+            visibleelements[kyi-1].style.backgroundColor = 'white';
+            visibleelements[0].style.backgroundColor = '#f5f3ba';
+            kyi=0;
+            scrollpos = 0;
+            }
+          else {
+               if (visibleelements[kyi-1] != undefined ){
+                visibleelements[kyi-1].style.backgroundColor = 'white';
+                visibleelements[kyi].style.backgroundColor = '#f5f3ba';
+                    }
+               else {
+                visibleelements[kyi].style.backgroundColor = '#f5f3ba';
+                        }
+               }
+            $(divList[0]).animate({scrollTop: scrollpos});
+            } 
+
+        } 
+    else if (km==='text'){
+       kyi = 0;
+       scrollpos = 0;
+       $(divList[0]).animate({scrollTop: scrollpos});
+       for (i = 0; i < visibleelements.length; i++) {
+        visibleelements[i].style.backgroundColor = 'white';
+        visibleelements[0].style.backgroundColor = '#f5f3ba';
+            }
+        
+        }  
+    else if (km==='up'){
+      
+      for (i = 0; i < visibleelements.length; i++) {
+        visibleelements[i].style.backgroundColor = 'white';
+            }
+      if (Object.entries(visibleelements).length > 0){ 
+        
+        if (kyi < 0){kyi=0;scrollpos -= 0;}
+        else if (visibleelements.length===0){kyi=0;return true;}
+        else if (visibleelements[kyi] === undefined ){kyi=0;  return true;} 
+             else { 
+                 scrollpos -= scrollval;
+                 kyi-- ; 
+
+                 $(divList[0]).animate({scrollTop: scrollpos});
+                 if (wdglen < 0){
+                    kyi = 0;
+                    scrollpos = 0;
+                    }
+                 else {
+                    try{
+                        visibleelements[kyi].style.backgroundColor = '#f5f3ba';
+                        visibleelements[kyi+1].style.backgroundColor = 'white';
+                        }
+                    catch(err){
+                        visibleelements[0].style.backgroundColor = '#f5f3ba';
+                        // visibleelements[1].style.backgroundColor = 'white';
+                        }
+                    }       
+                  }
+                }
+               $(divList[0]).animate({scrollTop: 0});
+              
+              }
+
+    else if (km==='select'){
+      
+      if (select){
+          if (visibleelements[kyi] === undefined ){
+            if(recdic['dbmess']==='update'){return true;} 
+            if (text===undefined){text=$('input['+tag+']').val().toUpperCase();}
+            else {text='';}
+            }
+          else {text = visibleelements[kyi].innerHTML;}
+        }
+      // default selection of ZERO index element value when data available and key not moved up down
+     
+      divlistHide()
+      kyi = 0;
+      scrollpos = 0;
+      }
+    }
+
+function divlistHide(kc=0){
+  kyi = kc;
+  $('div[list]').hide();
+  }
+
+// function searchTypeAhead(s, n, m, r, l){
+//      $(s).typeahead({name:n, method:m, remote:r, limit:l });
+// } ;
+
+// function suppostAjax(searchtxt, seturl, gptype, idf, keyc,){
+//     var dbrows = [];  
+//     var csname = document.getElementById("cssearch").innerHTML;
+    
+//     $.ajax({
+//         url: seturl,
+//         type: gptype,
+//         data: {name:csname,searchtxt:searchtxt, idf:idf, limit:keyc},
+//         dataType: 'json',
+//         success: function(result) {
+//             recdic['pan'] = result[0]; 
+//             recdic['pan']["billas"]='M'; // Default to Main Bill
+//             recdic['pan']["itype"]='1'; // 1==> for unregisted party; 2==> for registerd party
+//             $('.tt-dropdown-menu').css('display', 'none');
+//             $('#phone').html(result[0].phone);
+//             $('#add1').html(result[0].add1);
+//             $('#add2').html(result[0].add2);
+//             $('#add3').html(result[0].add3);
+//             if (posdict[result[0].add3] != null){
+//                  $('#add3').html(posdict[result[0].add3].toUpperCase());
+//             }
+//             $('#gstn').html(result[0].gstn);
+//             $('#regn').html(result[0].regn);
+//             //$('#supsearch').val(result[0].name );
+//             document.getElementById('0_itemsearch').focus();
+//             // document.getElementById('0_itemsearch').focus();
+//             // document.getElementById('supsearch').value = result.dbrows[0].name;    
+//                 }
+//             });
+//         }
+
+
+// function propostAjax(name, searchtxt, seturl, gptype, idf, keyc, info){
+//     cs = document.getElementById("sp").innerHTML.toLowerCase().trim();
+//     var totstk = 0 // will add to main result key-value pair
+//     var dbstkarray = [];
+//     var dbstock = 0;
+//     var batchno = "";
+//     var dbbatchstock = 0;
+//     var dbbatchno = "";
+//     var stockid = null;
+//     var expdate = "";
+   
+//     $.ajax({
+//         url: seturl,
+//         type: gptype,
+//         data: {name:name,searchtxt:searchtxt, idf:idf, limit:keyc, info:info},
+//         dataType: 'json',
+//         success: function(result) {
+           
+//             if(result.length > 0){
+//                 totstk = 0;
+//                 dbstkarray = result[0]['stockarray'];
+//                 if(dbstkarray.length>0){
+                
+//                     var dbstk = GetDBStk_stkarray(dbstkarray, ""); // No BATCH Will Available Here, remain EMPTY
+                
+//                     batchno = dbstkarray[0]["batchno"];
+//                     if (batchno==null){batchno="";}
+                    
+//                     stockid = dbstk["stockid"];
+//                     dbstock = dbstk["dbstock"];
+//                     dbbatchstock = dbstk["dbbatchstock"];
+//                     expdate = dbstk["expdate"];
+//                     dbbatchno = dbstk["dbbatchno"];
+                   
+//                 }
+//                 recdic['grid'][idcount] = result[0]; 
+//                 recdic['grid'][idcount]['stockid']=stockid;
+//                 recdic['grid'][idcount]['dbstock']=dbstock;
+//                 recdic['grid'][idcount]['dbbatchstock']=dbbatchstock;
+//                 recdic['grid'][idcount]['expdate']=expdate;
+//                 recdic['grid'][idcount]['dbbatchno']=dbbatchno;
+//                 recdic['grid'][idcount]["totstk"]=dbstock;
+//                 recdic['grid'][idcount]["batchno"]=batchno;
+//                 recdic['grid'][idcount]["rate_a"]=0.00; // Not in use write now but would be useful further
+//                 // "multibat" default is false; if user give/enter qty more than the relative batch exists
+//                 // "multibat" true condition automatically match batch wise qty and minus from stock table using stockid ;
+//                 recdic['grid'][idcount]["multibat"]=false;  
+//                 $('.tt-dropdown-menu').css('display', 'none');
+//                 $('#'+idcount+'_pack').html(result[0].pack);
+//                 if (cs=="customer"){
+                    
+//                     $('#'+idcount+'_rate').val(result[0].srate);
+//                 }else{
+
+//                     $('#'+idcount+'_rate').val(result[0].prate);
+//                 }
+                
+//                 $('#'+idcount+'_tax').html(result[0].gst);
+//                 document.getElementById(idcount+'_qty').focus();
+//                 $('#'+idcount+'_itemsearch').val(result[0].name);
+//                 $('#'+idcount+'_batchno').val(batchno);
+//                 $('#'+idcount+'_expdate').val(expdate);
+//                 StatusInfoDp(result[0], dbstock, "0.00", "0.00");
+                
+//            }
+//         }
+
+//         });
+//      }
 
 
 function billnoSET(dpidtag, bstartstring, fyear, billas='M'){
@@ -365,6 +804,13 @@ function getFocusedID(evt){
             var grid = JSON.parse(recdic['grid']) ;
             recdic['grid']=grid;
             var rgi = recdic['grid'][idcount];
+            if(typeof(rgi) == "undefined"){
+              recdic['grid'][idcount] = selecteditemrow;
+              recdicItemTemplateUpdate(selecteditemrow, idcount, spedit);
+              rgi = recdic['grid'][idcount];
+ 
+            }
+   
             var gstamt = rgi["ttaxamt"];
             var disamt = rgi["tdisamt"];
             recdic['grid'] = grid;
@@ -405,28 +851,3 @@ function StatusInfoDp(rgi, dbstock, gstamt, disamt){
     document.getElementById("statusinfo2").innerHTML = mrp_hsn;
 }
 
-function onItemChange(e){
-    
-    var keyc = e.keyCode || e.which;
-   
-    var activeid = document.activeElement.id;
-
-    var hasid = '#'+activeid;
-    
-    var searchtxt = document.getElementById(activeid).value ;
-    
-    document.getElementById('statusinfo').innerHTML = hasid+keyc + searchtxt;
-    
-    $(idcount+'_pack').html('');
-    
-    searchTypeAhead(hasid,'products','POST', 
-        itemhost+"?name=%QUERY"+"&idf=items&getcolumn=name&limit="+itemdatalimit, itemdatalimit);
-        
-    
-    if (keyc == 13){
-        var m_itemhost = itemhost+"?name=%QUERY&idf=items&getcolumn=all&limit=1" // required for GET method only
-        propostAjax('items',searchtxt, m_itemhost, 'POST','itemsearch||selection||all||items',
-        1, {'limit':itemdatalimit,});
-    }
-    document.getElementById(activeid).focus();
-}

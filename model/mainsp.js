@@ -23,6 +23,7 @@ function CommonRender(res, rscr, getid){
         rscr['title']="MediTrade-Home";
         rscr['cssearch']="";
         rscr['cs']="";
+        rscr["recdic"]["edit"]=false;
         res.render('medipages/medihome', {spinfo: rscr})
     }
     if (getid == 'logout'){
@@ -35,25 +36,27 @@ function CommonRender(res, rscr, getid){
         rscr['title']="MediTec-Purchase";
         rscr['cssearch']="purchase";
         rscr['cs']="supplier";
-        res.render('medipages/pmain', {spinfo: rscr});
+        rscr["recdic"]["edit"]=false;
+        res.render('medipages/spmaster', {spinfo: rscr, 'prows':{}, 'itemrows':{}, 'acrows':{} ,'spedit': false});
     }
     if (getid == 'sales'){
         rscr['title']="MediTec-Sale";
         rscr['cssearch']="sale";
         rscr['cs']="customer";
-        res.render('medipages/smain', {spinfo: rscr});
+        rscr["recdic"]["edit"]=false;
+        res.render('medipages/spmaster', {spinfo: rscr, 'prows':{}, 'itemrows':{}, 'acrows':{} , 'spedit': false});
     }
     if (getid == 'spurchase'){
         rscr['title']="MediTec-Purchase Search";
         rscr['cssearch']="purchase";
         rscr['cs']="supplier";
-        res.render('medipages/spsearch', {spinfo: rscr});
+        res.render('medipages/spsearch', {spinfo: rscr,  'prows':{}, 'itemrows':{}, 'acrows':{} ,'spedit':true});
     }
     if (getid == 'ssales'){
         rscr['title']="MediTec-Sale Search";
         rscr['cssearch']="sale";
         rscr['cs']="customer";
-        res.render('medipages/spsearch', {spinfo: rscr});
+        res.render('medipages/spsearch', {spinfo: rscr,  'prows':{}, 'itemrows':{}, 'acrows':{} , 'spedit':true});
     }
     if (getid == 'addcustomer'){
         rscr['title']="MediTec-AddCustomer";

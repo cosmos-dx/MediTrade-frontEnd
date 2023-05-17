@@ -181,9 +181,12 @@ app.get('/speditcalculate',function(req,res){
               rows[0]['amt'] = 0;
               rscr['cssearch']==='purchase'
               rscr['cs']="supplier";
-              seditdata = {'prows':rows, 'itemrows':itemrows, 'acrows':acrows};
-              
-              res.send(JSON.stringify(seditdata)); 
+
+              rscr["recdic"]["pan"]=rows[0];
+              rscr["recdic"]["grid"]=itemrows;
+              rscr["recdic"]["ac"]=acrows;
+              rscr["recdic"]["edit"]=true;
+              res.send(JSON.stringify(rscr["recdic"]));
               //res.end(JSON.stringify(seditdata));
             }
           });
@@ -197,8 +200,13 @@ app.get('/speditcalculate',function(req,res){
             rows[0]['amt'] = 0;
             rscr['cssearch']="sale";
             rscr['cs']="customer";
-            seditdata = {'prows':rows, 'itemrows':itemrows, 'acrows':acrows};
-            res.send(JSON.stringify(seditdata));
+            rscr["recdic"]["pan"]=rows[0];
+            rscr["recdic"]["grid"]=itemrows;
+            rscr["recdic"]["ac"]=acrows;
+            rscr["recdic"]["edit"]=true;
+
+            res.send(JSON.stringify(rscr["recdic"]));
+            // res.send(JSON.stringify(seditdata));
           });
       }
   });
@@ -206,8 +214,9 @@ app.get('/speditcalculate',function(req,res){
 app.get('/spedit',function(req,res){
   var rscr = req.session.rscr;
   try{
-    res.render('medipages/spedit', {spinfo: rscr, prows:seditdata['prows'][0], 
-      itemrows:seditdata['itemrows'], acrows:seditdata['acrows']});
+      // res.render('medipages/spmaster', {spinfo: rscr, prows:seditdata['prows'][0], 
+      // itemrows:seditdata['itemrows'], acrows:seditdata['acrows'], spedit: true});
+      res.render('medipages/spmaster', {spinfo:rscr, "spedit":true});
   }catch(err){}  
   });
 
@@ -217,7 +226,7 @@ app.post('/sendbilltodb', (req, res) => {
   var mode = req.body.mode;
   var redicdata = req.body.getdata;
   var main = req.body.main; 
-  
+
   if(main == "undefined"){
     main = true;
   }
@@ -252,7 +261,7 @@ app.post('/addtodb',function(req,res){
   var column = req.body.getcolumn;
   var limit = 1;
   var mode = req.body.mode;
-  
+
   qry.add_to_db(mlog.tclc, idf, text, column, mode, limit, function(data){
         res.send(JSON.stringify(data));
     });

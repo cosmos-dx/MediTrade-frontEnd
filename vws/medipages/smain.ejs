@@ -9,11 +9,11 @@
 <title><%= spinfo.title  %></title>
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
 <script  type="text/javascript" src="public/assets/js/minajax.js"></script>
-<script  type="text/javascript" src="public/assets/js/typeahead.min.js"></script>
 <script  type="text/javascript" src="public/assets/js/itemappend.js"></script>
 <script  type="text/javascript" src="public/assets/js/saveprint.js"></script>
 <script  type="text/javascript" src="public/assets/js/jsPDF.js"></script>
-<link rel="stylesheet" href="public/assets/css/mystyles.css"> 
+<link rel="stylesheet" href="public/assets/css/mystyles.css">
+<link rel="stylesheet" href="public/assets/css/bootstrap.css">  
 
 
 </head>
@@ -21,7 +21,7 @@
   <label hidden="hidden" id='sp'><%= spinfo.cs %> </label>  
   <div class="container" >
     <div id="divtop1" class="btcontainer">
-      <div class="col-7">
+      <div >
             <label id="billdatestx" class="rmslabel1">Bill Date</label>
             <input type="date" id="billdate" name="billdate" class="textinput" 
                 placeholder="dd/mm/yy" min="2020-01-01" value="2020-01-01">
@@ -38,17 +38,21 @@
     <!----------------------------------------------------------->
     
     <div id="divtop2" class="btcontainer">
-      <div class="col-10">
+      <div>
             <label id="stxt" class="rmslabel1"><%= spinfo.cs.toUpperCase() %>:</label>
-            <input type="text" id="supsearch" name="typeahead" class="typeahead tt-query medinameinput" autocomplete="off"
-             placeholder="<%= spinfo.cs  %> Name" >
+            <input type="text" id="supsearch" name="partysearch"  class="addinput" autocomplete="off"             
+                list="dlist" style="text-transform:uppercase; width:330px; height:30px; border: 1px solid #a6b8ba;"    
+                placeholder="<%= spinfo.cs  %> Name" /> 
+            
+             <div style="margin-left:65px; margin-top:0px;" list="dlist" id="dlist"></div>
+
             <label id="regn" class="rmslabel1"></label>
             <label id="gstn" class="rmslabel1"></label>
       </div>
     </div>  
 
     <div id="divtop3" class="btcontainer">
-      <div class="col-12">
+      <div >
             <label id="stxt" class="rmslabel1">Invoice.N:</label>
             <input type="test" id="billno" name="billno" class="mediselect" maxlength="10" disabled>
             <label id="cscrstx" class="rmslabel1">Cash/Credit</label>
@@ -64,7 +68,7 @@
 
     <div id="divtop21" class="btcontainer">
       <div id="alerts"></div> 
-      <div class="col-8">
+      <div >
             <label id="phone" class="rmslabel1"></label> 
             <label id="add1" class="rmslabel1"></label>   
             <label id="add2" class="rmslabel1"></label>
@@ -73,7 +77,7 @@
     </div>  
 
     <div id="divtop4" class="btcontainer">  
-      <div class="col-10">
+      <div >
             <label id="statusinfo" class="rmslabel1"></label>
             <label id="statusinfo2" class="rmslabel1"></label>
       </div>
@@ -83,7 +87,7 @@
     <div id="xitembox" class="scroll"><table id="itembox" ></table></div>
 
   <div id="divbtm1" class="btcontainer">
-    <div id="bt1part1" class="col-12">
+    <div id="bt1part1" >
         <input type="text" id="cmnt" name="cmnt" class="billcomment" placeholder="bill comment">
         <label id='prlo' class="textdpprlo" style="width:6%; text-align:center;">0.0</label>
 
@@ -102,7 +106,7 @@
   </div>
   
   <div id="divbtm2" class="btcontainer">
-    <div id="bt3part11" class="col-10">
+    <div id="bt3part11" >
         <button type="button" id="save" class="btn btn-outline-primary" onclick="onSave()"  > &nbsp; Save &nbsp; </button>
         <button type="button" id="update" class="btn btn-outline-primary" disabled onclick="onUpdate()">Update</button>
         <button type="button" id="delete" class="btn btn-outline-primary" disabled onclick="onDelete()">Delete</button>
@@ -120,7 +124,7 @@
   </div>
   
   <div id="divbtm3" class="btcontainer">
-    <div id="bt3part1" class="col-10">
+    <div id="bt3part1" >
         <button type="button" id="exportpdf" class="btn btn-outline-primary"  onclick="onPDF()">PDF Export</button>
         <button type="button" id="exportxls" class="btn btn-outline-primary"  onclick="onXLS()">Excel Export</button>
         <label id='roundoffstx' class="btmstaticsumdp">Round-Off: </label>
@@ -132,7 +136,7 @@
   </div>
   
   <div id="divbtm4" class="btcontainer">
-    <div id="bt4part1" class="col-10">
+    <div id="bt4part1" >
         <form method="POST" action="/medinav">
             <button type="submit" class="btn btn-outline-primary" id="close" name="name" value="medihome" > &nbsp; CLOSE &nbsp; </button>
             <button type="submit" class="btn btn-outline-primary" id="reset" name="name" value="sales" > &nbsp; RESET &nbsp; </button> 
@@ -185,6 +189,18 @@ var estidict = {'e':'E','E':'E','m':'M','M':'M','':'M','undefined':'M', ' ':'M'}
 var idcount = -1;
 var csdatalimit = 10;
 var itemdatalimit = 5; 
+
+var partyrows = {};
+var itemrows = {};
+var selecteditemrow = {};
+var selectedstockrow = {};
+var kyi = 0;
+var keyc = 0;
+var scrollpos = 0;
+var scrollval = 30 ;
+
+
+
 const posdict = POSDICT();
 var info = ['axy','first info','b','second, info'];
 var raw_billseries =  '<%- JSON.stringify(spinfo.billseries) %>'; 
@@ -197,6 +213,7 @@ var bankinfo = JSON.parse('<%- JSON.stringify(spinfo.bankinfo) %>');
 var recdic = JSON.parse('<%- JSON.stringify(spinfo.recdic) %>');
 var rscr = {"userinfo":userinfo, "bankinfo":bankinfo};
 
+var itemtemplate = recdic["itemtemplate"];
 //var info = {'1':'axy','2':'first info','b':'second','ginfo':'info'};
 //window.onbeforeunload = function(){return false;};
 
@@ -207,6 +224,15 @@ $(document).ready(function(){
     var today = rmstoday();
     document.getElementById("billdate").value = today;
     document.getElementById("invoicedate").value = today;
+
+    document.getElementById("billdate").value = today;
+    document.getElementById("invoicedate").value = today;
+    cs = document.getElementById("sp").innerHTML.toLowerCase();
+    var csurl = cshost+"?idf="+cs+"&getcolumn=name&limit="+csdatalimit;
+    var itemurl = itemhost+"?idf=items&getcolumn=name&limit="+csdatalimit;
+    partySearch(cs, csurl); // <<<=== NEW FUNCTION ADDITION 
+    
+
     if (!recdic['edit']){ 
         billseries = JSON.parse(raw_billseries);
         //console.log('bill set', billseries['main']);
@@ -216,20 +242,9 @@ $(document).ready(function(){
     }
     tableColumnHeader();
     appendRow();
-    cs = document.getElementById("sp").innerHTML.toLowerCase();
     document.getElementById("update").style.display = "none";
     document.getElementById("delete").style.display = "none";
-    
-    // getcolumn will return value accordingly ==> 
-    // only one column name/add1/(or any one column only) or all [working for only two options];
-
-    searchTypeAhead('#supsearch',cs,'GET', {wildcard: '%QUERY',url:cshost+"?name=%QUERY"+
-        "&idf="+cs+"&getcolumn=customer_name&limit="+csdatalimit }, csdatalimit)
-
-        
-    // Below searchTypeAhead is Not Required 
-    //searchTypeAhead('#0_itemsearch','items','POST', {wildcard: '%QUERY',url:cshost+"?name=%QUERY"
-    //    +"&idf=items&getcolumn=name&limit="+itemdatalimit }, itemdatalimit)
+ 
     
     $("#printcancel").click(function(){
           window.location.reload(); 

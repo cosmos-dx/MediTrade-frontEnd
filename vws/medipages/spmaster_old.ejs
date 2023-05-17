@@ -26,7 +26,7 @@
             <input type="date" id="billdate" name="billdate" class="textinput" 
                 placeholder="dd/mm/yy" min="2020-01-01" value="2020-01-01">
             <label id="invoicestx" class="rmslabel1">Invoice Date</label>
-            <input type="date" id="invoicedate" name="invoicedate" value="<%= spinfo.idate  %>" class="textinput" 
+            <input type="date" id="invdate" name="invdate" value="<%= spinfo.idate  %>" class="textinput" 
                 placeholder="dd/mm/yy" min="2020-01-01">
             
             <input type="text" id="esti" name="esti" class="estivalidate" placeholder="E" maxlength="1"
@@ -40,12 +40,13 @@
     <div id="divtop2" class="btcontainer">
       <div class="">
             <label id="stxt" class="rmslabel1"><%= spinfo.cs.toUpperCase() %>:</label>
-             <input type="text" id="supsearch" name="partysearch"  class="addinput" autocomplete="off"             
+            <input type="text" id="supsearch" name="partysearch"  class="addinput" autocomplete="off"             
                 list="dlist" style="text-transform:uppercase; width:330px; height:30px; border: 1px solid #a6b8ba;"    
                 placeholder="<%= spinfo.cs  %> Name" /> 
-            
-             <div style="margin-left:65px; margin-top:0px;" list="dlist" id="dlist"></div>
-
+            <div style="margin-left:90px; margin-top:-5px;" list="dlist" id="dlist"></div>
+           
+            <label id="blink" class="blink_me info"></label>
+            <label id="bal" class="rmslabel1"></label>
             <label id="regn" class="rmslabel1"></label>
             <label id="gstn" class="rmslabel1"></label>
       </div>
@@ -54,7 +55,7 @@
     <div id="divtop3" class="btcontainer">
       <div class="">
             <label id="stxt" class="rmslabel1">Invoice.N:</label>
-            <input type="text" id="billno" name="billno" class="mediselect" maxlength="10" >
+            <input type="test" id="billno" name="billno" class="mediselect" maxlength="10" >
             <label id="cscrstx" class="rmslabel1">Cash/Credit</label>
             <select id="cscr" name="cscr" class="mediselect" ><option value="CASH">CASH</option>
                 <option value="CREDIT">CREDIT</option>
@@ -68,7 +69,7 @@
 
     <div id="divtop21" class="btcontainer">
       <div id="alerts"></div> 
-      <div class="">
+      <div >
             <label id="phone" class="rmslabel1"></label> 
             <label id="add1" class="rmslabel1"></label>   
             <label id="add2" class="rmslabel1"></label>
@@ -77,13 +78,33 @@
     </div>  
 
     <div id="divtop4" class="btcontainer">  
-      <div class="">
-            <label id="statusinfo" class="rmslabel1"></label>
+      <div>
+            <label id="statusinfo" class="blink_me info"></label>
             <label id="statusinfo2" class="rmslabel1"></label>
       </div>
     </div>  
   <!-- Item Grid Construct here by using javascript -->  
-  <div id="xitembox" class="scroll"><table id="itembox" ></table></div>
+  <div id="xitembox" class="scroll">
+      <table id="itembox" >
+        <script type="text/javascript" charset="utf-8">
+           var spedit =  JSON.parse('<%- JSON.stringify(spedit) %>');
+           var recdic = JSON.parse('<%- JSON.stringify(spinfo.recdic) %>');
+           var itemrows ={};
+           var idcount = -1;
+            tableColumnHeader(); 
+            
+            if(spedit){       
+              var speditdata = SPEDIT_appendRow(recdic["pan"], recdic["grid"]);
+              var prows=recdic['pan'];
+              itemrows=recdic['grid'];;
+              var staticidcount = itemrows.length-1;
+             
+            }else{
+                appendRow();
+            }
+        </script>
+      </table>
+  </div>
 
   <div id="divbtm1" class="btcontainer">
     <div id="bt1part1" class="">
@@ -182,20 +203,20 @@
 var cshost = document.URL.substring(0, document.URL.lastIndexOf("/")+1)+'partysearchenter' ;
 var itemhost = document.URL.substring(0, document.URL.lastIndexOf("/")+1)+'itemsearchenter' ; 
 var cs = "supplier";
-var spedit = false ; // will true when update bill ;
+// var spedit = false ; // will true when update bill ;
 var dbcscr = {'CASH':'1','CREDIT':'2', 'CHALLAN':'3'}
+var rvcscr = {'1':'CASH','2':'CREDIT', '3':'CHALLAN'}
 var estidict = {'e':'E','E':'E','m':'M','M':'M','':'M','undefined':'M', ' ':'M'}
-var idcount = -1;
 
+// var staticidcount = 0;
 var partyrows = {};
-var itemrows = {};
 var selecteditemrow = {};
 var selectedstockrow = {};
 var kyi = 0;
+var kbatchcount = -1;
 var keyc = 0;
 var scrollpos = 0;
 var scrollval = 30 ;
-
 var csdatalimit = 10; 
 var itemdatalimit = 5; 
 const posdict = POSDICT();
@@ -205,30 +226,61 @@ var fyear =  '<%= spinfo.fyear %>';
 var owner = JSON.parse('<%- JSON.stringify(spinfo.owner) %>'); 
 var userinfo = JSON.parse('<%- JSON.stringify(spinfo.userinfo) %>'); 
 var bankinfo = JSON.parse('<%- JSON.stringify(spinfo.bankinfo) %>'); 
-var recdic = JSON.parse('<%- JSON.stringify(spinfo.recdic) %>');
 
 var itemtemplate = recdic["itemtemplate"];
 
 var rscr = {"userinfo":userinfo, "bankinfo":bankinfo};
 
-$(document).ready(function(){
-    var today = rmstoday();
+function fin_btn_hglt(flag1, flag2){
+    document.getElementById("update").style.display = flag1[0];
+    document.getElementById("delete").style.display = flag1[0];
+    document.getElementById('update').disabled = flag1[1];
+    document.getElementById('delete').disabled = flag1[1];
+    document.getElementById("save").style.display = flag2[0];
+    document.getElementById("save").disabled = flag2[1];
     
-    document.getElementById("billdate").value = today;
-    document.getElementById("invoicedate").value = today;
-    cs = document.getElementById("sp").innerHTML.toLowerCase();
+}
+
+$(document).ready(function(){
+
+
+    var today = rmstoday();
+
+    recdic['edit']=spedit;
+    cs = document.getElementById("sp").innerHTML.toLowerCase().trim();
     var csurl = cshost+"?idf="+cs+"&getcolumn=name&limit="+csdatalimit;
     var itemurl = itemhost+"?idf=items&getcolumn=name&limit="+csdatalimit;
     partySearch(cs, csurl); // <<<=== NEW FUNCTION ADDITION 
-    
-    tableColumnHeader();
-    appendRow();
-  
-    document.getElementById("update").style.display = "none";
-    document.getElementById("delete").style.display = "none";
-    
 
+    if (recdic['edit']){    
+        fin_btn_hglt(["inline", false], ["none", true]);
+        PartyPopulate_On_SPedit_Only();
+        $("#deleteconfirm").click(function(){
+            let savebool = true;
+            RecdicPanFill();
+            //console.log(recdic);
+            DbSaveBill(recdic, cs.trim(), "delete", "POST", "/sendbilltodb");
+            hidePrintConfirm()
+            PageRedirect(cs.trim());
+        });
+    }
+    else{
+        document.getElementById("billdate").value = today;
+       document.getElementById("invdate").value = today;
+      fin_btn_hglt(["none", true],["inline", false]);
+    }
+
+    if(cs=="customer"){
+      if (!recdic['edit']){       
+        document.getElementById('billno').disabled=true;
+        recdic['pan']["fyear"]=fyear;
+        var raw_billseries =  '<%- JSON.stringify(spinfo.billseries) %>';
+        billseries = JSON.parse(raw_billseries);
+        billnoSET('#billno', billseries['main'],  fyear);
+      }
    
+    }
+
     
     $("#printcancel").click(function(){
           window.location.reload(); 
@@ -253,6 +305,37 @@ $(document).ready(function(){
         }); 
     });
 
+function PartyPopulate_On_SPedit_Only(){
+  document.getElementById("cscr").value = rvcscr[prows["cscr"]];
+  document.getElementById("supsearch").value=prows["name"];
+  document.getElementById("billno").value=prows["billno"];
+  document.getElementById("esti").value=prows["billas"];
+  document.getElementById("billdate").value=prows["billdate"];
+  document.getElementById("invdate").value=prows["invdate"];
+  document.getElementById("add1").innerHTML=prows["add1"];
+  document.getElementById("add2").innerHTML=prows["add2"];
+  document.getElementById("regn").innerHTML=prows["regn"];
+  document.getElementById("gstn").innerHTML=prows["gstn"];
+  document.getElementById("add3").innerHTML=prows["add3"];
+  document.getElementById("phone").innerHTML=prows["phone"];
+  document.getElementById("bal").innerHTML="0.00";
+  document.getElementById("blink").innerHTML="*** EDIT ON ***";
+
+  var billgamt = parseFloat(prows["gamt"]).toFixed(2);
+  var roundgamt = parseFloat(prows["gamt"]).toFixed(0);
+  var roundoffval = billgamt - roundgamt;
+
+  document.getElementById("gtot").innerHTML="Rs " + roundgamt.toString() + "/-";
+  document.getElementById("raw_gtot").innerHTML=roundgamt;
+  document.getElementById("roundoff").innerHTML=roundoffval.toFixed(2).toString();
+
+  document.getElementById("tsubtot").innerHTML=prows["amt"];
+  document.getElementById("tamt").innerHTML=prows["tamt"];
+  document.getElementById("ttaxamt").innerHTML=prows["ttaxamt"];
+  document.getElementById("tdisamt").innerHTML=prows["tdisamt"];
+  document.getElementById("cgst").innerHTML=prows["cgst"];
+  document.getElementById("sgst").innerHTML=prows["sgst"];
+}
 
 function onSave(evt){
     let savebool = true;
@@ -284,21 +367,76 @@ function onSave(evt){
 
     
 function onUpdate(evt){
-    document.getElementById("statusinfo").innerHTML="UPDATE Button Pressed";}
-function onDelete(evt){
-    document.getElementById("statusinfo").innerHTML="DELETE Button Pressed";}
+    let savebool = true;
+    if(typeof(recdic['pan'])==="string"){
+        recdic["pan"] = JSON.parse(recdic["pan"]);
+    }
+    
+    RecdicPanFill();
+    //console.log(recdic);
+    /*matching keys that is used to insert into database*/
+    //recdic['pan']["csid"]=recdic['pan']["csid"];
+    recdic['pan']["fyear"]=fyear;
+    
+    if(typeof(recdic['grid'])==="string"){
+        recdic["grid"] = itemrows; 
+    }
+    savebool = validateDBEntry(savebool);
+    
+    if (savebool){
+        if(typeof recdic['grid'][0]["qty"] == 'undefined'){
+            document.getElementById("statusinfo").innerHTML=" No Items Selected !";
+            document.getElementById("statusinfo2").innerHTML=" Cannot Save !";
+            return false;
+        }
+
+        DbSaveBill(recdic, cs.trim(), "update", "POST", "/sendbilltodb");
+        showPrintConfirm(); // << This Should not be called here; should call after successfully insert data into database
+
+        }
+}
+
+function showDeleteConfirm(){
+  $('#save').css('display', 'none');
+  $('#update').css('display', 'none');
+  $('#delete').css('display', 'none');
+  $('#reset').css('display', 'none');
+  $('#close').css('display', 'none');
+  $('#exportpdf').css('display', 'none');
+  $('#exportxls').css('display', 'none');
+  $('#printconfirm').css('display', 'none');
+  $('#deleteconfirm').css('display', 'inline-flex');
+  $('#printcancel').css('display', 'inline-flex');
+  $('#deleteconfirm').css('text-align', 'center');
+  $('#printcancel').css('text-align', 'center');
+  $('#deleteconfirm').focus();
+  }
+
+function onDelete(evt){showDeleteConfirm()}
     
 function onPDF(evt){
-    document.getElementById("statusinfo").innerHTML="PDF Export Button Pressed";}
+    if(typeof(recdic['pan'])==="string"){
+        recdic["pan"] = JSON.parse(recdic["pan"]);
+    }
+    if(typeof(recdic['grid'])==="string"){
+        recdic["grid"] = itemrows; 
+    }
+    if(RecdicPanFill()){
+        showPrintConfirm()
+    }
+    //document.getElementById("status").innerHTML="PDF Export Button Pressed";
+    }
+
 function onXLS(evt){
     document.getElementById("statusinfo").innerHTML="Excell Export Button Pressed";}
 
 function onEsti(evt){RecdicPanFill()};
 
+
 //searchTypeAhead('#supsearch','suppliers','GET', cshost+"?key=%QUERY", 4)
 
 </script>
 <!-- rmsinputvalidate.js is wrapper function this will work after page loaded completely   -->
-<script  type="text/javascript" src="public/assets/js/itemappend.js"></script>
-<script  type="text/javascript" src="public/assets/js/mediinputvalidate.js"></script>
+<!-- <script  type="text/javascript" src="public/assets/js/itemappend.js"></script>
+<script  type="text/javascript" src="public/assets/js/mediinputvalidate.js"></script> -->
 </html>

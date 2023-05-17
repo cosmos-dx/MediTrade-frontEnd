@@ -24,7 +24,7 @@ function readRSCR(){
       //tsubtot==>Amount without Discount or Bonus, updtval==>if Bill Updated then Diffenece After Update Bill 
 
       let pan={"spid":0,"transid":0,"csid":0,"ledgid":0,"billas":"M","itype":1,"bal":0,
-        "name":"","partyname":"", "add1":"", "add2":"", "add3":"","stcode":"0","pincode":0,"area":"","mobile":0,
+        "name":"","partyname":"", "add1":"", "add2":"", "add3":"","stcode":"0","pincode":0,"area":"","phone":0,
         "email":0, "ophone":0, "pan":0, "regn":0, "gstn":"", "cmnt":"", "mode":0, "esti":0,
         "dbcscr":0, "cscr":0, "billdate":0, "invoicedate":0, "invdate":0, "dbbilldate":0, "dbinvdate":0,"fyear":0,
         "ddisc":0, "dis":0, "billno":0, "prolo":0, "roundoff":0,"gtotwords":0,    
@@ -37,17 +37,17 @@ function readRSCR(){
       //stkvariable==>balance stock while user entering Quantity  
 
       let itemtemplate={"sno":0,"spiid":"","spid":"","csid":"0","itemid":"","name":"","pack":"","unit":"","hsn":"",
-         "compid":"", "igroup":"","irack":"","qty":"", "tqty":"","bbool":false,"edited":false,"batreplace":false,
+         "compid":"", "igroup":"","irack":"","qty":0, "tqty":0,"bbool":false,"edited":false,"batreplace":false,
          "stockid":null,"dbstock":0,"dbbatchstock":0,"expdate":"","dbbatchno":"","totstk":0,"stockarray":[],
          "batchno":"","bonus":"","cgst":0, "sgst":0,"gst":0,"igst":0,"tax1":0, "tax2":0,"tax":0,
-         "bonus":"", "dis":0, "mrp":"","prate":"","srate":"", "rate_a":"0","rate":"","tax":"", "ttax":"",
+         "bonus":"", "dis":0, "mrp":"","prate":0,"srate":0, "rate_a":"0","rate":0,"tax":0, "ttax":0,
          "amttot":0, "amt":0,"batchno":"","ttaxamt":0,"tdisamt":0,"tax1amt":0,"tax2amt":0,"multibat":false,"stkinsert":false,
-         "netrate":"","netamt":"","updatedqty":"","pnet":""};
+         "netrate":0,"netamt":0,"updatedqty":0,"pnet":0};
            
       //acid1 ==> Account ID 1
       let ac={"acid1":0,"acid2":0,"acid3":0,"acval1":0,"acval2":0,"acval3":0,}
       //recdic==>store records of sales or purchase bill 
-      let recdic={"pan":pan,"grid":{0:itemtemplate},"ac":ac,"static":{},"edit":false, "other":{}}
+      let recdic={"pan":pan,"grid":{0:itemtemplate},"ac":ac,"static":{},"edit":false, "other":{}, "itemtemplate": itemtemplate }
       let estidict={"e":"E","E":"E","m":"M","M":"M","":"M","undefined":"M", " ":"M"}
       let sdcinfo={"1":"Pharma Distribution","2":"Retail Medical","11":"General Trade",
                 1:"Pharma Distribution",2:"Retail Medical",11:"General Trade",};

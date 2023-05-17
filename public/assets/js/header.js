@@ -256,7 +256,6 @@ function onBatchUpdate(evt){
     var batchno = evt.target.value.toUpperCase();
     var getitemname = document.getElementById(idcount+"_itemsearch").value.trim()  ;
     if (getitemname==""){$("div[list]").hide();CreateAlertDiv("Item Name Not Selected !! Select Item First !! ");return;}
-
     if (typeof(recdic['grid'][idcount])=="undefined"){CreateAlertDiv("Item Name Not Selected !! Select Item First !! ");return;}
     if (batchno.trim()==""){$("div[list]").hide();return;}
     recdic['grid'][idcount]['batchno']=batchno;
@@ -273,39 +272,122 @@ function onBatchUpdate(evt){
         var qtyn = stockarray[i]["qty"];
         var valdata = batno+","+expdt+","+qtyn+","+stockid;
         var dpdata = "Bat: "+batno+" Exp: "+expdt+" Qty: "+qtyn;
+
         if (batchno.length < 2){
-            $(a[0]).append("<span id='"+i+"' data-reference="+valdata+" >"+dpdata+"</span>")
+            $(a[0]).append("<span data-id='"+valdata+"' id='"+valdata+"' >"+dpdata+"</span>")
         }else{
+     
             if(batno==null){
-                valdata = " , ,0, null ";
+    
+                valdata = " , ,0, xnull ";
                 dpdata = "Bat: N.A Exp: N.A  Qty: 0";
-                $(a[0]).append("<span id='"+i+"' data-reference="+valdata+" >"+dpdata+"</span>")
+                $(a[0]).append("<span data-id='"+valdata+"' id='"+valdata+"' >"+dpdata+"</span>")
             }else{
+
             if(batno.startsWith(batchno)){
-                $(a[0]).append("<span id='"+i+"' data-reference="+valdata+" >"+dpdata+"</span>")
+
+                $(a[0]).append("<span data-id='"+valdata+"' id='"+valdata+"' >"+dpdata+"</span>")
                 }
             }
         }
      }
      
      a.show(100);
+    var searchEles = document.getElementById(n).children;
+    
+     var keyc =  evt.keyCode || evt.which;
+     if(val.trim().length == 0){kbatchcount = -1;}
+     if(keyc == 38){
+        kMove('up', n, a, n, val)
+        if(kbatchcount > 0){kbatchcount--;}
+        console.log("uparrow");
+     }
+     if(keyc == 40){
+        kMove('down', n, a, n, val)
+        if(kbatchcount < stockarray.length-1){
+            kbatchcount++;
+        }
+        // kbatchcount%stockarray.length-1;
+        // kbatchcount++;
+     }
+     if(keyc == 13){
+        kMove('select', n, a, n, val)
+        if(stockarray.length > 0){
+            console.log(kbatchcount);
+            console.log(stockarray);
+            $("#"+idcount+"_batchno").val(stockarray[kbatchcount]['batchno']);
+            $("#"+idcount+"_expdate").val(stockarray[kbatchcount]['expdate']);
+            recdic['grid'][idcount]['batchno']=stockarray[kbatchcount]['batchno'];
+            recdic['grid'][idcount]['dbbatchstock']=stockarray[kbatchcount]['dbbatchstock'];
+            recdic['grid'][idcount]['expdate']=stockarray[kbatchcount]['expdate'];
+            recdic['grid'][idcount]['stockid']=stockarray[kbatchcount]['stockid']; 
+        }
+        
+        // kbatchcount = -1;
+        kyi= -1; //--------------------------------- dekhna padega isseu
+        $("div[list]").hide();
+     }
+     if(keyc == 27){
+        kbatchcount = -1;
+        kyi = -1
+        console.log("escape");
+        $("div[list]").hide();
+     }
+     if(keyc == 8){
+        kbatchcount = -1;
+     }
+     if(keyc == 46){
+        kbatchcount = -1;
+     }
+     console.log(keyc);
 }
+
+function updateSelectedSpan() {
+    // Remove the "selected" class from all spans
+    for (var i = 0; i < searchEles.length; i++) {
+      searchEles[i].classList.remove('selected');
+    }
+  
+    // Add the "selected" class to the current selected span
+    searchEles[selectedIndex].classList.add('selected');
+  }
+  function changeSpanColor(color) {
+    searchEles[selectedIndex].style.backgroundColor = color;
+  }
+
+function colorholderbatch(color2, selectid, batchlist ){
+    // console.log(batchlist);
+    console.log(batchlist[selectid]);
+    for(let i = 0; i < batchlist.length; i++){
+        var span =  batchlist[i];
+        // $('#'+span.id).css('color', 'red');
+        console.log("---",span);
+        //document.getElementById(span.id).style.backgroundColor = "red";
+        
+    }
+    document.getElementById(selectid).style.backgroundColor = color2;
+}
+
 
 function onBatchSelect(idc, batid, batlist, expid){
     if(typeof(idcount)=="undefined"){var idcount = idc}
+    
     var batid=idcount+"_batlist";
     var batlist=$("div[list="+batid+"]");
     var ebat="#"+idcount+"_bat";
     var nbatlist="#"+idcount+"_batlist";
+
     $(nbatlist).on("click","span",function(nbatlist){
-        
+            
         nbatlist.preventDefault();
-        var getid=this.id;
-        var selectedarray = document.getElementById(getid).getAttribute('data-reference').split(',');
+        var batchtext = this.id;
+        var selectedarray = batchtext.split(',');
+
         var selectedstockid = selectedarray[3];
         var selectedqty = selectedarray[2];
         var selectedexp = selectedarray[1];
         var selectedbatch = selectedarray[0];
+        console.log("selectedbatch",selectedbatch);
         if(selectedbatch.trim()!=="" && selectedbatch.trim()!="null" ){
             $("#"+idcount+"_batchno").val(selectedbatch);
             $(expid).val(selectedexp);
@@ -315,8 +397,12 @@ function onBatchSelect(idc, batid, batlist, expid){
         recdic['grid'][idcount]['dbbatchstock']=selectedqty;
         recdic['grid'][idcount]['expdate']=selectedexp;
         recdic['grid'][idcount]['stockid']=selectedstockid; 
-        $("div[list]").hide();
+    
+    $("div[list]").hide();
+        
     })
+
+   
 }
 
 function GetDBStk_stkarray(stkary, inputbatchno){
@@ -350,11 +436,12 @@ function GetDBStk_stkarray(stkary, inputbatchno){
 }
 
 function onQtyCalculation(evt){
-    if (typeof(recdic['grid'][idcount]) == "undefined"){
+
+    if (typeof(recdic['grid'][idcount]) == "undefined" ){
         CreateAlertDiv("Item Name Not Selected OR Page Re-Loaded !! Select Item First !! ");
         document.getElementById(idcount+'_itemsearch').value = '';
         document.getElementById(idcount+'_itemsearch').focus();
-        return false;
+        return;
     }
 
     var keyc = evt.keyCode || evt.which;
@@ -363,14 +450,30 @@ function onQtyCalculation(evt){
     var getqty = $('#'+idcount+'_qty').val().trim();
     if(getqty==""){document.getElementById("statusinfo").innerHTML = "Quantity Not Given !! Write Qty First !!"; return false;} 
     
+    var idf = evt.target.id.split("_");
+    var tempidcount = idf[0];
+    var colname = idf[1];
     if(keyc==13){
-        try{
-            var newidc = (2+parseInt(idcount)).toString()+'_itemsearch';
-            document.getElementById(newidc).focus();
-        }catch(err){
-        appendRow();
-        document.getElementById(idcount+'_itemsearch').focus();
-        return true;}
+        if(colname=="qty"){document.getElementById(tempidcount+"_batchno").focus();}
+        if(colname=="bonus"){document.getElementById(tempidcount+"_rate").focus();}
+        if(colname=="rate"){document.getElementById(tempidcount+"_dis").focus();}
+        if(colname=="dis"){
+            try{
+                var newidc = (2+parseInt(idcount)).toString()+'_itemsearch';
+                document.getElementById(newidc).focus();
+            }catch{
+                appendRow();
+                document.getElementById(idcount+'_itemsearch').focus();
+                
+                if (typeof(recdic['grid'][idcount]['qty']) == "undefined"){
+                    CreateAlertDiv("Item Name Not Selected OR Qty Not Given !! ");
+                    document.getElementById(idcount+'_itemsearch').value = '';
+                    document.getElementById(idcount+'_itemsearch').focus();
+                    return true;
+                }
+                return true;
+            }
+        }
     }
    
 
@@ -413,6 +516,7 @@ function onQtyCalculation(evt){
     if (isNaN(dis)){dis = 0;}
 
     var batchno = $('#'+idcount+'_batchno').val();
+    
     recdic['grid'][idcount]['qty']=qty;
     recdic['grid'][idcount]['batchno']=batchno;
     recdic['grid'][idcount]['bbool']=bbool;
@@ -469,7 +573,7 @@ function onQtyCalculation(evt){
         roundoff = totnetamt - totnetamt.toFixed(0); 
         roundoff = roundoff.toFixed(2);
     }
-
+   
     recdic['pan']['gtot']=totnetamt.toFixed(2);
     recdic['pan']['tsubtot']=totamttot.toFixed(2);
     recdic['pan']['tamt']=totamt.toFixed(2);
@@ -479,6 +583,7 @@ function onQtyCalculation(evt){
     recdic['pan']['sgst']=totsgst.toFixed(2);
     recdic['pan']['roundoff']=roundoff;
 
+    
     document.getElementById("gtot").innerHTML=totnetamt.toFixed(2);
     document.getElementById("raw_gtot").innerHTML=totnetamt.toFixed(2);
     document.getElementById("tsubtot").innerHTML= totamttot.toFixed(2);
@@ -505,7 +610,7 @@ function RecdicPanFill(){
         return false;
     }
     let billdate = document.getElementById("billdate").value;
-    let invdate = document.getElementById("invoicedate").value;
+    let invdate = document.getElementById("invdate").value;
     let cscr = document.getElementById("cscr").value;
     let esti = document.getElementById("esti").value;
     let ddisc = document.getElementById("ddisc").value;

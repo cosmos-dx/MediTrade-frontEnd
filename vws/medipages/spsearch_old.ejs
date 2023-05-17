@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<%- include('../partials/theader'); %>
+<head>
+<meta name="description" content="Sale and Purchase Inventory For All Kind of Trade, Develop Utility Software "/>
+<meta name="keywords" content="MEDI-TRADE, MEDI-TRADE SOFT, MEDI-TRADE SOLUTIONS, ABHISHEK GUPTA, ERP, Pharmaceutical WholeSale Inventory">
+<meta name="Author" content="ABHISHEK GUPTA, abhi.me.deo.18@gmail.com">
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= spinfo.title  %></title>
+<script  type="text/javascript" src="public/assets/js/minajax.js"></script>
+<script  type="text/javascript" src="public/assets/js/saveprint.js"></script>
+<script  type="text/javascript" src="public/assets/js/itemappend.js"></script>
+<link rel="stylesheet" href="public/assets/css/mystyles.css"> 
+<link rel="stylesheet" href="public/assets/css/bootstrap.css"> 
+
+</head>
+<body >
+  <h3 id='header' ><%= spinfo.title  %> </h3>
+  
+  <div class="container">
+
+    <div id="div1" class="rmsdiv1">
+      <form method="post" action="/">
+      <label id="frmstx" class="rmslabel1">From Date :</label>
+      <input type="date" id="frm" name="frm" class="textinput" 
+              placeholder="dd/mm/yy" min="2017-01-01" value="2022-01-01">
+                
+      <label id="todstx" class="rmslabel1">To Date :</label>
+      <input type="date" id="tod" name="tod" class="textinput" 
+                placeholder="dd/mm/yy" min="2017-01-01" value="2022-01-01">
+
+      <label id="billasstx" class="rmslabel1">Select Invoice Type:</label>
+      <select id="billas" name="billas" class="custom-select" style="width:200px;" ><option value="('I','M','E')"> BOTH </option>
+                <option value="('I')">Inter-State Only</option>
+                <option value="('M')">Intra-State Only</option>
+                <option value="('E')">Challan</option>
+      </select>
+      </form>
+    </div>
+    
+    <div id="div2">
+      <label id="cssearch" class="rmslabel1"><%= spinfo.cssearch  %></label>
+      
+      <label id="sp" class="rmslabel1"> <%= spinfo.cs %></label>
+
+      <input type="text" id="supsearch" name="partysearch"  class="addinput" autocomplete="off"             
+                list="dlist" style="text-transform:uppercase; width:330px; height:30px; border: 1px solid #a6b8ba;"    
+                placeholder="<%= spinfo.cs  %> Name" /> 
+      <div style="margin-left:90px; margin-top:-5px;" list="dlist" id="dlist"></div>
+
+      <label id="itypestx" class="rmslabel1">Select Invoice Type:</label>
+      <select id="itype" name="itype" class="custom-select" style="width:200px;" ><option value="('1','2')"> BOTH </option>
+                <option value="('2')">Registered-Party</option>
+                <option value="('1')">Un-Registered-Party</option>
+      </select>
+    </div>
+    
+    <div id="table" class="table-editable">
+      <label id="statusinfo" class="blink_me info" ></label>
+      <label id="statusinfo2"></label>
+    </div>
+    
+    <div class="btcontainer">
+      <label id="regn" class="rmslabel1"></label>
+      <label id="gstn" class="rmslabel1"></label>
+      <label id="phone" class="rmslabel1"></label> 
+      <label id="add1" class="rmslabel1"></label>   
+      <label id="add2" class="rmslabel1"></label>
+      <label id="add3" class="rmslabel1"></label>
+      <label id="0_itemsearch" class="rmslabel1"></label>
+  </div>
+
+    <div id="xitembox" class="scroll2">
+      <table id="itembox", class="table table-bordered" onkeypress="keyrowselect()">
+        <thead>
+            <tr>
+            <th>Inv. Date</th>
+            <th>Inv. Number</th>
+            <th>Inv. Type</th>
+            <th>Party Name</th>
+            <th>Amount</th>
+            </tr>
+         </thead>
+      </table>  
+    </div>  
+
+  <div id="alerts"></div>    
+  <div id="gifboard" ><img src="" id="rungif" /></div>'
+  <div id="divbtm2" style="display:inline-flex;">
+    <button type="button" id="show" class="btn btn-outline-primary" onclick="onShow()" >&nbsp; SHOW &nbsp;</button>&nbsp;
+    <button type="button" id="open" class="btn btn-outline-primary" onclick="onopen()" >&nbsp; OPEN &nbsp;</button>&nbsp;
+    <form id="backtohome" method="POST" action="/medinav">
+     <button type="submit" class="btn btn-outline-primary" id="medihomenav" name="name" value="medihome" > &nbsp; CLOSE &nbsp; </button> 
+    </form>
+    
+  </div>  
+
+  </div>
+  <div>
+    <footer class="mydocfooter">
+  
+     
+      <div class="footerblock-1">
+        <h7>About Us</h7>
+        <li> <a href="#"  > Medi-Trade  </a></li>
+        <li> <a href="#" > Tech-Med </a></li>
+        <li><a href="#"> GST & SALES & PURCHASE </a></li>
+      </div>
+
+      <div class="footerblock-2">
+        <h7>Informations</h7>
+        <li> <a href="https://www.linkedin.com/in/abhishek-gupta-a1a44a203/"  target="_blank"> Linkedin <i class="fa-brands fa-linkedin fa-lg"></i> </a></li>
+        <li> <a href="https://github.com/cosmos-dx/"  target="_blank"> GitHub <i class="fa-brands fa-github-alt fa-lg"></i> </a></li>
+        <li><a href="https://auth.geeksforgeeks.org/user/abhishekgupta1802/"  target="_blank">GeeksForGeeks<i class="fa-light fa-code-simple fa-lg"></i></a></li>
+      </div>
+
+      <div class="footerblock-3">
+        <h7>Contact</h7>
+        <li> <a href="#"  > HelpLine </a></li>
+        <li> <a href="#" > YouTube  </a></li>
+        <li><a href="#" > Twitter </a></li>
+      </div>
+
+
+      <p> &copy;MEDI-TRADE - <span> abhishekgupta0118@gmail.com </span></p>
+    </footer> 
+ </div>
+      
+</body>
+
+<script type="text/javascript">
+  //var selectedrowdata = {};
+  //var partyrowdata = {};
+  var csdatalimit = 10;
+  var srd = {'spid':0,'transid':0,'csid':0,'ledgid':0,'billno':0,'gamt':0,
+            'dt':'2020-01-01','invdt':'2020-01-01','name':''}; // selected row  data // selected row  data
+  //var partyrowdata = {};
+  var partyname = '';
+  var csdatalimit = 10;
+  var kyi = -1;
+  var rowlen ;
+  var dbcscr = {'CASH':'1','CREDIT':'2', 'CHALLAN':'3'}
+  var cscr = {'1':'CASH','2':'CREDIT','3':'CHALLAN','':'N.A'}
+
+  var recdic={'pan':{},'grid':{},'ac':{},'static':{},'edit': false, 'other':{}}
+  var estidict = {'e':'E','E':'E','m':'M','M':'M','':'M','undefined':'M', ' ':'M'}
+  var idcount = -1;
+
+  var partyrows = {};
+  var itemrows = {};
+  var selecteditemrow = {};
+  var selectedstockrow = {};
+  var kyi = 0;
+  var keyc = 0;
+  var scrollpos = 0;
+  var scrollval = 30 ;
+  const posdict = POSDICT();
+
+
+  var tamount = 0;
+  var pready = false;
+  var cshost = document.URL.substring(0, document.URL.lastIndexOf("/")+1)+'partysearchenter' ;
+  var sp = document.getElementById("sp").innerHTML;
+  //var cs = document.getElementById("cssearch").innerHTML;
+  var cs =  '<%= spinfo.cs %>'; 
+  var sp = cs;
+  var cssearch = '<%= spinfo.cssearch %>';
+  
+
+
+function ShowData(){
+   
+    var name = cssearch; //document.getElementById("sp").innerHTML;
+    var htp = document.URL.substring(0, document.URL.lastIndexOf("/")+1)+'sppartysearch';
+    //var htp = document.URL.split('spsearch')[0] + 'sppartysearch'
+    var searchtxt = document.getElementById("supsearch").value ;
+    
+    var frm = document.getElementById("frm").value ;
+    var tod = document.getElementById("tod").value ;
+
+    var itype = document.getElementById("itype").value ;
+    var billas = document.getElementById("billas").value ;
+    partyname = searchtxt;
+    
+    $("#itembox").find("tr:not(:first)").remove();
+
+    $.ajax({
+        url: htp,
+        type: 'POST',
+        data: {name:cssearch,searchtxt:searchtxt, idf:cs, keyc:0, frm:frm, tod:tod,itype:itype,billas:billas},
+        dataType: 'json',
+        success: function(result) {
+          if(result.length > 0){
+            if(typeof (result[0]["name"]) == 'undefined'){
+              itemrows = {};
+               }else{
+                itemrows = result;
+                $('.tt-dropdown-menu').css('display', 'none');
+                AppendTable(itemrows); 
+          
+               }
+             }
+            stopGIF(); 
+          }
+
+        });
+    }
+
+  $(document).ready(function(){
+    var name = document.getElementById("sp").innerHTML;
+    var htp = document.URL.substring(0, document.URL.lastIndexOf("/")+1)+'sppartysearch';
+    var today = rmstoday();
+    document.getElementById("frm").value = today;
+    document.getElementById("tod").value = today;
+    cs = document.getElementById("sp").innerHTML.toLowerCase().trim();      ////------trim
+    var csurl = cshost+"?idf="+cs+"&getcolumn=name&limit="+csdatalimit;
+    partySearch(cs, csurl); // <<<=== NEW FUNCTION ADDITION 
+
+    var geturl = cshost+"?name=%QUERY&idf="+cs+"&getcolumn=name&limit="+csdatalimit; 
+
+    //var geturl = htp+"?key=%QUERY"+"&info="+name+"&limit="+csdatalimit;
+    
+    
+    // $('.typeahead').typeahead({
+    //     name:name, method:'GET', 
+    //     remote:
+    //         {wildcard: '%QUERY',url:geturl }, 
+    //     limit:csdatalimit,});   
+    });
+
+  // $('.typeahead').on('typeahead:selected', function(evt, item, name) {
+  //   // item has value ; item.value
+
+  //      ShowData();
+  //   });
+  
+  function AppendTable(rows){
+    $('#statusinfo').html('Total Invoice Count : '+rows.length);
+    for(i=0;i<rows.length;i++){
+      var rowd = rows[i];
+    document.getElementById("itembox").insertRow(-1).innerHTML = '<tr tabindex="'+i+'">'+
+    '<td id=1_'+i+' name="1" class="tablerows" onclick="rowselect('+i+') ">'+rowd.billdate+'</td>'+
+    '<td id=2_'+i+' name="2" class="tablerows" onclick="rowselect('+i+') ">'+rowd.billno+'</td>'+
+    '<td id=3_'+i+' name="3" class="tablerows" onclick="rowselect('+i+') ">'+cscr[rowd.cscr]+'</td>'+
+    '<td id=4_'+i+' name="4" class="tablerows" onclick="rowselect('+i+') ">'+rowd.name+'</td>'+
+    '<td id=5_'+i+' name="5" class="tablerows" onclick="rowselect('+i+') ">Rs.'+rowd.amount+'</td>'+
+    
+    '</tr>';
+    }
+
+  }
+
+  function keyrowselect(){
+    //console.log(evt)
+   
+    //var keyc = evt.which || evt.keyCode;
+  
+    }
+  function rowselect(tblrow){
+    
+    playGIF('public/assets/img/wrun.gif');
+    
+    var spid = itemrows[tblrow].spid;
+    var transid = itemrows[tblrow].transid;
+    var dt = itemrows[tblrow].billdate;
+    var billno = itemrows[tblrow].billno;
+    var table = document.getElementById('itembox'); 
+    table.classList.remove('dptable');
+    var ttr = table.getElementsByTagName("tr");
+    srd = itemrows[tblrow];
+    //console.log(srd);
+      for (let i = 0; i < ttr.length; i++) {
+          if (i % 2 === 0){ttr[i].style.backgroundColor = "powderblue";}
+          else{ttr[i].style.backgroundColor = "#2BC1FF52";}
+          //ttr[i].className = "dptable";
+          //ttr[i].style.color = "black";   
+        } 
+     table.classList.add('dptable');
+     ttr[tblrow+1].style.background = 'yellow';
+     
+     $.ajax({
+        url: '/speditcalculate',
+        type: 'GET',
+        contentType: 'application/json;charset=UTF-8',
+        data: {name:cs,jsdata:'', idf:'spedit', keyc:0, spid:srd.spid, ledgid:srd.ledgid, text:partyname,
+               csid:srd.csid, transid:srd.transid, dt:srd.dt, invdt:srd.dt, billno:srd.billno, 
+               gamt:srd.amount, fyear:srd.fyear,},
+        dataType: 'json',
+        success: function(result) {  
+            
+          if(result['grid'].length >0){
+            document.getElementById("statusinfo").innerHTML = "Total Items Found : " +result['grid'].length;
+          }      
+          pready = true;
+          //console.log(result.itemrows[0].itemname)
+          //console.log(result);
+          var openbtn = document.getElementById("open")
+          openbtn.style.background = "yellow";
+          openbtn.style.color = "blue";
+          openbtn.style.fontWeight= "bold";
+          openbtn.style.fontSize = "large";
+          
+          $('html,body').animate({scrollTop: $("#divbtm2").offset().top},'slow');
+          stopGIF();
+
+
+          }
+        });
+    
+    
+    }
+  function onShow(){
+    playGIF('public/assets/img/wrun.gif');
+    ShowData();
+      //var searchtxt = document.getElementById("partysearch").value ;
+      // if (searchtxt == ""){CreateAlertDiv("Wait.. !! Party Name Not Selected !! ")}
+      // else{ShowData();}
+    
+    }
+  function onopen(){
+    var baseurl = window.location.origin;
+    // var rdpage = baseurl+'/spedit'; //window.location.host;
+    var rdpage = baseurl+'/spedit';
+    if (pready==true){window.location.href = rdpage;}
+    pready==false;
+    //CreateAlertDiv("Wait.. !! Invoice Number Not Given !! ")
+
+    }
+  
+
+</script>
+
+</html>

@@ -33,13 +33,15 @@
 }
 
 .mid-nav{
-  flex-wrap: wrap;
-  background: linear-gradient(to right, #5f43b0, #12077b, #00008B, #00008B, #2e2e99, #5f43b0);
-    padding-top: 25px;
-    padding-bottom: 5px;
+  background: linear-gradient(to right, #5f43b0, #2e2e99, #00008B, #00008B, #2e2e99,#5f43b0);
+  
+  padding-top: 15px;
+  padding-bottom: 10px;
     margin: 0px;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+    
 }
 
 .mid-nav .menu-icon {
@@ -55,8 +57,8 @@
 }
 
 .mid-l img {
-  height: 100%;
-  width: 400px;
+  width: 465px;
+
 }
 
 .mid-l .menu-icon {
@@ -68,26 +70,7 @@
 }
 
 
-.mid-r{
-    display: flex;
-    align-items: center;
-}
 
-.mid-r > img{
-    margin-right: 8px;
-}
-
-#bell{
-    margin-left: 25px;;
-    cursor: pointer;
-}
-
-.User-dropdown{
-    color: #f6f6f6;
-    margin-right: 25px;
-    display: flex;
-    align-items: center;
-}
 .dropdown-content {
     display: none;
     position: absolute;
@@ -122,25 +105,25 @@
   
 
   .last-nav {
-    flex-wrap: wrap;
     background-image: linear-gradient(to right, #3434bd, #4db8ff);
-    border: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 20px;
-    justify-content: space-evenly;
-    display: flex;
+    
   }
   
   .last-nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+
   }
   
   .last-nav li {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 2px;
     position: relative;
+    font-size: 1rem;
   }
   
   .last-nav a {

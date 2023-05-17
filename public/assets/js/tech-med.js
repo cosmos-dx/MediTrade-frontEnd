@@ -5,7 +5,7 @@ let mapMarkers = [];
 function initMap() {
   const myLatlng = { lat: 28.640552786049202, lng: 77.22074051949213 };
   map = new google.maps.Map(document.getElementById("app-map"), {
-    zoom: 4,
+    zoom: 10,
     center: myLatlng,
     mapId: "7bd8fe8d2cca9c09",
   });

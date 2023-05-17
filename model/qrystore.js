@@ -374,29 +374,26 @@ function csfind_by_name(db, method, idf, text, column, limit, callback){
 	if (idf==="items"){
 		const findResult = db["itm"].find({"name":new RegExp("^" +text, "i")}).limit(5).toArray();
 		findResult.then(function(result){
-			if(method==="GET"){ 
-				for(var i=0; i<result.length; i++){data.push(result[i].name);}
-			  	callback(data);
-			}else{
-				if (result.length > 0){
-					var checkitemid = ObjectIdCheck(result[0].itemid);
-					if(checkitemid){
-					  var itemid = checkitemid;
-					}else{
-					  var itemid = result[0].itemid;  
-					}
-					
-					// Force on Item Selection [POST Method, will fetch stock too]
-					itemid = itemid.toString();
-					const findResult = db["stk"].find({"itemid":itemid}).sort({'itemid' : -1}).limit(limit).toArray(); // remove limit for multiple batch
-					findResult.then(function(stkresult){
-						result[0]["stockarray"] = stkresult;
-						callback(result); 
-						});
-				}
+		
+		if (result.length > 0) {
+			const fin_res = [];
+			for (let i = 0; i < result.length; i++) 
+			{
+				const itemid = result[i].itemid.toString();
+				result[i].stockarray = [];
+				fin_res.push(db["stk"].find({ "itemid": itemid }).sort({ 'itemid': -1 }).toArray().then(function (stkresult) {
+						result[i].stockarray = stkresult;
+					})
+				);
 			}
-
+			Promise.all(fin_res)
+			  .then(() => {
+				callback(result);
+			  })
+			  .catch((e) => {console.log(e)});
+		  }
 		});
+
 		return true;
 		
 	};
@@ -414,24 +411,26 @@ function csfind_by_name(db, method, idf, text, column, limit, callback){
 	
 		const findResult = db["cust"].find({"name":new RegExp("^" +text)}).limit(5).toArray();
 		findResult.then(function(result){
-			if(method==="GET"){ 
-				for(var i=0; i<result.length; i++){data.push(result[i].name);}
-			  	callback(data);
-			}else{
-				callback(result);
-			}  
+			callback(result);
+			// if(method==="GET"){ 
+			// 	for(var i=0; i<result.length; i++){data.push(result[i].name);}
+			//   	callback(data);
+			// }else{
+			// 	callback(result);
+			// }  
 		});
 		return true;
 	};
 	if (idf==="supplier"){
 		const findResult = db["sup"].find({"name":new RegExp("^" +text, "i"), "mode":{"$ne":6}}).limit(5).toArray();
 		findResult.then(function(result){
-			if(method==="GET"){ 
-				for(var i=0; i<result.length; i++){data.push(result[i].name);}
-			  	callback(data);
-			}else{
-				callback(result);
-			}  
+			callback(result);
+			// if(method==="GET"){ 
+			// 	for(var i=0; i<result.length; i++){data.push(result[i].name);}
+			//   	callback(data);
+			// }else{
+			// 	callback(result);
+			// }  
 		});
 		return true;
 	};
@@ -904,12 +903,14 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 	  } // supplier save mode close
 
 	  if (mode=="update"){
+		
 	  	  typ = 1 ; // FOR PURCHASE typ=2 FOR SALE, typ=3 FOR PAYMENT typ=4 FOR RECEIPT typ=7 FOR BANK TARNSACTION, typ=8 PUR RETURN, typ=9 SALE RETURN
 	  	  transid = rp['transid'];
 		    spid = rp['spid'];
 		    const filter = {"spid":spid,"transid":transid,};
 		    const pur_update = { "$set": {"ledgid":rp['ledgid'], "itype":rp['itype'], "billno":rp["billno"], "billdate":rp["dbbilldate"],
 				      "cscr":rp["dbcscr"], "csid":rp['csid'], "amount":parseFloat(rp['gtot']), "billas":rp['billas'],"cmnt":rp['cmnt'],}};
+
 		  if (cscr=='CHALLAN'){
 				main = false;
 				db["puro"].updateOne(filter, pur_update).then(function(puroupdate){
@@ -918,7 +919,7 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 			  	return true; //
 		  	} // purchase order update challan closed
 				
-				const filter_mytrans = {"spid":rp['spid'],"transid":rp['transid'],};	
+				const filter_mytrans = {"ledgid":rp['ledgid'],"transid":rp['transid'],};	
 		    var mytransobj = {"transid":rp['transid'],"ledgid":rp['ledgid'],"trtype":rp['dbcscr'],"type":typ, "credit":0, "debit":0, 'date':rp['dbbilldate'], "fyear":fyear, };
 				if (cscr=="CASH"){mytransobj["debit"]=parseFloat(rp['gtot']);};
 				if (cscr=="CREDIT"){mytransobj["credit"]=parseFloat(rp['gtot']); };
@@ -930,8 +931,11 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 							"amount":parseFloat(rp['gtot']),"billas":rp['billas'],"cmnt":rp['cmnt'],"fyear":fyear,}};
 
 				pay_rcpt_cash_update(db, typ, rp, parseFloat(rp["gtot"]), 0, fyear);
+
+				
 				db["trns"].updateOne(filter_mytrans, update_mytrans).then(function(result){
 					db["pur"].updateOne(filter_pur, update_pur).then(function(purchaseid){
+
 							itemflag = PANEL_PURCHASE_PROD(fyear, "", "", rd, db, spid, transid, main);
 					});					
 				});
@@ -1004,7 +1008,7 @@ function csfinalbill(db, idf, rd, mode, main, callback){
 			  	return true; //
 		  	} // customer update challan closed
 
-		  const filter_mytrans = {"spid":rp['spid'],"transid":rp['transid'],};	
+		  const filter_mytrans = {"ledgid":rp['ledgid'],"transid":rp['transid'],};	
 		  var mytransobj = {"transid":rp['transid'],"ledgid":rp['ledgid'],"trtype":rp['dbcscr'],"type":typ, "credit":0, "debit":0, 'date':rp['dbbilldate'], "fyear":fyear, };
 			if (cscr=="CASH"){mytransobj["credit"]=parseFloat(rp['gtot']);};
 			if (cscr=="CREDIT"){mytransobj["debit"]=parseFloat(rp['gtot']);};
@@ -1053,7 +1057,7 @@ function PANEL_SALE_PROD(fyear, callback, tbl, recdic, db, saleid, transid, main
 	
 	for (const [k, v] of Object.entries(grid)){
 	  
-	  if (v['itemid'] !="" && v['qty'] !=""){
+	  if (v['itemid'] !="" && (v['qty'] !="" && v['qty'] != 0)){
 		  
 		//if (v['spitemid'] !=""){
 		if(typeof v['spiid'] !== "undefined"){
@@ -1208,7 +1212,7 @@ function PANEL_PURCHASE_PROD(fyear, tblname, tbl, recdic, db, purcid, transid, m
 
   for (const [k, v] of Object.entries(grid)){
 	//console.log("this is v going to start",v);
-  	 if (v['itemid'] !="" && v['qty'] !=""){
+  	 if (v['itemid'] !="" && (v['qty'] !="" && v['qty'] !=0)){
 
   	 	if(typeof v['spiid'] !== "undefined"){ 
 			

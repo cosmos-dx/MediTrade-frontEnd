@@ -157,7 +157,7 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 } */
 
 .mydocfooter {
-  background: linear-gradient(to right, #5f43b0, #2e2e99, #00008B, #00008B, #2e2e99, #5f43b0);
+  background: linear-gradient(to right, #5f43b0, #2e2e99, #00008B, #00008B, #2e2e99,#5f43b0);
   /* background: linear-gradient(to right, #191970, #00008B); */
   padding: 10px;
   display: flex;
