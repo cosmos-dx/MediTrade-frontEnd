@@ -11,6 +11,7 @@ const mainpage = require('./model/mainsp');
 const sbsearch = require('./model/dbsearch');
 const { hostname } = require('os');
 // const customer_model = require('./rmsconfig/model/customer');
+//here
 const wifi = '192.168.149.139'  ;
 const port = process.env.PORT ||  80 ;
 const app = myapp.app ;
