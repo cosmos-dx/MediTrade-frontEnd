@@ -1,0 +1,28 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  gap: 2rem;
+}
+.error-page h1 {
+  font-size: 20vw;
+  background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+p.message {
+  background-image: linear-gradient(180deg, #2af598 0%, #009efd 100%);
+  -webkit-background-clip: text;
+  font-size: 2rem;
+  color: transparent;
+}
+p.message .status {
+  background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+  font-size: 2rem;
+  background-clip: text;
+  -webkit-background-clip: text;
+  font-weight: bold;
+  color: #fa5252;
+}

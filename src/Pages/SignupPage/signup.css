@@ -1,0 +1,89 @@
+.signup-form-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background-color: #fff;
+  gap: 1.2rem;
+  min-height: 100vh;
+}
+
+.signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  /* align-content: center; */
+  margin-left: 1rem;
+  margin-top: -4rem;
+  gap: 1rem;
+}
+.btn-container {
+  grid-column: 1/3;
+  display: flex;
+  justify-content: center;
+}
+.header {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  height: 70px;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header .logo {
+  margin-left: 1rem;
+}
+
+.header .link {
+  color: #7950f2;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border: 2px solid #7950f2;
+  padding: 0.8rem 1rem;
+  border-radius: 100px;
+}
+.header .link:hover {
+  background-color: #7950f2;
+  color: #fff;
+  box-shadow: 0 2px 5px #7950f297;
+}
+.map-container {
+  grid-row: 1/3;
+  box-shadow: inset 2px 0 5px rgb(0 0 0 /10%);
+  position: relative;
+}
+.map-container::after {
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -10px;
+  background-color: transparent;
+  width: 10px;
+  box-shadow: 4px 0 5px rgb(0 0 0 /10%);
+  z-index: 0;
+}
+.signup-form select {
+  height: 48px;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.signup-form select:focus {
+  border-color: #7950f2;
+  box-shadow: 0 0 0 3px rgba(121, 80, 242, 0.3);
+}
+
+
+.signup-form input {
+  color: black;
+}
+
+

@@ -1,0 +1,134 @@
+@media only screen and (max-width: 767px) {
+  .main {
+    background-color: #31e78c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .form-container,
+  .sidebar {
+    display: none;
+  }
+  .sidebar__container{
+    display: none;
+  }
+  .btn, btn-secondary {
+    display: none;
+  }
+  .sidebar .msg {
+    display: none;
+  }
+  .sidebar__container .ques {
+    display: none;
+  }
+  .logo{
+    display: none;
+  }
+  .form{
+    display: none;
+  }
+  .form-container 
+  {
+    display: none;
+  }
+  .form-content{
+    display: none;
+  }
+  .form-container .topbar {
+    display: none;
+  }
+  .form-content .message {
+    display: none;
+  }
+
+  .message-for-smartphones {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    /* Add any additional styles you want for the message */
+  }
+  .oauth-icons {
+    display: none;
+  }
+  .input-container input, svg, button {
+    display: none;
+  }
+}
+.main {
+  background-color: #fafffe;
+  width: 100vw;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 2fr 1fr;
+
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+.form-container .topbar {
+  height: 80px;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+}
+.logo {
+  height: 3.4rem;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -100px;
+  height: 100%;
+}
+.form-content .message {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.form {
+  /* margin-top: 40px; */
+  display: flex;
+  width: 300px;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.oauth-icons {
+  margin-bottom: 30px;
+  font-size: 1.3rem;
+}
+
+.sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  background-image: linear-gradient(120deg, #31e78c 0%, #2de5d6 100%);
+}
+.sidebar__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sidebar__container .ques {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fafffe;
+}
+.sidebar__container .msg {
+  text-align: center;
+  font-size: 1rem;
+  color: #fafffe;
+}

@@ -1,0 +1,62 @@
+.table-row {
+  padding: 0 1rem;
+  /* width: 200%; */
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 10px;
+}
+
+.table-row:not(:last-child) {
+  margin-bottom: 8px;
+}
+.dropdownthing{
+  position: absolute;
+  width: 100%;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border: "1px solid #ddd";
+  z-index: 1;
+}
+.dropdownthing-span {
+  display: "block";
+  padding: "10px";
+  cursor: "pointer";
+  width: "100%";
+}
+.table-row input,
+.table-row span {
+  width: 5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: none;
+  font-size: 0.8rem;
+  padding: 10px;
+  border: 2px solid rgb(0 0 0 /15%);
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+
+.table-row input:focus {
+  border: none;
+  outline-offset: -2px;
+}
+
+/* .table-row input:first-of-type {
+  width: 200px;
+} */
+.table-row button {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 3rem;
+}
+.table-row button svg {
+  width: 1.5rem;
+  fill: #fa5252;
+}

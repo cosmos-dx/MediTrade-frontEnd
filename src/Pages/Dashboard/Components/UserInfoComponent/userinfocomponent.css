@@ -1,0 +1,84 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    width: 26rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  .modal-content:hover {
+    transition: .3s;
+    box-shadow: 0 3px 10px rgba(33, 228, 75, 0.995);
+  }
+  .modal-content input {
+    width: 90%;
+    position: relative;
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    
+    border: none;
+    font-weight: 500;
+    color: #68706b;
+    border-bottom: 2px solid #c3c9c5; 
+  }
+  
+
+  .save-button-user-info {
+    border-radius: 10px;
+    height: 2rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #3ddc8d ;
+    color: white;
+  }
+  .save-button-user-info:hover {
+    box-shadow: 0 3px 10px rgba(229, 233, 230, 0.995);
+    cursor: pointer;
+  }
+  .close-button-user-info{
+    width: 100%;
+    margin-top: 5px;
+    background-color: rgba(237, 59, 59, 0.926);
+    border-radius: 10px;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    color: white;
+  }
+  .close-button-user-info:hover {
+    box-shadow: 0 3px 10px rgba(229, 233, 230, 0.995);
+    cursor: pointer;
+  }
+  .modal-backdrop + div {
+    filter: blur(2px);
+    pointer-events: none;
+  }
+  #usernme:hover {
+    background-color: #3ddc8d;
+    color: white;
+  }
+  #logout:hover {
+    background-color: rgba(237, 59, 59, 0.926);
+    color: white;
+  }
