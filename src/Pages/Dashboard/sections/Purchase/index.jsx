@@ -70,7 +70,11 @@ function resetStore(){
         }
         else {
           document.getElementById("cscr")?.focus();
+<<<<<<< HEAD:src/Pages/Dashboard/sections/Purchase/index.jsx
           const billurl = `${userContext.api}/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset`;
+=======
+          const billurl = `{userContext.api}/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset`;
+>>>>>>> 008cc0e72abe9d357aef5219000b45f7f65e353c:src/Pages/Dashboard/sections/Purchase/index.tsx
           const fetchDataFromAPI = async () => {
             try {
               const response = await fetch(billurl);
