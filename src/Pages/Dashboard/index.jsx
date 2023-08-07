@@ -14,7 +14,7 @@ import billNo from "../../assets/images/billno.svg";
 import billDate from "../../assets/images/billdate.svg";
 import trtype from "../../assets/images/trtype.svg";
 import ApexChart from '../../assets/js/ApexChart.jsx';
-import UserInfoDropDown from "../Dashboard/Components/UserInfoComponent";
+import UserInfoDropDown from "./Components/UserInfoComponent";
 export default function index() {
   const navigateTo = useNavigate();
   const location = useLocation();

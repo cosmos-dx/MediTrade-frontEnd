@@ -70,7 +70,7 @@ function resetStore(){
         }
         else {
           document.getElementById("cscr")?.focus();
-          const billurl = 'http://localhost/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset';
+          const billurl = `${userContext.api}/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset`;
           const fetchDataFromAPI = async () => {
             try {
               const response = await fetch(billurl);

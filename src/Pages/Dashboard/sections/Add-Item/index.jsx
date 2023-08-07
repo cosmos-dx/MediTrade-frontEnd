@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import "./mystyles.css";
 import { UserDataContext } from "../../../../context/Context";
 // import "./bootstrap.css";
-import kMove from "../../sections/kMove.js";
+import kMove from "../kMove.js";
 function SetFocusToNext(inputid){
   const nextfield = document.getElementById(inputid+1);
   

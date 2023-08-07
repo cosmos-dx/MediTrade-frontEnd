@@ -1,6 +1,6 @@
 import React, { useContext,useState, useEffect, useRef } from 'react';
 import './row-style.css';
-import ItemInputHandler from '../../../Dashboard/Components/InputHandler';
+import ItemInputHandler from '../InputHandler';
 import {UserDataContext} from "../../../../context/Context";
 
 
