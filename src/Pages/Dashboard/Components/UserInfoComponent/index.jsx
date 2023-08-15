@@ -64,10 +64,6 @@ const Index = () => {
     navigateto("/");
   }
 
-  const handleModalClose = () => {
-
-    setIsModalOpen(false);
-  };
 
   const handleFormSubmit = (event, selectedMenuItem) => {
     event.preventDefault();

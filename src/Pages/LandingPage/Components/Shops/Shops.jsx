@@ -110,13 +110,11 @@ const Shops = ({ itemShop }) => {
   const handleStarClick = (shopIndex, starIndex) => {
     const newRatings = [...ratings];
     newRatings[shopIndex] = starIndex + 1;
-    console.log(shopIndex, starIndex);
     setRatings(newRatings);
   };
   const handleMediStarClick = (mediIndex, starIndex) => {
     const newMediRatings = [...mediratings];
     newMediRatings[mediIndex] = starIndex + 1;
-    console.log(mediIndex, starIndex);
     setmediRatings(newMediRatings);
   }
   const showData = () => {

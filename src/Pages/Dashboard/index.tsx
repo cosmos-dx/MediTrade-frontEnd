@@ -123,7 +123,6 @@ const populateTotalSP = (idf) => {
           </Link>
           <select
             onChange={(e) => {
-              console.log(e.target.value);
               fetch(`${userContext.api}/selectfyear`, {
                 method: "post",
                 headers: {

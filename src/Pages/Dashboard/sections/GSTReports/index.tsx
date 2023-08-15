@@ -87,21 +87,11 @@ const Index = ({idf, sp, searchroutes}) => {
     .catch(error => {
       console.log(error);
     });
-    //console.log(frmdate, todate, billas, itype, idf);
   }
   
   
   function resetStore(){
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: userContext.store.recdic.pantemplate,},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["cscr"]: "CASH"},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["regn"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["gstn"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["add1"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["add2"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["mobile"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["stcode"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["email"]: ""},},}))
-    //let ac={"acname1":"" ,"acname2":"" ,"acname3":"" ,"acid1":0,"acid2":0,"acid3":0,"acval1":0,"acval2":0,"acval3":0,}
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, ac: userContext.store.recdic.ac,},}))
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, grid: {[0] : userContext.store.recdic.itemtemplate},},}));
   
@@ -334,15 +324,11 @@ const Index = ({idf, sp, searchroutes}) => {
   }
 
   
-function onRowClick(index){
-
-  //console.log("recdic =--- ",userContext.store.recdic);
-  
+function onRowClick(index){ 
   
   var temp =spdisplaydata[index];
   temp['idf'] = idf;
   var params = new URLSearchParams(temp);
-  //console.log("yeaha ");
   
   const url = `${userContext.api}/speditcalculate?${params}`
     fetch(url, {

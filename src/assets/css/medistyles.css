@@ -1,5 +1,5 @@
 .purchase-section {
-  background-color: #e31d1d;
+  background-color: #fff;
   border-radius: 1rem;
   padding: 1rem;
   max-width: 55rem;
@@ -143,6 +143,17 @@ select {
   box-shadow: 0 0 5px #3ddc8da9;
 }
 
+.partyinfo{
+padding-left:2rem;
+width: 100%;
+display: inline-flex;
+}
+
+.infolabel{
+padding-right: 1rem;
+font-size: 0.8rem;
+}
+
 .purchase-summary {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -273,9 +284,4 @@ select {
   margin-right: 5px;
   fill: #3ddc8d;
 }
-.info-data p{
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: center;
-  color: #3ddc8d;
-}
+  

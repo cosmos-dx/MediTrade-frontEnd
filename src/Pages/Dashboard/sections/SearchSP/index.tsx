@@ -98,18 +98,13 @@ const Index = ({idf, sp, searchroutes}) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       
       if(sp === "gstsummary"){
         var ttt =[];
         AppendTableGSTSUMMARY(ttt, data['rowp'], "Purchase");
-        AppendTableGSTSUMMARY(ttt, data['rows'], "Sale");
-        // console.log(" this is my sp",ttt);        
+        AppendTableGSTSUMMARY(ttt, data['rows'], "Sale");   
       }
       else{
-        console.log("ysss");
-        
-        // console.log("chekcing", spdisplaydata);
         setspdisplaydata(data);
       }
       
@@ -392,7 +387,6 @@ function onRowClick(index){
       return response.json();
     })
     .then((data) => {
-      console.log(data['grid']);
       userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: data['pan'],},}));
       userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, grid: data['grid'],},}));
       document.getElementById("show").style.background = "#f1f5f4";

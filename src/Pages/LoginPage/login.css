@@ -1,62 +1,3 @@
-@media only screen and (max-width: 767px) {
-  .main {
-    background-color: #31e78c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-
-  .form-container,
-  .sidebar {
-    display: none;
-  }
-  .sidebar__container{
-    display: none;
-  }
-  .btn, btn-secondary {
-    display: none;
-  }
-  .sidebar .msg {
-    display: none;
-  }
-  .sidebar__container .ques {
-    display: none;
-  }
-  .logo{
-    display: none;
-  }
-  .form{
-    display: none;
-  }
-  .form-container 
-  {
-    display: none;
-  }
-  .form-content{
-    display: none;
-  }
-  .form-container .topbar {
-    display: none;
-  }
-  .form-content .message {
-    display: none;
-  }
-
-  .message-for-smartphones {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    color: #333;
-    /* Add any additional styles you want for the message */
-  }
-  .oauth-icons {
-    display: none;
-  }
-  .input-container input, svg, button {
-    display: none;
-  }
-}
 .main {
   background-color: #fafffe;
   width: 100vw;
@@ -132,3 +73,71 @@
   font-size: 1rem;
   color: #fafffe;
 }
+
+@media only screen and (max-width: 480px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .form-content .message{
+    font-size: 1.8rem;
+  }
+  .form-container .topbar img {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100%;
+    margin-left: 13%;
+    margin-top: 20%;
+  }
+  .form-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+  }
+  .form-content{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .sidebar {
+    margin-top: 20%;
+    width: 100%;
+    height: 30%;
+  }
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 868px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .form-container .topbar img {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100%;
+    margin-left: 22%;
+    margin-top: 20%;
+  }
+  .form-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+  }
+  .form-content{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .sidebar {
+    margin-top: 20%;
+    width: 100%;
+    height: 20%;
+  }
+}
+
+

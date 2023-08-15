@@ -91,62 +91,50 @@ const Index = ({idf, sp, crdr, searchroutes}) => {
   }
 
   const onSaveButton = () => {
-    //console.log(billas,idf,sp,frmdate,todate,itype,taxslab,agreegate,gsttable)
-    // setshowgif("block");
-    // setshowbtn("none");
-    // const spdata = {
-    //   idf: idf,
-    //   sp:sp,
-    //   frm: frmdate,
-    //   tod: "",
-    //   itype: "",
-    //   gsttable:"",
-    //   ledgid : userContext.store.recdic.pan['ledgid'] || "",
-    //   fyear : 0,
-    // };
+    setshowgif("block");
+    setshowbtn("none");
+    const spdata = {
+      idf: idf,
+      sp:sp,
+      frm: frmdate,
+      tod: "",
+      itype: "",
+      gsttable:"",
+      ledgid : userContext.store.recdic.pan['ledgid'] || "",
+      fyear : 0,
+    };
     
-    // fetch(`${userContext.api}${searchroutes}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(spdata)
-    // })
-    // .then((response) => {
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   return response.json();
-    // })
-    // .then((data) => {
-    //   //console.log("dataaa", data)
-    //   if(Object.keys(data).length>0){
-    //     setspdisplaydata(data);
-    //   }
-    //   else{
-    //     setspdisplaydata([{}]);
-    //   }
-    //   setshowgif("none");
-    //   setshowbtn("block");
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    // });
-    //console.log(frmdate, todate, billas, itype, idf);
+    fetch(`${userContext.api}${searchroutes}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(spdata)
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if(Object.keys(data).length>0){
+        setspdisplaydata(data);
+      }
+      else{
+        setspdisplaydata([{}]);
+      }
+      setshowgif("none");
+      setshowbtn("block");
+    })
+    .catch(error => {
+      console.log(error);
+    });
     
   }
 
   function resetStore(){
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: userContext.store.recdic.pantemplate,},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["cscr"]: "CASH"},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["regn"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["gstn"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["add1"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["add2"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["mobile"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["stcode"]: ""},},}))
-    // userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, pan: {...ps.recdic.pan, ["email"]: ""},},}))
-    //let ac={"acname1":"" ,"acname2":"" ,"acname3":"" ,"acid1":0,"acid2":0,"acid3":0,"acval1":0,"acval2":0,"acval3":0,}
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, ac: userContext.store.recdic.ac,},}))
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, grid: {[0] : userContext.store.recdic.itemtemplate},},}));
   

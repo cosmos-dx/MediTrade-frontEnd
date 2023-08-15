@@ -9,7 +9,6 @@ import {UserDataContext} from "../../../../context/Context";
 import "../../../../assets/js/jsPDF.js";
 import CreatePDF from "../../../../assets/js/saveprint.js";
 const index = ({whichPage, idf, edit, pageName}) => {
-  console.log("check -- ",idf);
   const navigateTo = useNavigate();
   const userContext = useContext(UserDataContext);
    const [showPrintConfirmation, setShowPrintConfirmation] = useState(false);
@@ -186,7 +185,6 @@ function resetStore(){
       body: JSON.stringify(requestBody)
     }).then((res) => res.json())
       .then((data)=> {
-        console.log(data);
         if(data["success"]){
           setShowPrintConfirmation(true);
           setIsSaveDisable(false);

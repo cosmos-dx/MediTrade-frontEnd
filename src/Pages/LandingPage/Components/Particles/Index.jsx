@@ -5,7 +5,6 @@ import "../../assets/css/mystyles.css";
 
 function Index() {
   const particlesInit = useCallback(async (engine) => {
-    console.log(engine);
     await loadSlim(engine);
   }, []);
   

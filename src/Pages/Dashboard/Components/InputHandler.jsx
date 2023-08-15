@@ -122,7 +122,6 @@ class InputHandler extends React.Component {
 
   handleKeyDown = (event) => {
     const { searchResults, selectedItemIndex } = this.state;
-  
     if (event.key === "ArrowUp") {
       event.preventDefault();
       const prevIndex = selectedItemIndex > 0 ? selectedItemIndex - 1 : searchResults.length - 1;

@@ -1,9 +1,17 @@
 .landing-main-container{
-    height: 80vh;
+    height: 84vh;
     padding: 0 100px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     animation: tagline-animation 1.5s;
+}
+.landing-below-container {
+    display: flex;
+    align-items: center;
+}
+.construction-land {
+    width: 20px;
 }
 .tagline{
     margin-top: -5rem;
