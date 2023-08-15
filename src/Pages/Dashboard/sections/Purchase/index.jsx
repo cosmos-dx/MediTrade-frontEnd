@@ -70,7 +70,10 @@ function resetStore(){
         }
         else {
           document.getElementById("cscr")?.focus();
+<<<<<<< HEAD
 
+=======
+>>>>>>> d64d9be7e7bd62b8a95d1fd0ac429299686cf949
           const billurl = `${userContext.api}/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset`;
           const fetchDataFromAPI = async () => {
             try {
