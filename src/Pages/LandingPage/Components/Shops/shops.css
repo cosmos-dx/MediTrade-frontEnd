@@ -1,0 +1,62 @@
+.container-shops-location-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.locations {
+    width: 80%;
+    padding: 0.8rem 1rem;
+    background-color: #fff;
+    appearance: none;
+    outline: none;
+    border: 2px solid #3ddc8d;
+    border-radius: 1rem;
+    width: 100%;
+}
+.locations:hover ,.shop-card:hover{
+    transition: .2s;
+    box-shadow: 0 3px 10px rgba(33, 228, 75, 0.995);
+}
+.location-info{
+    text-align: center;
+    font-weight: 400;
+    font-size: 22px;
+}
+
+.shops-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 2%;
+    margin-left: 8%;
+    margin-right: 8%;
+    gap: 20px;
+  }
+  .shop-card {
+    display: flex;
+    flex-direction: column;
+    width: calc(25% - 20px);
+    margin-bottom: 20px;
+    border: 1px solid #3ddc8d;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .shop-image {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    height: auto;
+    margin: 10px auto 0;
+  }
+  
+  .shop-details {
+    padding: 10px;
+  }
+  
+

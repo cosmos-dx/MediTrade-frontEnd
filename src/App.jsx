@@ -57,7 +57,7 @@ const browserRouter = createBrowserRouter([
 
 function App() {
   const userContext = useContext(UserDataContext);
-  const api = "http://localhost";
+  const api = "http://meditradesoft.in";
   const [store, setStore] = useState({ owner: { cal: null } });
   const [isLoading, setLoading] = useState(true);
 

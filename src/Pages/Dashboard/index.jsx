@@ -173,10 +173,6 @@ const populateTotalSP = (idf) => {
               to={"purchase"}
               onClick={resetStore}
               className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end
             >
               Purchase
@@ -188,10 +184,6 @@ const populateTotalSP = (idf) => {
               to={"sales"}
               onClick={resetStore}
               className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end
             >
               Sales
@@ -201,21 +193,13 @@ const populateTotalSP = (idf) => {
             <NavLink to={"search-purchase"}
             onClick={resetStore}
             className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
-            isActive={(match, location) => {
-              if (match) return true;
-              return false;
-            }}
-            end>
+          end>
               Search Purchase
             </NavLink>
           </li>
           <li>
             <NavLink to={"search-sales"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Search Sales
             </NavLink>
@@ -223,10 +207,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"add-item"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Add Item
             </NavLink>
@@ -234,10 +214,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"add-supplier"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Add Supplier
             </NavLink>
@@ -245,10 +221,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"add-customer"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Add Customer
             </NavLink>
@@ -256,10 +228,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"cash-ledger"}className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Cash Ledger
             </NavLink>
@@ -267,10 +235,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"customer-ledger"}className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Customer Ledger
             </NavLink>
@@ -278,10 +242,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"supplier-ledger"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Supplier Ledger
             </NavLink>
@@ -289,10 +249,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"gst-summary"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               GST Summary
             </NavLink>
@@ -300,10 +256,6 @@ const populateTotalSP = (idf) => {
           <li>
             <NavLink to={"company-stock"} className={`sidebar-link ${!isFinYearSelected ? "disabled-link" : ""}`}
             onClick={resetStore}
-              isActive={(match, location) => {
-                if (match) return true;
-                return false;
-              }}
               end>
               Company Stock Adjustment
             </NavLink>

@@ -1,0 +1,113 @@
+.landing-main-container{
+    height: 80vh;
+    padding: 0 100px;
+    display: flex;
+    align-items: center;
+    animation: tagline-animation 1.5s;
+}
+.tagline{
+    margin-top: -5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    width: 40%;
+    animation: tagline-animation 1.5s;
+}
+.tagline h1{
+    font-weight: 500;
+    font-size: 62px;   
+}
+.tagline h3{
+    font-weight: 398;
+    font-size: 26px;   
+}
+.tagline-slogan-span{
+    display: inline-block;
+    /* border: 1px solid red; */
+    padding: 0 10px;
+    position: relative;
+    color: #fff;
+}
+.tagline-slogan-span::after{
+
+    content: '';
+    height: 90%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+    z-index: -1;
+    transform: skew(-10deg);
+}
+.tagline-button{
+    height: 3rem;
+    width: 30%;
+    color: #fff;
+    border:#43e97b;
+    border-radius: 20px;
+    font-size: 22px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+}
+.tagline-button:hover{
+    height: 3rem;
+    width: 31%;
+    color: #fff;
+    border:#1f25216f;
+    border-radius: 20px;    
+    background-image: linear-gradient(to right, #1fca58 0%, #2adbbb 100%);
+    font-size: 22px;
+    transition: .7s;
+    box-shadow: 0 3px 10px rgba(54, 202, 59, 0.995);
+   
+}
+  .sliders {
+    height: 40rem;
+    width: 50rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 20px;
+    margin: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    object-fit: contain;
+    transition: opacity 0.5s ease-in-out;
+    animation: fade 10s infinite ease-in-out;
+        
+}
+  
+  .slider-image {
+    animation: fade 0.5s;
+    transition: 2s;
+    
+  }
+
+
+  @keyframes fade {
+    0% {
+      
+      background-image: url("../../assets/sliders/medicines-slides2.jpg");
+    }
+    30%{
+        background-image: url("../../assets/sliders/medicines-slides3.jpg");
+    }
+    60% {
+        background-image: url("../../assets/sliders/medicines-slides1.jpg");
+    }
+    100%{
+        background-image: url("../../assets/sliders/medicines-slides4.jpg");
+    }
+  }
+  
+@keyframes tagline-animation {
+    0%{
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+}
