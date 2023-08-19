@@ -399,8 +399,8 @@ function onRowClick(index){
     
 }
   return (
-    <div className="search-section">
-      <div className="search-header">
+    <div className="search-section search-section-mobile gstr3-section-mobile">
+      <div className="search-header search-header-mobile gstr3-section-header-mobile">
         
         
         <div className="search-input">

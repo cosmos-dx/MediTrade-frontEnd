@@ -61,7 +61,7 @@ const browserRouter = createBrowserRouter([
 ]);
 
 function App() {
-  const api = "http://localhost";
+  const api =  "http://meditradesoft.in:8080";   //"http://192.168.29.116"; //localhost add
   const [store, setStore] = useState({ owner: { cal: null } });
   const [isLoading, setLoading] = useState(true);
 

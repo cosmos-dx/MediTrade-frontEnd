@@ -1,12 +1,11 @@
-// import "./purchase.css";
 import "../../../../assets/css/medi-styles.css";
+import  "../../../../assets/js/jsPDF";
 import RowComponent from "../../Components/RowComponent";
 import { useState, useContext, useRef, useEffect, ReactNode } from "react";
 import rupeeSymbol from "./Indian-Rupee-symbol.svg";
 import InputHandler from "../../Components/InputHandler";
 import { Link, useNavigate } from "react-router-dom";
 import {UserDataContext} from "../../../../context/Context";
-import "../../../../assets/js/jsPDF.js";
 import CreatePDF from "../../../../assets/js/saveprint.js";
 const index = ({whichPage, idf, edit, pageName}) => {
   const navigateTo = useNavigate();
@@ -185,6 +184,8 @@ function resetStore(){
       body: JSON.stringify(requestBody)
     }).then((res) => res.json())
       .then((data)=> {
+        console.log(data);
+        
         if(data["success"]){
           setShowPrintConfirmation(true);
           setIsSaveDisable(false);
@@ -205,6 +206,8 @@ function resetStore(){
 
   const onConfirmPrint = async() => {
     setShowPrintConfirmation(false); 
+    console.log(userContext.store, userContext.store.recdic);
+    
     await CreatePDF(userContext.store, userContext.store.recdic, "landscape");
     resetStore();
   };
@@ -251,7 +254,7 @@ function resetStore(){
   }
   
   return (
-    <div className="purchase-section">
+    <div className="purchase-section purchase-section-mobile">
       <div className="purchase-header">
         <div className="purchase-input">
         <InputHandler

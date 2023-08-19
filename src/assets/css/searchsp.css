@@ -157,3 +157,46 @@
   .cismain{
     width:calc(50% - 65px);;
   }
+
+  @media only screen and (max-width: 550px) {
+    .payrcpt-mobile{
+      display: flex;
+      flex-direction: column;
+      width: 96%;
+      margin-left: 7px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px #00000088;
+    }
+    .payrcpt-header-mobile{
+      display: flex;
+      flex-direction: column;
+    }
+    .payrcpt-header-mobile div {
+      width: 100%;
+    }
+    .payrcpt-mobile .payrcpt-row{
+      max-width: 100%;
+      
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .payrcpt-mobile .payrcpt-row div{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .payrcpt-mobile .payrcpt-row .search-input{
+
+      height: 50px;
+    }
+    .payrcpt-mobile .payrcpt-row .search-input input{
+      text-align: center;
+      height: 100%;
+    }
+
+  }

@@ -1,4 +1,6 @@
-
+import "../js/jsPDF";
+// import {jsPDF} from "jspdf";
+import Logo from"../logo_meditrade.png";
 function validateDBEntry(savebool){
   
   if (typeof recdic['pan']['name']=='undefined'){
@@ -163,7 +165,7 @@ function CreatePDF(rscr, recdic, ornt="landscape", invtype="GST-Invoice"){
     //var bluetxt = [24, 54, 204];
     //var url = '../../public/img/mylogo.png';
     var url = '../../mylogo.png';
-    var mylogo = getLogo("../../../../src/assets/logo_meditrade.png");
+    var mylogo = getLogo(Logo);
     doc.addImage(mylogo, 'png', 20, 12, 60, 17)
     //var mylogo = new Image()
     //mylogo.src = '../../static/img/mylogo.png';

@@ -252,9 +252,9 @@ const handleMapClick = (event) => {
 
 
   return (
-    <div className="signup-form-container">
+    <div className="signup-form-container signup-form-container-mobile">
       
-      <div className="header">
+      <div className="header header-mobile">
         <img src={logo} className="logo" alt="" />
         <Link to={"/"} className="link">
           Already have an account.
@@ -262,7 +262,7 @@ const handleMapClick = (event) => {
       </div>
       <form
         onSubmit={onRegisterUser}
-        className="signup-form"
+        className="signup-form signup-form-mobile"
       >
        <div style={{ color: infobool ? "#3ddc8d" : "rgba(237, 59, 59, 0.926)" , textAlign : "center"}}>
           <p>{info}</p></div>
@@ -519,7 +519,7 @@ const handleMapClick = (event) => {
           <button className="btn btn-primary" >SIGN UP</button>
         </div>
       </form>
-      <div className="map-container">
+      <div className="map-container map-container-mobile">
       <GoogleMapReact
         bootstrapURLKeys={{
           key: "AIzaSyBcjOCY2sK1-HXkxsQUqISRRYqF9p9Ul8U",

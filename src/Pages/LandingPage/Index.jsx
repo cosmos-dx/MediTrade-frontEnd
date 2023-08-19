@@ -48,10 +48,10 @@ function Index() {
       <img src={About2} alt="" />
     </div>
     <About />
-    <div className='blog-info'> 
+    <div className='blog-info contact-info'> 
       <img src={Contact1} alt="" />
       <h1>Contact Us</h1>
-      <img style={{"width":"12%"}} src={Contact2} alt="" />
+      <img className="contact-info-second-img" style={{"width":"12%"}} src={Contact2} alt="" />
     </div>
     <Contact />
     <Footer />

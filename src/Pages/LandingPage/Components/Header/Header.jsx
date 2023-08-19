@@ -10,7 +10,7 @@ const Header = () => {
     navigateto('/login')
   }
   return (
-    <div>
+    <div className="NavMain">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="#">
           <img src={logo} alt="" />

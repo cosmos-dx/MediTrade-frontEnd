@@ -142,8 +142,8 @@ const Index = ({idf, sp, crdr, searchroutes}) => {
   
 
   return (
-    <div className="search-section">
-      <div className="search-header">
+    <div className="search-section payrcpt-mobile">
+      <div className="search-header payrcpt-header-mobile">
         
         
         <div className="search-input">
@@ -190,7 +190,7 @@ const Index = ({idf, sp, crdr, searchroutes}) => {
         </div>
       </div>
 
-      <div style={{width:"870px",height:"350px",border:"1px solid #000"}}>
+      <div className="payrcpt-row" style={{width:"870px",height:"350px",border:"1px solid #000"}}>
         {sp.toUpperCase()}
 
         <div>

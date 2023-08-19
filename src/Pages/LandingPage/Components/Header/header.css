@@ -67,3 +67,32 @@ nav ul li a:hover{
     height: 1.6rem;
     transition: .5s;
 }
+
+@media screen and (max-width: 550px) {
+    .navbar {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+    .navbar .navbar-brand{
+        margin-right: 40px;
+    }
+    .navbar:first-child img {
+        margin-top: 15px;
+    }
+    .nav-contents-container {
+        max-width: 100%;
+        display: flex;
+        justify-content: space-between;
+        overflow-y: scroll;
+        width: 100%;
+    }
+    .nav-contents-container ul li:nth-child(3){
+       width: 220px;
+    }
+    .nav-contents-container ul li:nth-child(6){
+        width: 144px;
+     }
+
+}

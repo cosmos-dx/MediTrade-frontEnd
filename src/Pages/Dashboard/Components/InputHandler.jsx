@@ -71,11 +71,15 @@ class InputHandler extends React.Component {
       this.item_Link_Obj.limit;
     this.provided_data = this.item_Link_Obj.provided_data;
     this.fetchSearchResults(this.mylink);
-    if(this.state.searchResults.length > 0){
-      this.populateGridData(this.state.searchResults[0]);
-      this.props.rowdatahandler(this.props.myobj, value, this.state.searchResults[0], 'text' );
-    }
+    console.log(">>>>> ",this.state.searchResults)
     
+    if (this.item_Link_Obj.idf === "items") {
+      if(this.state.searchResults.length > 0){
+        console.log("<ser>>> ", this.state.searchResults)
+        this.populateGridData(this.state.searchResults[0]);
+        this.props.rowdatahandler(this.props.myobj, value, this.state.searchResults[0], 'text' );
+      }
+  }
 
 
   };
@@ -137,7 +141,12 @@ class InputHandler extends React.Component {
       this.props.rowdatahandler(this.props.myobj,event.target.value , this.state.searchResults[nextIndex], 'text' );
     } else if (event.key === "Enter") {
       event.preventDefault();
+  
       const { searchResults, selectedItemIndex } = this.state;
+      if(searchResults.length === 0){
+        alert("Add New Supplier if Required");
+        return ;
+      }
       if (selectedItemIndex !== -1) {
         const selectedItem = searchResults[selectedItemIndex];
         this.handleItemClick(selectedItem);

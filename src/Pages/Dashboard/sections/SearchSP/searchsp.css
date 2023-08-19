@@ -97,6 +97,7 @@
     text-align: center;
   }
   
+
   .search-table-header th {
     
     font-size: 1rem;
@@ -153,3 +154,51 @@
     color: #fff;
     
   }
+
+  @media only screen and (max-width: 550px) {
+    .search-section{
+      display: none;
+    }
+    .search-header{
+      width: 100%;
+      min-width: 100%;
+    }
+    
+    .search-section-mobile{
+      display: flex;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      flex-direction: column;
+      width: 100%;
+      min-width: 100%;
+    }
+
+    .search-header .search-input:nth-child(5){
+      width: 50%;
+    }
+    .search-header .search-input:nth-child(5) #myDropdown{
+      width: 100%;
+    }
+    .search-header .search-input:nth-child(5) #myDropdown input{
+      width: 100%;
+      max-width: 100%;
+    }
+    .search-header .search-input input{
+      width: 100%;
+    }
+    .search-header .search-input:nth-child(5) #myDropdown .dropdownthing{
+      min-width: 100%;
+    }
+    .search-header div{
+
+      width: 50%;
+    }
+    .gstr3-section-mobile .gstr3-section-header-mobile{ 
+     
+      margin-top: 30px;
+    }
+    .gstr3-section-mobile .gstr3-section-header-mobile div{
+      width: 100%;
+    }
+  }
+  

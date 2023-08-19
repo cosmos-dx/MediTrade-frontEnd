@@ -341,3 +341,51 @@
     background-color: #0056b3;
   }
   
+  @media only screen and (max-width: 550px) {
+    .purchase-section{
+      display: none;
+    }
+    .purchase-section-mobile{
+      margin-top: 40px;
+      margin-bottom: 30px;
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%; max-width: 95%;
+      box-shadow: 0 5px 20px #00000088;
+    }
+    .purchase-section-mobile .purchase-header {
+      margin: 0;
+      padding: 0;
+      margin-left: 30px;
+      justify-content: space-between;
+      gap: -100px;
+     
+    }
+    .purchase-section-mobile .purchase-header div {
+      width: 100%;
+    }
+    .purchase-section-mobile .purchase-header input {
+      width: 90%;
+    }
+    .purchase-section-mobile .purchase-header div:first-child input{
+      max-width: 120px;
+      
+    }
+    .purchase-section-mobile .purchase-header div:first-child #myDropdown{
+
+      width: 100%;
+
+    }
+    .purchase-summary{
+      display: flex;
+      flex-direction: column-reverse;
+      overflow: scroll;
+    }
+    .purchase-summary .col-2 .gst-col{
+      
+      width: 100%;
+
+    }
+  }

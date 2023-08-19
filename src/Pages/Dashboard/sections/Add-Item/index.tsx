@@ -131,7 +131,6 @@ class CISComponent extends  React.Component {
                 var urlqry = new URLSearchParams({name:val.toUpperCase(),idf:this.props.iidf[this.props.setid].cssearch,
                 getcolumn:"all",mode:"search",limit:2 });
 
-                //const url = 'http://localhost:80/partysearchenter_test?'+urlqry;
                 const url = this.props.iidf[this.props.setid].url+urlqry;
 
                 let data = [];
@@ -309,19 +308,19 @@ function Index({rscr, whichPage}){
      rscr["cssearch"]="supplier";
      rscr["pagename"]="ADD-ITEM";
      iidf = {"0":{"in":true,"value":"","labelid":"0info","id":"name","idf":"db_name","ph":"Item-Name","mxl":"100",
-    			"listattr":"list-name","info":"","cssearch":"items","url":"http://localhost:80/itemsearchenter?",
+    			"listattr":"list-name","info":"","cssearch":"items","url": `${userContext.api}/itemsearchenter?`,
           "db_data":{},"req":true,"regexp":/^[A-Za-z0-9. -]*$/, "disable":false,},
     			"1":{"in":true,"value":"TAB","labelid":"1info","id":"unit","idf":"dd_unit","ph":"Item-Unit","mxl":"10","listattr":"","info":"",
     		    	"dd":['TAB','CAP','VIAL','BOTT','DROP','PCS','OINT','CREAM'],"db_data":{},"req":true,"regexp":/^[A-Za-z0-9_-]*$/, "disable":false,},
     			"2":{"in":true,"value":"","labelid":"2info","id":"pack","idf":"si_pack","ph":"Item-Pack","mxl":"10",
     				"listattr":"","info":"","db_data":{},"req":true,"regexp":/^(?!.*\**.*\+)[a-zA-Z0-9 *]*$/i, "disable":false,},
     			"3":{"in":true,"value":"","labelid":"3info","id":"igroup","idf":"db_igroup","ph":"Item-Composition","mxl":"500",
-    				"listattr":"list-igroup","info":"","cssearch":"items_igroup","url":"http://localhost:80/addtodb?",
+    				"listattr":"list-igroup","info":"","cssearch":"items_igroup","url": `${userContext.api}/addtodb?`,
             "db_data":{},"req":false,"regexp":/^[A-Za-z0-9.-]*$/, "disable":false,},
     			"4":{"in":true,"value":"","labelid":"4info","id":"irack","idf":"db_irack","ph":"Item-Rack Name","mxl":"25","listattr":"list-irack","info":"",
-    			     "cssearch":"items_irack","url":"http://localhost:80/addtodb?","db_data":{},"req":false,"regexp":/^[A-Za-z0-9_-]*$/, "disable":false,},
+    			     "cssearch":"items_irack","url":`${userContext.api}/addtodb?`,"db_data":{},"req":false,"regexp":/^[A-Za-z0-9_-]*$/, "disable":false,},
     			"5":{"in":true,"value":"","labelid":"5info","id":"comp","idf":"db_comp","ph":"Item-Manufecturer","mxl":"25","listattr":"list-comp","info":"",
-    			   "cssearch":"comp","url":"http://localhost:80/addtodb?","db_data":{},"req":true,"regexp":/^[A-Za-z0-9.-]*$/, "disable":false,},
+    			   "cssearch":"comp","url":`${userContext.api}/addtodb?`,"db_data":{},"req":true,"regexp":/^[A-Za-z0-9.-]*$/, "disable":false,},
     			"6":{"in":true,"value":"","labelid":"6info","id":"prate","idf":"si_prate","ph":"Purchase Rate","mxl":"10",
     				"listattr":"","info":"","db_data":{},"req":true,"regexp":/^-?\d*[.,]?\d*$/, "disable":false,},
     			"7":{"in":true,"value":"","labelid":"7info","id":"srate","idf":"si_srate","ph":"Sale Rate","mxl":"10",
@@ -336,10 +335,10 @@ function Index({rscr, whichPage}){
     			"11":{"in":true,"value":6,"labelid":"11info","id":"sgst","idf":"label_sgst","ph":"SGST","mxl":"4",
     				"listattr":"","info":"ADD [ 6% ] as SGST","db_data":{},"req":false,"regexp":/^-?\d*[.,]?\d*$/, "disable":true,},
     			"12":{"in":true,"value":"","labelid":"12info","id":"hsn","idf":"db_hsn","ph":"HSN Code","mxl":"8",
-    				"listattr":"list-hsn","info":"","cssearch":"hsn","url":"http://localhost:80/addtodb?",
+    				"listattr":"list-hsn","info":"","cssearch":"hsn","url":`${userContext.api}/addtodb?`,
             "db_data":{},"req":true,"regexp":/^-?\d*$/, "disable":false,},
     			"13":{"in":true,"value":"","labelid":"13info","id":"sup","idf":"db_sup","ph":"Item-Supplier Name","mxl":"100",
-    				"listattr":"list-sup","info":"","cssearch":"sup","url":"http://localhost:80/addtodb?",
+    				"listattr":"list-sup","info":"","cssearch":"sup","url":`${userContext.api}/addtodb?`,
             "db_data":{},"req":true,"regexp":/^[A-Za-z0-9.-]*$/, "disable":false,},
     			"14":{"in":true,"value":"","labelid":"14info","id":"cmnt","idf":"si_cmnt","ph":"Comment and Notes","mxl":"20",
     				"listattr":"","info":"","db_data":{},"req":false,"regexp":/^[A-Za-z0-9.-]*$/, "disable":false,},
@@ -352,9 +351,9 @@ function Index({rscr, whichPage}){
      rscr["pagename"]="ADD-SUPPLIER";
      iidf["0"]["ph"]="Add Supplier-Name";
      iidf["0"]["cssearch"]="supplier";
-     iidf["0"]["url"]="http://localhost:80/partysearchenter?";
+     iidf["0"]["url"]= `${userContext.api}/partysearchenter?`;
      iidf["6"]["cssearch"]="supplier_area";
-     iidf["6"]["url"]="http://localhost:80/addtodb?";
+     iidf["6"]["url"]=`${userContext.api}/addtodb?`;
      
     }
     else{
@@ -363,9 +362,9 @@ function Index({rscr, whichPage}){
      rscr["pagename"]="ADD-CUSTOMER";
      iidf["0"]["ph"]="Add Customer-Name";
      iidf["0"]["cssearch"]="customer";
-     iidf["0"]["url"]="http://localhost:80/partysearchenter?";
+     iidf["0"]["url"]= `${userContext.api}/partysearchenter?`;
      iidf["6"]["cssearch"]="customer_area";
-     iidf["6"]["url"]="http://localhost:80/addtodb?";
+     iidf["6"]["url"]=`${userContext.api}/addtodb?`;
 
      
     }

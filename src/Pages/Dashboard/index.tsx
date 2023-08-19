@@ -116,7 +116,7 @@ const populateTotalSP = (idf) => {
   }, []);
   return (
     <div className="dashboard">
-      <div className="dashboard-sidebar">
+      <div className="dashboard-sidebar mobile-dashboard-sidebar">
         <div className="sidebar-header">
           <Link to={"/"}>
             <img src={logo} alt="MediTrade Logo" className="logo" />
@@ -285,7 +285,7 @@ const populateTotalSP = (idf) => {
 
         </ul>
       </div>
-      <div className="dashboard-main">
+      <div className="dashboard-main mobile-dashboard">
         <Outlet />
         {location.pathname === "/dashboard" && (
         <div className="dashboard-cover">
@@ -305,10 +305,8 @@ const populateTotalSP = (idf) => {
               </div>
             </div>
             
-            <div className="dashboard-user-info">
-
-            </div>
-             <div className="dashboard-info">
+           
+             <div className="dashboard-info dashboard-info-mobile">
                 <div className="dashboard-info-sales">
                 <img className= "sicon" src={saleicon} alt="" />
                 <div className="dashboard-info-sales-values">
@@ -374,7 +372,7 @@ const populateTotalSP = (idf) => {
                       <img src={trtype} alt="" />
                       <h4>Trns. Type</h4>
                     </div>
-                    <p>{recpurchase['itype'] === 1 ? 'Cash' : recpurchase['itype'] === 2  ? 'Credit'  : recpurchase['itype'] === 3 ?'Challan': ""}</p>
+                    <p>{recpurchase['cscr'] === 1 ? 'Cash' : recpurchase['cscr'] === 2  ? 'Credit'  : recpurchase['cscr'] === 3 ?'Challan': ""}</p>
                    </div>
                    <div className="dashboard-center-second-data">
                     <div className="dashboard-center-second-data-heads">
@@ -404,7 +402,7 @@ const populateTotalSP = (idf) => {
                           <tr key={index} onClick={() => console.log(recsale[index])}>
                             {<td>{value.billdate}</td>}
                             {<td>{value.billno}</td>}
-                            {<td>{value.trtype === 2 ? "CREDIT" : value.itype === 1 ? "CASH" : value.itype === 3? "CHALLAN" : ""}</td>}
+                            {<td>{value.cscr === 1 ? "CASH" : value.cscr === 2 ? "CREDIT" : value.cscr === 3? "CHALLAN" : ""}</td>}
                             {<td>{value.name}</td>}
                             {<td>{value.amount}</td>}
                           </tr>

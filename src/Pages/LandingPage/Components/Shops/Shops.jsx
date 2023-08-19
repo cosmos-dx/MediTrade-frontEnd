@@ -124,7 +124,7 @@ const Shops = ({ itemShop }) => {
           <div className="container-shops-location-details">
             <div className="location-info"></div>
           </div>
-          <div className="shops-cards">
+          <div className="shops-cards shop-cards-mobile">
              {MedicinesData.map((medi, mediIndex) => (
               <div key={medi.id} className="shop-card">
                 <img src={DrugImage} alt={medi.name} className="shop-image" />
@@ -163,7 +163,7 @@ const Shops = ({ itemShop }) => {
               </select>
             </div>
           </div>
-          <div className="shops-cards">
+          <div className="shops-cards shop-cards-mobile">
             {shopsData.map((shop, shopIndex) => (
               <div key={shop.id} className="shop-card">
                 <img src={shop.image} alt={shop.name} className="shop-image" />

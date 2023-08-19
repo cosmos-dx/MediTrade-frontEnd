@@ -4,7 +4,7 @@ const HomeInfo = () => {
   return (
     <>
     <div className="landing-main-container">
-      <div>
+      <div className="under-constr">
         <br />
       <h1>
           Site is Under <span className="tagline-slogan-span">Construction</span>.

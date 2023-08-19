@@ -59,7 +59,8 @@
 }
 .ourBlogs-main .ourblogcontent img {
   width: 35%;
-  background-blend-mode: multiply;
+  background-color: #fff;
+  background-blend-mode:lighten;
 }
 .blog-slogan-span {
   display: inline-block;
@@ -303,4 +304,159 @@
   background-color: transparent;
   width: 10px;
   z-index: 0;
+}
+
+@media screen and (max-width: 550px) {
+  .particles-mine{
+    height: 200px;
+  }
+  .particles-mine .centered-heading h1{
+    font-size: 1.5rem;
+  }
+  .nearest {
+    width: 390px;
+    height: 700px;
+  }
+  .nearest-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .nearest-main .search-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .nearest-main .search-bar img {
+    width: 50%;
+  }
+  .nearest-main .search-bar input {
+    width: 80%;
+  }
+  .nearest-main .map-holder .nearest-details{
+    display: none;
+  }
+  .nearest-main .map-holder .nearest-stores{
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    padding: 10px;
+
+  }
+  .ourBlogs-main{
+    display: flex;
+    flex-direction: column;
+  }
+  .ourBlogs-main .ourblogcontent {
+    display: flex;
+  }
+  .ourBlogs-main .ourblogcontent h1{
+    font-size: 1.5rem;
+  }
+  .ourBlogs-main .ourblogcontent h1:hover{
+    font-size: 1.8rem;
+  }
+  .ourBlogs-main .ourblogcontent img{
+    background-color: #fff;
+    background-blend-mode: multiply;
+    width: 45%;
+  }
+  .ourBlogs-main .ourblogcontent .blog-heading {
+    text-align: center;
+    margin: 0;
+  }
+  .ourBlogs-main .ourblogcontent .blog-heading div{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .ourBlogs-main .ourblogcontent .blog-heading div p {
+    font-size: 0.4rem;
+  }
+  
+  .ourBlogs-main .ourblogcontent img:nth-child(2){
+    background-color: #fff;
+    background-blend-mode: multiply;
+    width: 60%;
+  }
+  .ourBlogs-main .ourblogcontent:nth-child(2) h1 {
+    font-size: 1.2rem;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .ourBlogs-main .ourblogcontent:nth-child(2) h1:hover {
+    font-size: 1.4rem;
+    transition: .5s;
+  }
+  .ourBlogs-main .ourblogcontent:nth-child(2) div {
+    font-size: 1.2rem;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .ourBlogs-main .ourblogcontent:nth-child(4) h1 {
+    font-size: 1.2rem;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .about-us-main {
+    width: 100%;
+  }
+  .about-us-main div {
+    width: 100%;
+    margin-left: 10px;
+  }
+  .about-us-main .founder img:hover {
+    width: 30%;
+  }
+  .contact-us-main .contactimg{
+    position: absolute;
+    text-align: right;
+    z-index: -1;
+    width: 100%;
+  }
+  .contact-us-main{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-evenly;
+
+  }
+  .contact-left {
+    width: 70%;
+    margin-left: 20px;
+    background-color: #eaeaea3f;
+    backdrop-filter: blur(5px);
+  }
+  .contact-right{
+    width: 30%;
+
+  }
+  .contact-right img{
+    width: 50%;
+  }
+  .contact-right img:hover{
+    width: 70%;
+  }
+  .Footer .centered-row-foot{
+    margin: 0;
+  
+  }
+  .Footer{
+    height: 100%;
+  }
+  .Footer .centered-row-foot .FooterRow{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .Footer .centered-row-foot .FooterRow .FooterSection{
+    margin-top: 10px;
+  }
 }
