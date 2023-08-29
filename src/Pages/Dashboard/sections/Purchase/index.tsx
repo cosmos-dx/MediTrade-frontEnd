@@ -8,8 +8,12 @@ import { Link, useNavigate } from "react-router-dom";
 import {UserDataContext} from "../../../../context/Context";
 import CreatePDF from "../../../../assets/js/saveprint.js";
 const index = ({whichPage, idf, edit, pageName}) => {
+  
+  
   const navigateTo = useNavigate();
   const userContext = useContext(UserDataContext);
+
+  
    const [showPrintConfirmation, setShowPrintConfirmation] = useState(false);
    const [rows, setRows] = useState([{ id: 0 }]);
    const [IsSaveDisable, setIsSaveDisable] = useState(false);
@@ -53,7 +57,7 @@ function resetStore(){
         }
         else {
           document.getElementById("cscr")?.focus();
-          const billurl = `${userContext.api}/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset`;
+          const billurl = `${userContext.api}/partysearchenter?name=customer&getcolumn=billno&limit%5Bbillhead%5D=S&limit%5Bfyear%5D=0&limit%5Bbillas%5D=M&idf=billnoset&identity=${userContext.store['uqpath']['dbfname']}`;
           const fetchDataFromAPI = async () => {
             try {
               const response = await fetch(billurl);
@@ -172,6 +176,7 @@ function resetStore(){
       idf: idf,
       mode: edit ? "update" : "save",
       getdata: userContext.store.recdic,
+      identity : userContext.store['uqpath']['dbfname'],
   };
 
     setIsSaveDisable(true);

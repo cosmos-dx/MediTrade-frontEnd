@@ -61,6 +61,26 @@ const Index = () => {
     let ac={"acname1":"" ,"acname2":"" ,"acname3":"" ,"acid1":0,"acid2":0,"acid3":0,"acval1":0,"acval2":0,"acval3":0,}
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, ac: userContext.store.recdic.ac,},}))
     userContext.updateStore((ps) => ({...ps, recdic: {...ps.recdic, grid: {[0] : userContext.store.recdic.itemtemplate},},}));
+    console.log(userContext.store['uqpath']['dbfname']);
+    const dbfname = userContext.store['uqpath']['dbfname'];
+    fetch(`${userContext.api}/logout`, {
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ dbfname })
+    })
+    .then(response => {
+        if (response.ok) {
+            navigateto("/");
+            localStorage.removeItem("rscr");
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+        }
+    })
+    .catch(error => {
+        console.error('Error sending fetch request:', error);
+    });
     navigateto("/");
   }
 

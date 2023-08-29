@@ -14,6 +14,7 @@ function SetFocusToNext(inputid){
   }
 }
 class CISComponent extends  React.Component {
+  static contextType = UserDataContext;
   constructor(props){
      super(props);
      this.keyCount = -1;
@@ -129,7 +130,7 @@ class CISComponent extends  React.Component {
             if(val.length>0){
                 //var urlqry = new URLSearchParams({name: val,idf:this.props.rscr.cssearch,getcolumn:"all",limit:2 });
                 var urlqry = new URLSearchParams({name:val.toUpperCase(),idf:this.props.iidf[this.props.setid].cssearch,
-                getcolumn:"all",mode:"search",limit:2 });
+                getcolumn:"all",mode:"search",limit:2,identity:this.context.store['uqpath']['dbfname'] });
 
                 const url = this.props.iidf[this.props.setid].url+urlqry;
 
@@ -674,6 +675,7 @@ function Index({rscr, whichPage}){
       cs: cs,
       getcolumn: getcolumn,
       mode: mode,
+      identity : userContext.store['uqpath']['dbfname']
     };
     fetch(`${userContext.api}/addtodb`, {
       method: 'POST',

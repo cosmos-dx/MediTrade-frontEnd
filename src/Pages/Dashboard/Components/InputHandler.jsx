@@ -18,6 +18,7 @@ class InputHandler extends React.Component {
       selectedItemIndex: 0,
       isShown:false,
     };
+    
 
 
   }
@@ -51,7 +52,6 @@ class InputHandler extends React.Component {
     // console.log("inputhandler----- ",value);
     
     this.setState({ itemName: value });
-    
     this.mylink = 
       
       this.item_Link_Obj.links +
@@ -68,10 +68,13 @@ class InputHandler extends React.Component {
       "&cs=" +
       this.item_Link_Obj.cs +
       "&limit=" +
-      this.item_Link_Obj.limit;
+      this.item_Link_Obj.limit +
+      "&identity=" +
+      this.context.store['uqpath']['dbfname'];
     this.provided_data = this.item_Link_Obj.provided_data;
     this.fetchSearchResults(this.mylink);
     console.log(">>>>> ",this.state.searchResults)
+    
     
     if (this.item_Link_Obj.idf === "items") {
       if(this.state.searchResults.length > 0){

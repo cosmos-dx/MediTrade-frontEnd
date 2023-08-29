@@ -70,27 +70,27 @@ const populateTotalSP = (idf) => {
     };
     
 
-    fetch(`${userContext.api}/getTotalsp`, {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if(idf === "recentpurchase"){
+    // fetch(`${userContext.api}/getTotalsp`, {
+    //   method: "post",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(requestData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if(idf === "recentpurchase"){
           
-          setrecpurchase(data);
-        }
-        if(idf === "products") settotalProducts(data);
-        if(idf === "recentsale") setrecsale(data);
-        if(data.sales) settotalSales(data.sales);
-        else if(data.purchase) settotalPurchase(data.purchase);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    //       setrecpurchase(data);
+    //     }
+    //     if(idf === "products") settotalProducts(data);
+    //     if(idf === "recentsale") setrecsale(data);
+    //     if(data.sales) settotalSales(data.sales);
+    //     else if(data.purchase) settotalPurchase(data.purchase);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
 }
 
   useEffect(() => {
@@ -122,23 +122,7 @@ const populateTotalSP = (idf) => {
             <img src={logo} alt="MediTrade Logo" className="logo" />
           </Link>
           <select
-            onChange={(e) => {
-              fetch(`${userContext.api}/selectfyear`, {
-                method: "post",
-                headers: {
-                  "content-type": "application/json",
-                },
-                body: JSON.stringify({
-                  action: "action",
-                  type: "fyear",
-                  daterow: JSON.parse(e.target.value),
-                }),
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  userContext.updateStore(data);
-                });
-                
+            onChange={(e) => {                
                 setIsFinYearSelected(true);
                 var sv = JSON.parse(e.target.value);
                 setfystr(`FROM ${sv["frm"]} TO ${sv["tod"]}`)
@@ -300,7 +284,7 @@ const populateTotalSP = (idf) => {
                 <img src={`${userContext.api}${avtaar}`} alt="Profile" />
                   <UserInfoDropDown />
                 </div>
-                <div>{sessionStorage.getItem('username')}</div>
+                <div>{localStorage.getItem('username')}</div>
                 
               </div>
             </div>

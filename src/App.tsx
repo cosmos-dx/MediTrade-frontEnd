@@ -61,7 +61,7 @@ const browserRouter = createBrowserRouter([
 ]);
 
 function App() {
-  const api =  "http://meditradesoft.in:8080";   //"http://192.168.29.116"; //localhost add
+  const api =   "http://localhost:8080";//"http://meditradesoft.in:8080";   //"http://192.168.29.116"; //localhost add
   const [store, setStore] = useState({ owner: { cal: null } });
   const [isLoading, setLoading] = useState(true);
 
@@ -69,6 +69,8 @@ function App() {
     setStore(data);
     setLoading(false);
   };
+
+  
 
   useEffect(() => {
     const loadFromLocalStorage = () => {

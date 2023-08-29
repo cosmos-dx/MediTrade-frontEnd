@@ -1,15 +1,21 @@
 import "./login.css";
 import logo from "../../assets/logo_nearMed.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { UserDataContext } from "../../context/Context";
 
 export default function () {
+  
   const [loginfo, setloginfo] = useState("Login To Your Account");
   const navigateTo = useNavigate();
   const userContext = useContext(UserDataContext);
   const userNameInputRef = useRef("");
   const passwordInputRef = useRef("");
+  useEffect(()=> {
+    if(localStorage.getItem("rscr")){
+      navigateTo("/dashboard");
+    }
+  }, [])
   return (
     <div className="main">
       <div className="form-container">

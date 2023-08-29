@@ -58,6 +58,7 @@ const Index = ({idf, sp, searchroutes}) => {
       gsttable:gsttable,
       ledgid : userContext.store.recdic.pan['ledgid'] || "",
       fyear : 0,
+      identity : userContext.store['uqpath']['dbfname']
     };
     
     fetch(`${userContext.api}${searchroutes}`, {

@@ -40,7 +40,7 @@ const Index = ({idf, sp, crdr, searchroutes}) => {
       }
 
       if(eventType==="select"){
-        const payrcptsearch = {idf:idf,sp:sp,ledgid:userContext.store.recdic.pan['ledgid'] || ""}
+        const payrcptsearch = {idf:idf,sp:sp,ledgid:userContext.store.recdic.pan['ledgid'],identity:userContext.store['uqpath']['dbfname'] || ""}
 
         fetch(`${userContext.api}/payrcptsearch`, {
            method: 'POST',
@@ -102,6 +102,7 @@ const Index = ({idf, sp, crdr, searchroutes}) => {
       gsttable:"",
       ledgid : userContext.store.recdic.pan['ledgid'] || "",
       fyear : 0,
+      identity : useContext.store['uqpath']['dbfname']
     };
     
     fetch(`${userContext.api}${searchroutes}`, {
