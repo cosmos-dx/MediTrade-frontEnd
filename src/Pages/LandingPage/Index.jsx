@@ -20,6 +20,7 @@ import Contact1 from "./assets/images/contact1.svg";
 import Contact2 from "./assets/images/contact2.svg";
 import Location1 from "./assets/images/location1.svg";
 import Location2 from "./assets/images/location2.svg";
+import Chatbot from './Components/Chatbot/Chatbot';
 
 
 function Index() {
@@ -27,6 +28,7 @@ function Index() {
     <>
     <Header />
     <HomeInfo />
+    {/* <br /><br /><br /><br /> */}
     <Shops itemShop="shop" />
     <Particles />
     <Shops itemShop="item" />
@@ -55,6 +57,7 @@ function Index() {
     </div>
     <Contact />
     <Footer />
+    <Chatbot />
     </>
   )
 }

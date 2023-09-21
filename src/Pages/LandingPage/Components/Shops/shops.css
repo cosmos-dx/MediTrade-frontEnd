@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 100px;
 }
 .locations {
     width: 80%;
@@ -61,6 +62,9 @@
   @media screen and (max-width: 550px) {
     .shops-cards{
       display: none;
+    }
+    .container-shops-location-details{
+      margin-top: 0;
     }
    .shop-cards-mobile{
     display: flex;
