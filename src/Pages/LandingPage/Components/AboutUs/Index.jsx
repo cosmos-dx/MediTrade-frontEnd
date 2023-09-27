@@ -7,7 +7,7 @@ function Index() {
         window.location.href = `https://profound-dasik-cd267f.netlify.app/`;
     }
   return (
-    <div className="about-us-main">
+    <div id="about" className="about-us-main">
       <p>About Us - MediTrade</p>
       <div>
         <p>

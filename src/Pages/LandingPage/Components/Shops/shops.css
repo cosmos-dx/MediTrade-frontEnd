@@ -3,7 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    /* margin-top: 100px; */
+}
+:root{
+  scroll-behavior: smooth;
 }
 .locations {
     width: 80%;
@@ -87,4 +90,19 @@
     width: 80%;
    }
   }
-
+  .shops-cards{
+    max-height: 1200px;
+    overflow: auto;
+  }
+  .show-btn-container{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .show-btn-container .show-btn{
+    padding: 12px 1rem;
+    background-color: #43e97a;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+  }

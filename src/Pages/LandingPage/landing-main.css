@@ -24,7 +24,21 @@
 .blog-info img:last-child {
     width: 14%;
 }
+/* CSS for scroll icon */
+.scroll-icon {
+    position: fixed;
+    right: 20px; 
+    top: 50%; 
+    transform: translateY(-50%);
+    display: none; 
+    cursor: pointer;
+    z-index: 1000; 
+  }
+  .scroll-icon a img {
+    color: #43e97b;
+  }
 
+  
 .blog-info-nearest {
     width: 100%;
     height: 16rem;

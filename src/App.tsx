@@ -12,6 +12,7 @@ import AddItem from "./Pages/Dashboard/sections/Add-Item";
 import SearchSP from "./Pages/Dashboard/sections/SearchSP";
 import PayRcpt from "./Pages/Dashboard/sections/PayRcpt";
 import GstReports from "./Pages/Dashboard/sections/GSTReports";
+import ShopOwner from "./Pages/LandingPage/Components/ShopOwner/index";
 import { UserDataContext } from "./context/Context";
 import { useContext, useState, useEffect } from "react";
 const rscr = {cs: "supplier", pagename : "", cssearch : "supplier", sdates : {}}
@@ -28,6 +29,7 @@ const browserRouter = createBrowserRouter([
       { path: "signup", element: <SignupPage /> },
       { path: "admin", element: <AdminPage /> },
       { path: "adminpanel", element: <AdminPanel /> },
+      { path: ":shopId", element: <ShopOwner /> },
       {
         path: "dashboard",
         element: <Dashboard />,

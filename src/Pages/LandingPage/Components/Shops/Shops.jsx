@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext , useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
 import "./shops.css";
 import DrugImage from "../../assets/shopImages/n1.jpg";
 import Shop1 from "../../assets/shopImages/f1.jpg";
@@ -9,57 +10,44 @@ import Shop5 from "../../assets/shopImages/f5.jpg";
 import Shop6 from "../../assets/shopImages/f6.jpg";
 import Shop7 from "../../assets/shopImages/f7.jpg";
 import Shop8 from "../../assets/shopImages/f8.jpg";
+import { UserDataContext } from "../../../../context/Context";
 const Shops = ({ itemShop }) => {
-  const shopsData = [
-    {
-      id: 1,
-      name: "Jai Durga Medical Store",
-      location: "Lal Kuwan",
-      image: Shop1,
-    },
-    {
-      id: 2,
-      name: "Omkar Medical Store",
-      location: "Raj Nagar",
-      image: Shop2,
-    },
-    {
-      id: 3,
-      name: "Praveen Medical Store",
-      location: "Meerut Road",
-      image: Shop3,
-    },
-    {
-      id: 4,
-      name: "Kishan Medical Store",
-      location: "5 no Stone",
-      image: Shop4,
-    },
-    {
-      id: 5,
-      name: "Chitra Medicals",
-      location: "Sanjay Nagar",
-      image: Shop5,
-    },
-    {
-      id: 6,
-      name: "Kumabh Medical",
-      location: "Sector 10",
-      image: Shop6,
-    },
-    {
-      id: 7,
-      name: "Astri Medicals",
-      location: "Turab Nagar",
-      image: Shop7,
-    },
-    {
-      id: 8,
-      name: "Dashmesh Medical Store",
-      location: "Gaur City",
-      image: Shop8,
-    },
-  ];
+  const userContext = useContext(UserDataContext);
+  const [selectedLocation, setSelectedLocation] = useState("Ghaziabad");
+  const [shopsData, setShopsData] = useState([]);
+  const [isExpanded,setIsExpanded] = useState(false)
+  const [ratings, setRatings] = useState([].fill(0));
+  const [mediratings, setMediRatings] = useState([].fill(0));
+  const navigateTo = useNavigate();
+  useEffect(() => {
+    const fetchData = () => {
+      const requestData = {
+        place: selectedLocation,
+      };
+
+      fetch(`${userContext.api}/initland`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((responseData) => {
+          console.log("---", responseData);
+          setShopsData(responseData);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    fetchData();
+  }, [selectedLocation]);
   const MedicinesData = [
     {
       id: 1,
@@ -103,10 +91,16 @@ const Shops = ({ itemShop }) => {
     },
   ];
   
-  
-  const [ratings, setRatings] = useState([].fill(0));
-  const [mediratings, setmediRatings] = useState([].fill(0));
 
+  const handleShopCardClick = (shop) => {
+    navigateTo(`/${shop.username}`, { state: { shopData: shop } });
+  };
+
+  
+  const handleLocationChange = (event) => {
+    const newLocation = event.target.value;
+    setSelectedLocation(newLocation);
+  };
   const handleStarClick = (shopIndex, starIndex) => {
     const newRatings = [...ratings];
     newRatings[shopIndex] = starIndex + 1;
@@ -152,21 +146,27 @@ const Shops = ({ itemShop }) => {
     } else if (itemShop === "shop") {
       return (
         <>
-          <div className="container-shops-location-details">
-            <div className="location-info">
-              We are <span className="tagline-slogan-span">Available</span> Here
-              <select className="locations" name="locations" id="locations">
-                <option value="Ghaziabad">Ghaziabad</option>
-                <option value="Banglore">Banglore</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Deoria">Deoria</option>
-              </select>
-            </div>
+        <div id="shops" className="container-shops-location-details">
+          <div className="location-info">
+            We are <span className="tagline-slogan-span">Available</span> Here
+            <select
+              className="locations"
+              name="locations"
+              id="locations"
+              onChange={handleLocationChange}
+              value={selectedLocation}
+            >
+              <option value="Ghaziabad">Ghaziabad</option>
+              <option value="Banglore">Banglore</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Deoria">Deoria</option>
+            </select>
           </div>
+        </div>
           <div className="shops-cards shop-cards-mobile">
-            {shopsData.map((shop, shopIndex) => (
-              <div key={shop.id} className="shop-card">
-                <img src={shop.image} alt={shop.name} className="shop-image" />
+            {shopsData.slice(0,isExpanded?shopsData.length:8).map((shop, shopIndex) => (
+              <div key={shop.id} className="shop-card" onClick={() => handleShopCardClick (shop)}>
+                <img src={`${userContext.api}/${shop.imagePath}`} alt={shop.shopName} className="shop-image" />
                 <div className="shop-details">
                   <div className="rating">
                     {Array.from({ length: 5 }).map((_, starIndex) => (
@@ -180,13 +180,17 @@ const Shops = ({ itemShop }) => {
                         ★
                       </span>
                     ))}
-                    <h3 className="shop-name">{shop.name}</h3>
-                  <p className="shop-location">{shop.location}</p>
+                    <h3 className="shop-name">{shop.shopname}</h3>
+                  <p className="shop-location">{shop.address}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+          
+          <div className="show-btn-container">
+              <span onClick={()=>setIsExpanded(!isExpanded)} className="show-btn">{isExpanded?"Show less":"Show more"}</span>
+            </div>
         </>
       );
     }

@@ -65,7 +65,7 @@ function Index() {
   }
 
   return (
-    <div className="contact-us-main">
+    <div id='contactus' className="contact-us-main">
       <div className="contact-left">
         <form ref={form} onSubmit={sendEmail}>
           <input type="email" name="email" placeholder='Email'/>

@@ -19,7 +19,7 @@ function Index() {
     }
   };
   return (
-    <div className="ourBlogs-main">
+    <div id="blogs" className="ourBlogs-main">
       <div className="ourblogcontent">
         <img src={OurDoctors} />
         <div className="blog-heading" onClick={() => onContentClick("docs")}>

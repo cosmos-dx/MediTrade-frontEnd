@@ -1,10 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { useState, useContext, useEffect } from "react";
+import ReactDOM from "react-dom/client";
 import "./landing-main.css";
 // Components Below
+
 import Header from "./Components/Header/Header";
-import HomeInfo from './Components/HomeInfo/HomeInfo.jsx';
-import Shops from './Components/Shops/Shops.jsx';
+import HomeInfo from "./Components/HomeInfo/HomeInfo.jsx";
+import Shops from "./Components/Shops/Shops.jsx";
 import Particles from "./Components/Particles/Index.jsx";
 import OurBlog from "./Components/OurBlogs/Index.jsx";
 import Footer from "./Components/Footer/Index.jsx";
@@ -20,46 +21,74 @@ import Contact1 from "./assets/images/contact1.svg";
 import Contact2 from "./assets/images/contact2.svg";
 import Location1 from "./assets/images/location1.svg";
 import Location2 from "./assets/images/location2.svg";
-import Chatbot from './Components/Chatbot/Chatbot';
-
-
+import Chatbot from "./Components/Chatbot/Chatbot";
+import Scroll from "./assets/images/scroll.svg";
 function Index() {
+  const [showScrollIcon, setShowScrollIcon] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 500) {
+        setShowScrollIcon(true);
+      } else {
+        setShowScrollIcon(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
-    <Header />
-    <HomeInfo />
-    {/* <br /><br /><br /><br /> */}
-    <Shops itemShop="shop" />
-    <Particles />
-    <Shops itemShop="item" />
-    <div className='blog-info-nearest'> 
-      <img src={Location2} alt="" />
-      <h1>Find Nearest Shops</h1>
-      <img src={Location1} alt="" />
-    </div>
-    <NearestShops />
-    <div className='blog-info'> 
-      <img src={OurBlogs1} alt="" />
-      <h1>Our Blogs</h1>
-      <img src={OurBlogs2} alt="" />
-    </div>
-    <OurBlog />
-    <div className='blog-info'> 
-      <img src={About1} alt="" />
-      <h1>About Us</h1>
-      <img src={About2} alt="" />
-    </div>
-    <About />
-    <div className='blog-info contact-info'> 
-      <img src={Contact1} alt="" />
-      <h1>Contact Us</h1>
-      <img className="contact-info-second-img" style={{"width":"12%"}} src={Contact2} alt="" />
-    </div>
-    <Contact />
-    <Footer />
-    <Chatbot />
+      <Header isShopOwnerPage={false} />
+      <HomeInfo />
+      <div
+        className="scroll-icon"
+        style={{ display: showScrollIcon ? "block" : "none" }}
+      >
+        <a href="#navmain">
+          <img src={Scroll} alt="" />
+        </a>
+      </div>
+      <Shops itemShop="shop" />
+      <Particles />
+      <Shops itemShop="item" />
+      <div className="blog-info-nearest">
+        <img src={Location2} alt="" />
+        <h1>Find Nearest Shops</h1>
+        <img src={Location1} alt="" />
+      </div>
+      <NearestShops />
+      <div className="blog-info">
+        <img src={OurBlogs1} alt="" />
+        <h1>Our Blogs</h1>
+        <img src={OurBlogs2} alt="" />
+      </div>
+      <OurBlog />
+      <div className="blog-info">
+        <img src={About1} alt="" />
+        <h1>About Us</h1>
+        <img src={About2} alt="" />
+      </div>
+      <About />
+      <div className="blog-info contact-info">
+        <img src={Contact1} alt="" />
+        <h1>Contact Us</h1>
+        <img
+          className="contact-info-second-img"
+          style={{ width: "12%" }}
+          src={Contact2}
+          alt=""
+        />
+      </div>
+      <Contact />
+      <Footer />
+      <Chatbot />
     </>
-  )
+  );
 }
 
 export default Index;

@@ -3,7 +3,7 @@ import Wrun from "../../../../assets/images/wrun.gif";
 const HomeInfo = () => {
   return (
     <>
-    <div className="landing-main-container">
+    <div id="home" className="landing-main-container">
       <div className="under-constr">
         <br />
       <h1>

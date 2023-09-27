@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../../assets/css/mystyles.css";
 import logo from "../../assets/logo.svg"
 import GoogleMapReact from "google-map-react";
+import { UserDataContext } from "../../../../context/Context";;
 function Index() {
   const [clickedLocation, setClickedLocation] = useState({
     lat: null,
@@ -10,12 +11,22 @@ function Index() {
   const [currentLocation, setCurrentLocation] = useState({
     coords: { lattitude: 28.640552786049202, longitude: 77.22074051949213 },
   });
+  const userContext = useContext(UserDataContext);
   const handleMapClick = (event) => {
     const latitude = event.lat;
     const longitude = event.lng;
     setClickedLocation({ lat: latitude, lng: longitude });
-    console.log("Latitude:", latitude);
-    console.log("Longitude:", longitude);
+
+    fetch(`${userContext.api}/nearestShops?latitude=${latitude}&longitude=${longitude}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+       console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -26,9 +37,7 @@ function Index() {
             <input type="text" placeholder="Search Nearest Stores" />
         </div>
         <div className="map-holder">
-          <div className="nearest-details">
-           <h2>Search Details Would be Here</h2>
-          </div>
+          
           <div className="nearest-stores">
             <GoogleMapReact
               bootstrapURLKeys={{

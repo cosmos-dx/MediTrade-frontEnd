@@ -6,6 +6,32 @@
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
+.close-image{
+  position: absolute;
+  width: 35px !important;
+  margin-left: -50px;
+  cursor: pointer;
+}
+.uploaded-image{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.hindi-button{
+  display: none;
+  width: 20%;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  font-size: 0.9rem;
+  background-color: #43e97b;
+  border-radius: 10px;
+  color: #fff;
+  text-shadow: #333;
+  margin-left: 12px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
 .chatbot::before{
   box-sizing: border-box;
   content: "";
@@ -14,12 +40,26 @@
   bottom: 12px;
   right: 2px;
   height: 50px;
-  background-color: #007bff;
+  background-color: #43e97b;
   transform: translate(100%,90%);
   width: 50px;
   clip-path: polygon(0 0, 0 33%, 30% 40%);
 }
-
+input[type="file"]{
+  display: none;
+}
+.custom-file-upload{
+  width: 30px;
+  height: 30px;
+}
+.inputfile {
+  width: 100% !important;
+}
+.custom-file-upload img {
+  width: 100%;
+  height: 100%;
+  margin-left: 5px;
+}
 .chatbot.open {
   width: 300px;
   overflow-y: scroll;
@@ -38,7 +78,7 @@ width: 100px;
   border-bottom-left-radius: 0;
 }
 .chatbot-toggle {
-  background-color: #007bff;
+  background-color: #43e97b;
   color: white;
   padding: 10px;
   text-align: center;
@@ -53,7 +93,7 @@ width: 100px;
 }
 
 .chat-header {
-  background-color: #007bff;
+  background-color: #43e97b;
   color: white;
   padding: 10px;
   text-align: center;
@@ -81,7 +121,7 @@ width: 100px;
 }
 
 .user-message {
-  background-color: #007bff;
+  background-color: #43e97b;
   color: white;
   align-self: flex-end;
 }
@@ -117,7 +157,8 @@ width: 100px;
 
 
 .chat-input button {
-  background-color: #007bff;
+  margin-left: 14px;
+  background-color: #43e97b;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -127,4 +168,7 @@ width: 100px;
 .chat-input button svg{
   height: 20px;
   transform: translateY(3px);
+}
+label.disabled{
+  pointer-events: none;
 }
