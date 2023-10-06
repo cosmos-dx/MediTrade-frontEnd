@@ -66,6 +66,7 @@ function App() {
   const api =   "http://localhost:8080";//"http://meditradesoft.in:8080";   //"http://192.168.29.116"; //localhost add
   const [store, setStore] = useState({ owner: { cal: null } });
   const [isLoading, setLoading] = useState(true);
+  const [showSearchResult,setShowSearchResult] = useState(false);
 
   const updateStore = (data) => {
     setStore(data);
@@ -89,13 +90,17 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div onClick={(e)=>{
+      if(!e.target.closest(".search-container")){
+        setShowSearchResult(false);
+      }
+    }} className="App">
       {isLoading ? (
         <div className="ring">Loading
         <span></span>
       </div>
       ) : (
-        <UserDataContext.Provider value={{ api, store, updateStore }}>
+        <UserDataContext.Provider value={{ api, store, updateStore, showSearchResult, setShowSearchResult }}>
           <RouterProvider router={browserRouter} />
         </UserDataContext.Provider>
       )}

@@ -39,6 +39,13 @@ nav ul li{
 
     margin: 0 5px;
 }
+.navbar-shopOwner{
+    background-color: #fafffe;
+    box-shadow: none;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+}
 nav ul li a{
    
     color: rgb(3, 3, 3);
@@ -62,7 +69,7 @@ nav ul li a:hover{
     height: 1.5rem;
    
 }
-.nav-item  img:hover{
+.nav-item  > img:hover{
     margin-top: 5px;
     height: 1.6rem;
     transition: .5s;
@@ -95,4 +102,19 @@ nav ul li a:hover{
         width: 144px;
      }
 
+}
+
+.nav-contents-container.searchpage{
+    flex: 1;
+    display: flex;
+}
+
+.nav-contents-container.searchpage .navbar-nav{
+    flex: 1;
+}
+
+.nav-contents-container.searchpage .navbar-nav .nav-item:first-child{
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }

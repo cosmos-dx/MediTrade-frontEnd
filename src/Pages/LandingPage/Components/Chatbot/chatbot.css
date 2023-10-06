@@ -172,3 +172,11 @@ width: 100px;
 label.disabled{
   pointer-events: none;
 }
+@media only screen and (max-width: 550px) {
+  .chat-input{
+    display: flex;
+  }
+  #chat-message{
+    width: 30px;
+  }
+}

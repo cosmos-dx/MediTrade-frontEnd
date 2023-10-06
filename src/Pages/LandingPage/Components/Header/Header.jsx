@@ -2,25 +2,25 @@ import React from "react";
 import "./header.css";
 import cartlogo from "./cart-black-icon.svg";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
+import SearchBar from "../SearchData/Index";
 
-const Header = ({isShopOwnerPage, shopData}) => {
+const Header = ({ isShopOwnerPage, shopData}) => {
   const navigateto = useNavigate();
   const onMediLogin = () => {
-    navigateto('/login')
-  }
-  return (
-    !isShopOwnerPage ?
+    navigateto("/login");
+  };
+  return !isShopOwnerPage ? (
     <div id="navmain" className="NavMain">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="#">
           <img src={logo} alt="" />
         </a>
-        <div className="nav-contents-container" >
+        <div className="nav-contents-container">
           <ul className="navbar-nav">
             <li className="nav-item active">
               <a className="nav-link" href="#home">
-                Home 
+                Home
               </a>
             </li>
             <li className="nav-item">
@@ -29,9 +29,7 @@ const Header = ({isShopOwnerPage, shopData}) => {
               </a>
             </li>
             <li className="nav-item" onClick={onMediLogin}>
-              <a className="nav-link">
-              MediTrade-Login
-              </a>
+              <a className="nav-link">MediTrade-Login</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#blogs">
@@ -40,7 +38,7 @@ const Header = ({isShopOwnerPage, shopData}) => {
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#about">
-                About 
+                About
               </a>
             </li>
             <li className="nav-item">
@@ -49,35 +47,32 @@ const Header = ({isShopOwnerPage, shopData}) => {
               </a>
             </li>
             <li className="nav-item">
-              <a
-                className="nav-link disabled"
-                href="#"
-              >
-              <img src={cartlogo} alt=""  />
+              <a className="nav-link disabled" href="#">
+                <img src={cartlogo} alt="" />
               </a>
             </li>
           </ul>
         </div>
       </nav>
-    </div> : 
-
-
-<div id="navmain" className="NavMain">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
+    </div>
+  ) : (
+    <div id="navmain" className="NavMain">
+      <nav className="navbar-shopOwner navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="/">
           <img src={logo} alt="" />
         </a>
-        <div className="nav-contents-container" >
+        <div className="nav-contents-container searchpage">
           <ul className="navbar-nav">
-            <li className="nav-item active">
-                 {shopData.shopName}
+            <li className="nav-item active"><SearchBar shopOwnerData={shopData}/></li>
+            <li className="nav-item active">{shopData.shopName}</li>
+
+            <li className="nav-item">{shopData.username}</li>
+            <li className="nav-item" onClick={onMediLogin}>
+              <a className="nav-link">MediTrade-Login</a>
             </li>
             <li className="nav-item">
-              {shopData.username}
-            </li>
-            <li className="nav-item" onClick={onMediLogin}>
-              <a className="nav-link">
-              MediTrade-Login
+              <a className="nav-link disabled" href="#">
+                <img src={cartlogo} alt="" />
               </a>
             </li>
           </ul>
