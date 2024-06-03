@@ -70,27 +70,27 @@ const populateTotalSP = (idf) => {
     };
     
 
-    // fetch(`${userContext.api}/getTotalsp`, {
-    //   method: "post",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(requestData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if(idf === "recentpurchase"){
+    fetch(`${userContext.api}/getTotalsp`, {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if(idf === "recentpurchase"){
           
-    //       setrecpurchase(data);
-    //     }
-    //     if(idf === "products") settotalProducts(data);
-    //     if(idf === "recentsale") setrecsale(data);
-    //     if(data.sales) settotalSales(data.sales);
-    //     else if(data.purchase) settotalPurchase(data.purchase);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data:", error);
-    //   });
+          setrecpurchase(data);
+        }
+        if(idf === "products") settotalProducts(data);
+        if(idf === "recentsale") setrecsale(data);
+        if(data.sales) settotalSales(data.sales);
+        else if(data.purchase) settotalPurchase(data.purchase);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
 }
 
   useEffect(() => {
